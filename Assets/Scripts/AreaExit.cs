@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AreaExit : MonoBehaviour
+public class AreaExit : MonoBehaviour, UIFade.IFade
 {
     public string areaToLoad;
+
+    public string areaTransitionName;
+
+    public AreaEntrance areaEntrance;
+
+    public float waitToLoad = 1f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        areaEntrance.areaTransitionName = areaTransitionName;
     }
 
     // Update is called once per frame
@@ -23,7 +29,14 @@ public class AreaExit : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            SceneManager.LoadScene(areaToLoad);
+            UIFade.instance.fadeToBlack(this);
+
+            PlayerController.instance.areaTransitionName = areaTransitionName;
         }
+    }
+
+    public void OnCompleted()
+    {
+        SceneManager.LoadScene(areaToLoad);
     }
 }
