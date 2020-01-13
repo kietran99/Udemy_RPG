@@ -18,7 +18,7 @@ public class UIFade : MonoBehaviour
 
     public float fadeSpeed;
 
-    public bool shouldFadeToBlack, shouldFadeFromBlack;
+    private bool shouldFadeToBlack, shouldFadeFromBlack;
 
     // Start is called before the first frame update
     void Start()
@@ -64,14 +64,14 @@ public class UIFade : MonoBehaviour
         }
     }
 
-    public void fadeToBlack(IFade fadeCaller)
+    public void FadeToBlack(IFade fadeCaller)
     {
         this.fadeCaller = fadeCaller;
         shouldFadeToBlack = true;
         shouldFadeFromBlack = false;
     }
 
-    public void fadeFromBlack(IFade fadeCaller)
+    public void FadeFromBlack(IFade fadeCaller)
     {
         this.fadeCaller = fadeCaller;
         shouldFadeToBlack = false;

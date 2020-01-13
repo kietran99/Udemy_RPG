@@ -27,9 +27,9 @@ public class AreaExit : MonoBehaviour, UIFade.IFade
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag.Equals("Player"))
+        if (other.CompareTag("Player"))
         {
-            UIFade.instance.fadeToBlack(this);
+            UIFade.instance.FadeToBlack(this);
 
             PlayerController.instance.areaTransitionName = areaTransitionName;
         }

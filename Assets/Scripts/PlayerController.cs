@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // prevents the player from moving while talking
+        if (DialogManager.instance.dialogBox.activeInHierarchy) return;
+
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
