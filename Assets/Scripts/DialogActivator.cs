@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DialogActivator : MonoBehaviour
 {
-    public string speaker = "";
+    public string speaker;
 
     public string[] dialogLines;
 
@@ -21,7 +21,9 @@ public class DialogActivator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space) && canActivate && !DialogManager.instance.dialogBox.activeInHierarchy) 
+        if (Input.GetKeyDown(KeyCode.Space) && canActivate && 
+            !DialogManager.instance.dialogBox.activeInHierarchy &&
+            DialogManager.instance.secsToNextDialog <= 0f) // if DialogManager is being delayed
             DialogManager.instance.InitDialog(speaker, dialogLines, isPerson);
     }
 

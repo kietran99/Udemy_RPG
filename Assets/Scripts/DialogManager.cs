@@ -13,8 +13,14 @@ public class DialogManager : MonoBehaviour
     public string[] dialogLines;
 
     public int currentLine;
+
+    // make each line is typed more fluid
     private const float charWaitTime = 0.02f;
     private bool isTyping = false;
+
+    // seconds to next dialog display since closing current dialog
+    private const float dialogDelay = 1f;
+    public float secsToNextDialog;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +28,8 @@ public class DialogManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-        } else if (instance != this)
+        } 
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -33,8 +40,15 @@ public class DialogManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dialogBox.activeInHierarchy && Input.GetKeyUp(KeyCode.Space))
-        {    
+        // disable any dialog activation for dialogDelay seconds
+        if (secsToNextDialog >= 0f)
+        {
+            secsToNextDialog -= Time.deltaTime;
+            return;
+        }
+
+        if (dialogBox.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
+        {
             // if a dialog sentence is being typed, stop the current typing then show the whole sentence
             if (isTyping)
             {
@@ -50,6 +64,7 @@ public class DialogManager : MonoBehaviour
             if (currentLine >= dialogLines.Length)
             {
                 dialogBox.SetActive(false);
+                secsToNextDialog = dialogDelay;
             }
             else
             {
@@ -83,6 +98,7 @@ public class DialogManager : MonoBehaviour
 
         if (isPerson)
         {
+            nameBox.SetActive(true);
             nameText.text = speaker;
         }
         else

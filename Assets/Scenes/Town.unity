@@ -217,6 +217,7 @@ MonoBehaviour:
   dialogText: {fileID: 2072584224}
   nameText: {fileID: 1586078340}
   dialogLines: []
+  currentLine: 0
 --- !u!1 &446719062
 GameObject:
   m_ObjectHideFlags: 0
@@ -16298,6 +16299,7 @@ MonoBehaviour:
   speaker: 
   dialogLines:
   - Welcome to town!
+  - Enjoy the soothing atmosphere!
   isPerson: 0
 --- !u!61 &1240740848
 BoxCollider2D:
