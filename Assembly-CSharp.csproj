@@ -66,9 +66,11 @@
     <Compile Include="Assets\Scripts\AreaEntrance.cs" />
     <Compile Include="Assets\Scripts\AreaExit.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\CharStats.cs" />
     <Compile Include="Assets\Scripts\DialogActivator.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
     <Compile Include="Assets\Scripts\EssentialsLoader.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\UIFade.cs" />
     <None Include="Assets\Udemy RPG Assets\Licence.txt" />

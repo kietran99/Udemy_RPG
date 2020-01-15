@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EssentialsLoader : MonoBehaviour
 {
-    public GameObject player, fadeScreen;
+    public GameObject player;
+    public GameObject fadeScreen;
+    public GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,11 @@ public class EssentialsLoader : MonoBehaviour
         if (UIFade.instance == null)
         {
             UIFade.instance = Instantiate(fadeScreen).GetComponent<UIFade>();
+        }
+
+        if (GameManager.instance == null)
+        {
+            GameManager.instance = Instantiate(gameManager).GetComponent<GameManager>();
         }
     }
 

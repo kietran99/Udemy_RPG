@@ -46,3 +46,5 @@ MonoBehaviour:
   player: {fileID: 3986985053424760601, guid: 48fbc41a94d80ef48bc43802d80dcc72, type: 3}
   fadeScreen: {fileID: 4785226215126399114, guid: 16797b1a1c147444b907a0bdccf3b937,
     type: 3}
+  gameManager: {fileID: 4186544816920298656, guid: ead7f7eb89b294649b374a8f1ff0362d,
+    type: 3}
