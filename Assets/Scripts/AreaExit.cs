@@ -11,8 +11,6 @@ public class AreaExit : MonoBehaviour, UIFade.IFade
 
     public AreaEntrance areaEntrance;
 
-    public float waitToLoad = 1f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +28,8 @@ public class AreaExit : MonoBehaviour, UIFade.IFade
         if (other.CompareTag("Player"))
         {
             UIFade.instance.FadeToBlack(this);
+
+            GameManager.instance.fadingBetweenAreas = true;
 
             PlayerController.instance.areaTransitionName = areaTransitionName;
         }

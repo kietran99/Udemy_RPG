@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody2D theRB;
     public float moveSpeed;
+    public bool canMove = true;
 
     public Animator myAnim;
 
@@ -31,20 +32,26 @@ public class PlayerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        // prevents the player from moving while talking
-        if (DialogManager.instance.dialogBox.activeInHierarchy) return;
-
+    {    
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
-        theRB.velocity = new Vector2(moveX, moveY) * moveSpeed;
+        if (canMove)
+        {
+            theRB.velocity = new Vector2(moveX, moveY) * moveSpeed;
+        }
+        else
+        {
+            theRB.velocity = Vector2.zero;
+        }
 
         myAnim.SetFloat("moveX", theRB.velocity.x);
         myAnim.SetFloat("moveY", theRB.velocity.y);
 
         if (moveX == 1 || moveX == -1 || moveY == 1 || moveY == -1)
         {
+            if (!canMove) return;
+
             myAnim.SetFloat("lastMoveX", moveX);
             myAnim.SetFloat("lastMoveY", moveY);
         }
@@ -55,7 +62,7 @@ public class PlayerController : MonoBehaviour
                                 transform.position.z);
     }
 
-    public void setBounds(Vector3 botLeft, Vector3 topRight)
+    public void SetBounds(Vector3 botLeft, Vector3 topRight)
     {
         bottomLeftLimit = botLeft + new Vector3(.5f, .75f, 0f);
         topRightLimit = topRight - new Vector3(.5f, .75f, 0f);

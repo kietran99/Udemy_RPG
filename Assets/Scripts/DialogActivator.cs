@@ -23,7 +23,7 @@ public class DialogActivator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && canActivate && 
             !DialogManager.instance.dialogBox.activeInHierarchy &&
-            DialogManager.instance.secsToNextDialog <= 0f) // if DialogManager is being delayed
+            DialogManager.instance.secsToNextDialog <= 0f) // if DialogManager is not being delayed
             DialogManager.instance.InitDialog(speaker, dialogLines, isPerson);
     }
 

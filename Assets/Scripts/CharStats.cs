@@ -23,18 +23,12 @@ public class CharStats : MonoBehaviour
     public int[] mpLvlBonus;
 
     // Character's attributes
-    public int strength;
-    public int defence;
+    public int strength, defence, intellect, vitality, agility;
 
-    // Weapon and Armor
-    public int weaponPow;
-    public int armorPow;
-
-    public string equippedWeapon;
-    public string equippedArmor;
+    public string equippedWeapon, equippedArmor, equippedHelmet, equippedSecondary, equippedShoes, equippedAccessory;
 
     // Avatar
-    public Sprite characterImage;
+    public Sprite charImage;
 
     public float levelMultiplier = 1.05f;
 
@@ -90,6 +84,6 @@ public class CharStats : MonoBehaviour
 
         maxHP = Mathf.FloorToInt(maxHP * levelMultiplier);
 
-        maxMP += mpLvlBonus[playerLevel];
+        maxMP += mpLvlBonus[playerLevel - 1];
     }
 }

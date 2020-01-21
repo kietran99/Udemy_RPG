@@ -14,11 +14,11 @@ public class DialogManager : MonoBehaviour
 
     public int currentLine;
 
-    // make each line is typed more fluid
+    // Make each line is typed more fluid
     private const float charWaitTime = 0.02f;
     private bool isTyping = false;
 
-    // seconds to next dialog display since closing current dialog
+    // Seconds to next dialog display since closing current dialog
     private const float dialogDelay = 1f;
     public float secsToNextDialog;
 
@@ -64,6 +64,7 @@ public class DialogManager : MonoBehaviour
             if (currentLine >= dialogLines.Length)
             {
                 dialogBox.SetActive(false);
+                GameManager.instance.dialogActive = false;
                 secsToNextDialog = dialogDelay;
             }
             else
@@ -89,6 +90,8 @@ public class DialogManager : MonoBehaviour
 
     public void InitDialog(string speaker, string[] dialogLines, bool isPerson)
     {
+        GameManager.instance.dialogActive = true;
+
         this.dialogLines = dialogLines;
 
         currentLine = 0;

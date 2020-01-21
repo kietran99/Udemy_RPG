@@ -15,6 +15,8 @@ public class AreaEntrance : MonoBehaviour, UIFade.IFade
         }
 
         UIFade.instance.FadeFromBlack(this);
+
+        GameManager.instance.fadingBetweenAreas = false;
     }
 
     // Update is called once per frame
