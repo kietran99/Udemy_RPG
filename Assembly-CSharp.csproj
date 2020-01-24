@@ -67,12 +67,14 @@
     <Compile Include="Assets\Scripts\AreaExit.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CharStats.cs" />
+    <Compile Include="Assets\Scripts\CircularLinkedList.cs" />
     <Compile Include="Assets\Scripts\DialogActivator.cs" />
     <Compile Include="Assets\Scripts\DialogManager.cs" />
     <Compile Include="Assets\Scripts\EssentialsLoader.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameMenu.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\StatsDisplay.cs" />
     <Compile Include="Assets\Scripts\UIFade.cs" />
     <None Include="Assets\Udemy RPG Assets\Licence.txt" />
     <Reference Include="Unity.Timeline.Editor">
