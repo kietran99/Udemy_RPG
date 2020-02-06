@@ -23,7 +23,7 @@ public class CharStats : MonoBehaviour
     public int[] mpLvlBonus;
 
     // Character's attributes
-    public string charClass;
+    public string charClass, description;
 
     public int strength, defence, intellect, vitality, agility, luck;
 

@@ -8,6 +8,9 @@ public class EssentialsLoader : MonoBehaviour
     public GameObject fadeScreen;
     public GameObject gameManager;
 
+    [SerializeField]
+    private GameObject itemManager = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,11 @@ public class EssentialsLoader : MonoBehaviour
         if (GameManager.instance == null)
         {
             GameManager.instance = Instantiate(gameManager).GetComponent<GameManager>();
+        }
+
+        if (ItemManager.Instance == null)
+        {
+            ItemManager.Instance = Instantiate(itemManager).GetComponent<ItemManager>();
         }
     }
 

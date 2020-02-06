@@ -10,7 +10,7 @@ public class StatsDisplay : MonoBehaviour
 
     public Image charImage;
     public Text nameText, lvText, classText, strengthText, defenceText, intellectText, vitalityText, agilityText, luckText,
-                maxHPText, maxMPText, currentEXPText, toNextLvText;
+                maxHPText, maxMPText, currentEXPText, toNextLvText, descriptionText;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +20,16 @@ public class StatsDisplay : MonoBehaviour
         linkedPlayerStats.Append(playerStats);
         Display();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void OnEnable()
+    {
+        if (linkedPlayerStats != null) Display();
     }
 
     // Iterate through the next player that is active
@@ -52,21 +57,22 @@ public class StatsDisplay : MonoBehaviour
 
     private void Display()
     {
-        CharStats current = linkedPlayerStats.current.value;
+        CharStats currentCharacter = linkedPlayerStats.current.value;
 
-        charImage.sprite = current.charImage;
-        nameText.text = current.characterName;
-        lvText.text = "Lv: " + current.playerLevel;
-        classText.text = current.charClass;
-        strengthText.text = current.strength.ToString();
-        defenceText.text = current.defence.ToString();
-        intellectText.text = current.intellect.ToString();
-        vitalityText.text = current.vitality.ToString();
-        agilityText.text = current.agility.ToString();
-        luckText.text = current.luck.ToString();
-        maxHPText.text = current.maxHP.ToString();
-        maxMPText.text = current.maxMP.ToString();
-        currentEXPText.text = current.currentEXP.ToString();
-        toNextLvText.text = (current.EXPToNextLevel[current.playerLevel - 1] - current.currentEXP).ToString();
+        charImage.sprite = currentCharacter.charImage;
+        nameText.text = currentCharacter.characterName;
+        lvText.text = "Lv: " + currentCharacter.playerLevel;
+        classText.text = currentCharacter.charClass;
+        strengthText.text = currentCharacter.strength.ToString();
+        defenceText.text = currentCharacter.defence.ToString();
+        intellectText.text = currentCharacter.intellect.ToString();
+        vitalityText.text = currentCharacter.vitality.ToString();
+        agilityText.text = currentCharacter.agility.ToString();
+        luckText.text = currentCharacter.luck.ToString();
+        maxHPText.text = currentCharacter.maxHP.ToString();
+        maxMPText.text = currentCharacter.maxMP.ToString();
+        currentEXPText.text = currentCharacter.currentEXP.ToString();
+        toNextLvText.text = (currentCharacter.EXPToNextLevel[currentCharacter.playerLevel - 1] - currentCharacter.currentEXP).ToString();
+        descriptionText.text = currentCharacter.description;
     }
 }

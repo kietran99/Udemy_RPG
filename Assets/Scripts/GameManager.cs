@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public const int NUM_OF_CHARS = 5;
+
     public CharStats[] playerStats;
 
+    [HideInInspector]
     public bool fadingBetweenAreas, dialogActive, openingGameMenu;
 
     // Start is called before the first frame update
@@ -31,4 +34,5 @@ public class GameManager : MonoBehaviour
         if (fadingBetweenAreas || dialogActive || openingGameMenu) PlayerController.instance.canMove = false;
         else PlayerController.instance.canMove = true;
     }
+
 }
