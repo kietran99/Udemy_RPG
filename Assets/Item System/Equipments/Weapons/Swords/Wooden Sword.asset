@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Wooden Sword
   description: Simple sword made out of wood.
-  image: {fileID: 21300074, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
-  sellValue: 20
+  image: {fileID: 21300000, guid: 394ffc60c66e6cc4592621c0b55718f3, type: 3}
+  sellValue: 10

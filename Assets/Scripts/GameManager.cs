@@ -8,7 +8,9 @@ public class GameManager : MonoBehaviour
 
     public const int NUM_OF_CHARS = 5;
 
-    public CharStats[] playerStats;
+    [SerializeField]
+    private CharStats[] playerStats = null;
+    public CharStats[] PlayerStats { get { return playerStats; } }
 
     [HideInInspector]
     public bool fadingBetweenAreas, dialogActive, openingGameMenu;
@@ -35,4 +37,8 @@ public class GameManager : MonoBehaviour
         else PlayerController.instance.canMove = true;
     }
 
+    public CharStats GetCharacter(int pos)
+    {
+        return playerStats[pos];
+    }
 }

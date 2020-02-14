@@ -15,7 +15,7 @@ public class StatsDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerStats = GameManager.instance.playerStats;
+        playerStats = GameManager.instance.PlayerStats;
         linkedPlayerStats = new CircularLinkedList<CharStats>();
         linkedPlayerStats.Append(playerStats);
         Display();

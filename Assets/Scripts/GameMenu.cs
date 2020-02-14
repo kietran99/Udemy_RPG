@@ -53,7 +53,7 @@ public class GameMenu : MonoBehaviour
 
     public void UpdateMainStats()
     {
-        playerStats = GameManager.instance.playerStats;
+        playerStats = GameManager.instance.PlayerStats;
 
         for(int i = 0; i < playerStats.Length; i++)
         {

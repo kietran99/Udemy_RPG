@@ -16,3 +16,5 @@ MonoBehaviour:
   description: Restores 10 MP.
   image: {fileID: 21300004, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   sellValue: 10
+  changeToHP: 0
+  changeToMP: 10
