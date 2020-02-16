@@ -17,6 +17,12 @@ public class AmountSelector : MonoBehaviour
     private IEnabler enabler;
     private GameObject invoker;
 
+    [SerializeField]
+    private float requiredHoldTime = 0f;
+
+    private float startTime = 0f;
+    private KeyCode lastKey;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +32,7 @@ public class AmountSelector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameObject.activeInHierarchy) return;
-        if (Input.GetKey(KeyCode.W)) IncreaseAmount();
-        if (Input.GetKey(KeyCode.S)) DecreaseAmount();        
+        HoldKey();    
     }
 
     private void OnEnable()
@@ -41,6 +45,48 @@ public class AmountSelector : MonoBehaviour
     {
         enabler = null;
         SetBtnsInteraction(true);
+    }
+
+    private void HoldKey()
+    {
+        if (!gameObject.activeInHierarchy) return;
+     
+        if (Input.GetKey(KeyCode.W))
+        {
+            if (lastKey == KeyCode.S) Reset();
+
+            lastKey = KeyCode.W;
+
+            startTime += Time.deltaTime;
+
+            if (startTime >= requiredHoldTime)
+            {
+                IncreaseAmount();
+                Reset();
+            }
+            
+        }
+
+        if (Input.GetKey(KeyCode.S)) 
+        {
+            if (lastKey == KeyCode.W) Reset();
+
+            lastKey = KeyCode.S;
+
+            startTime += Time.deltaTime;
+
+            if (startTime >= requiredHoldTime)
+            {
+                DecreaseAmount();
+                Reset();
+            }
+
+        }
+    }
+
+    private void Reset()
+    {
+        startTime = 0f;
     }
 
     public void SetEnabler(IEnabler enabler, GameObject invoker, int itemQuantity)
@@ -109,18 +155,19 @@ public class AmountSelector : MonoBehaviour
 
     public void Confirm()
     {
-        if (enabler != null)
-        {
-            enabler.OnAmountConfirm(IntFastParse(amountText.text));
-            SetBtnsInteraction(true);
-        }
+        ReturnValue(IntFastParse(amountText.text));
     }
 
     public void Cancel()
     {
+        ReturnValue(0);
+    }
+
+    private void ReturnValue(int val)
+    {
         if (enabler != null)
         {
-            enabler.OnAmountConfirm(0);
+            enabler.OnAmountConfirm(val);
             SetBtnsInteraction(true);
         }
     }

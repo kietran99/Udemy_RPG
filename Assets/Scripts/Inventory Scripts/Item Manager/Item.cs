@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : ScriptableObject
+public abstract class Item : ScriptableObject
 {
     [SerializeField]
     private string itemName = "", description = "";
@@ -23,6 +23,8 @@ public class Item : ScriptableObject
 
     [SerializeField]
     private int changeToMP = 0;
+
+    public abstract string GetPrimaryAction();
 
     public void Use(CharStats charStats)
     {

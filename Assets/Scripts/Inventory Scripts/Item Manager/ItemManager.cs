@@ -5,12 +5,6 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public const int MAX_INVENTORY_SIZE = 16;
-    
-    private int highestEntry = -1;
-    public int HighestEntry { get { return highestEntry; } }
-
-    private int numOfEntries;
-    public int NumOfEntries { get { return numOfEntries; } set { numOfEntries = value; } }
 
     private static ItemManager instance;
     public static ItemManager Instance { get { return instance; } set { instance = value; } }
@@ -44,7 +38,6 @@ public class ItemManager : MonoBehaviour
 
         InitItemLibrary();
         TestItemData();
-        SearchHighestEntry();
     }
 
     // Update is called once per frame
@@ -75,18 +68,7 @@ public class ItemManager : MonoBehaviour
     }
 
     private void TestItemData()
-    {
-        /*FillInvSlots(itemHolders);
-
-        itemHolders[0] = new ItemHolder(itemLibrary[2], 5, 0, PossessorSearcher.ItemPossessor.BAG);
-        itemHolders[1] = new ItemHolder(itemLibrary[0], 1, 3, PossessorSearcher.ItemPossessor.BAG);
-        itemHolders[2] = new ItemHolder(itemLibrary[1], 10, 6, PossessorSearcher.ItemPossessor.BAG);
-        itemHolders[3] = new ItemHolder(itemLibrary[4], 9, 7, PossessorSearcher.ItemPossessor.BAG);
-        itemHolders[4] = new ItemHolder(itemLibrary[3], 40, 9, PossessorSearcher.ItemPossessor.BAG);
-        itemHolders[5] = new ItemHolder(itemLibrary[5], 6, 15, PossessorSearcher.ItemPossessor.BAG);
-      
-        numOfEntries = 6;*/
-
+    {       
         // Inventory holder test
         foreach (InventoryHolder myHolder in invHolders)
         {
@@ -95,59 +77,20 @@ public class ItemManager : MonoBehaviour
 
         InventoryHolder holder = invHolders[0];
 
-        holder.ItemHolders[0] = new ItemHolder(itemLibrary[2], 5, 0, PossessorSearcher.ItemPossessor.BAG);
-        holder.ItemHolders[3] = new ItemHolder(itemLibrary[0], 1, 3, PossessorSearcher.ItemPossessor.BAG);
-        holder.ItemHolders[6] = new ItemHolder(itemLibrary[1], 10, 6, PossessorSearcher.ItemPossessor.BAG);
-        holder.ItemHolders[7] = new ItemHolder(itemLibrary[4], 9, 7, PossessorSearcher.ItemPossessor.BAG);
-        holder.ItemHolders[9] = new ItemHolder(itemLibrary[3], 40, 9, PossessorSearcher.ItemPossessor.BAG);
-        holder.ItemHolders[15] = new ItemHolder(itemLibrary[5], 6, 15, PossessorSearcher.ItemPossessor.BAG);
+        holder.ItemHolders[0] = new ItemHolder(itemLibrary[2], 5);
+        holder.ItemHolders[3] = new ItemHolder(itemLibrary[0], 1);
+        holder.ItemHolders[6] = new ItemHolder(itemLibrary[1], 10);
+        holder.ItemHolders[7] = new ItemHolder(itemLibrary[4], 9);
+        holder.ItemHolders[9] = new ItemHolder(itemLibrary[3], 40);
+        holder.ItemHolders[15] = new ItemHolder(itemLibrary[5], 6);
 
         holder = invHolders[1];
-        holder.ItemHolders[1] = new ItemHolder(itemLibrary[6], 1,PossessorSearcher.ItemPossessor.P1);
-        holder.ItemHolders[4] = new ItemHolder(itemLibrary[7], 2, PossessorSearcher.ItemPossessor.P1);
-        holder.ItemHolders[7] = new ItemHolder(itemLibrary[8], 1, PossessorSearcher.ItemPossessor.P1);
-        holder.ItemHolders[8] = new ItemHolder(itemLibrary[9], 2, PossessorSearcher.ItemPossessor.P1);
-        holder.ItemHolders[13] = new ItemHolder(itemLibrary[10], 1, PossessorSearcher.ItemPossessor.P1);
-    }
-
-    private void SearchHighestEntry()
-    {
-        for (int i = 0; i < numOfEntries; i++)
-        {
-            if (itemHolders[i].InvPosition > highestEntry) highestEntry = itemHolders[i].InvPosition;
-        }
-    }
-
-    public void Organize()
-    {
-        Sort();
-
-        for (int i = 0; i < numOfEntries; i++)
-        {
-            itemHolders[i].InvPosition = i;
-        }
-
-        //Reassign the highest entry after organization
-        highestEntry = numOfEntries - 1;
-    }
-
-    private void Sort()
-    {
-        for (int i = 1; i < numOfEntries; i++)
-        {
-            for (int j = i; j > 0; j--)
-            {
-                if (itemHolders[i].InvPosition > itemHolders[i - 1].InvPosition) break;
-
-                //Swap 2 values
-                itemHolders[i - 1].InvPosition += itemHolders[i].InvPosition;
-
-                itemHolders[i].InvPosition = itemHolders[i - 1].InvPosition - itemHolders[i].InvPosition;
-
-                itemHolders[i - 1].InvPosition -= itemHolders[i].InvPosition;
-            }
-        }
-    }
+        holder.ItemHolders[1] = new ItemHolder(itemLibrary[6], 1);
+        holder.ItemHolders[4] = new ItemHolder(itemLibrary[7], 2);
+        holder.ItemHolders[7] = new ItemHolder(itemLibrary[8], 1);
+        holder.ItemHolders[8] = new ItemHolder(itemLibrary[9], 2);
+        holder.ItemHolders[13] = new ItemHolder(itemLibrary[10], 1);
+    }   
 
     public void Organize(PossessorSearcher.ItemPossessor possessor)
     {

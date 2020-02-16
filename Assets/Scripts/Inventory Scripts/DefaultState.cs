@@ -18,12 +18,11 @@ public class DefaultState : InventoryState
 
     public void OnItemSelected(int pos)
     {
-        // Display item details
-        itemsDisplay.SelectedPos = pos;
-
+        // Display item details       
         Item selectedItem = itemsDisplay.CurrentInv[pos].TheItem;
         
         itemsDisplay.ItemNameText.text = selectedItem.ItemName;
-        itemsDisplay.ItemDescriptionText.text = selectedItem.Description;                  
+        itemsDisplay.ItemDescriptionText.text = selectedItem.Description;
+        itemsDisplay.PrimaryActionText.text = selectedItem.GetPrimaryAction();
     }
 }

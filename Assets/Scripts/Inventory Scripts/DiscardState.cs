@@ -14,7 +14,6 @@ public class DiscardState : InventoryState
     public void OnAmountConfirm(int changeAmount)
     {
         ItemManager.Instance.RemoveItemAt(itemsDisplay.CurrentPossessor, itemsDisplay.SelectedPos, changeAmount);
-        itemsDisplay.DisplayAllItems();
     }
 
     public void OnItemSelected(int pos)

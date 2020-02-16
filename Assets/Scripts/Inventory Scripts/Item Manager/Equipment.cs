@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Equipment : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    protected const string primaryAction = "EQUIP";
 
-    // Update is called once per frame
-    void Update()
+    public override string GetPrimaryAction()
     {
-        
+        return primaryAction;
     }
 }

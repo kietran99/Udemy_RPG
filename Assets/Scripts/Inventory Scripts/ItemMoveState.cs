@@ -8,7 +8,7 @@ public class ItemMoveState : InventoryState
 
     private int fromPos, toPos;
     private PossessorSearcher.ItemPossessor fromPossessor, toPossessor;
-    private ItemHolder itemToMove;
+    private int itemQuantity;
 
     public ItemMoveState(ItemsDisplay itemsDisplay)
     {
@@ -18,22 +18,21 @@ public class ItemMoveState : InventoryState
     public void OnAmountConfirm(int changeAmount)
     {       
         Item temp = ItemManager.Instance.GetItemAt(fromPos, fromPossessor);
-        itemToMove = new ItemHolder(temp, changeAmount, fromPossessor);
         ItemManager.Instance.RemoveItemAt(fromPossessor, fromPos, changeAmount);
-        ItemManager.Instance.AddItemAt(toPossessor, itemToMove, toPos, changeAmount);
-        itemsDisplay.DisplayAllItems();
+        ItemManager.Instance.AddItemAt(toPossessor, new ItemHolder(temp, changeAmount), toPos, changeAmount);
     }  
 
     public void OnItemSelected(int toPos)
     {
         this.toPos = toPos;
-        this.toPossessor = itemsDisplay.CurrentPossessor;
-        itemsDisplay.EnableAmountSelector();       
+        toPossessor = itemsDisplay.CurrentPossessor;
+        itemsDisplay.EnableAmountSelector(itemQuantity);       
     }
 
-    public void SetItemToBeMoved(PossessorSearcher.ItemPossessor fromPossessor, int fromPos)
+    public void SetItemToBeMoved(PossessorSearcher.ItemPossessor fromPossessor, int fromPos, int itemQuantity)
     {
         this.fromPossessor = fromPossessor;
         this.fromPos = fromPos;
+        this.itemQuantity = itemQuantity;
     }
 }

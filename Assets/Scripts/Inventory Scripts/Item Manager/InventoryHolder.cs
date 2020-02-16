@@ -34,7 +34,7 @@ public class InventoryHolder
     public void Add(Item itemToAdd, int amount)
     {
         int pos = CheckExists(itemToAdd);
-        ItemHolder holder = new ItemHolder(itemToAdd, amount, pos, possessor);
+        ItemHolder holder = new ItemHolder(itemToAdd, amount);
 
         // If item does not already exists in inventory then append it 
         if (pos == -1)
@@ -61,7 +61,7 @@ public class InventoryHolder
     {
         for (int i = 0; i < itemHolders.Length; i++)
         {
-            if (itemHolders[i].Possessor == PossessorSearcher.ItemPossessor.NONE) return i;
+            if (itemHolders[i].Amount <= 0) return i;
         }
 
         return -1;
@@ -82,9 +82,7 @@ public class InventoryHolder
     }
 
     public void AddAt(ItemHolder itemToAdd, int posToAdd, int amount)
-    {
-        itemToAdd.Possessor = possessor;
-
+    {       
         // If adding to an empty slot
         if (itemHolders[posToAdd].IsEmpty())
         {
@@ -99,7 +97,7 @@ public class InventoryHolder
         {
             int exceededAmount = itemHolders[posToAdd].Amount - ItemHolder.ITEM_CAPACITY;
             itemHolders[posToAdd].Amount = ItemHolder.ITEM_CAPACITY;
-            itemHolders[FindFirstEmptySlot()] = new ItemHolder(itemToAdd.TheItem, exceededAmount, possessor);
+            itemHolders[FindFirstEmptySlot()] = new ItemHolder(itemToAdd.TheItem, exceededAmount);
         }
     }
 }

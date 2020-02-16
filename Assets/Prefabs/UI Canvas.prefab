@@ -760,12 +760,12 @@ GameObject:
   - component: {fileID: 208199472}
   - component: {fileID: 208199473}
   m_Layer: 5
-  m_Name: Item Interaction
+  m_Name: Item Interactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &208199470
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2509,6 +2509,7 @@ MonoBehaviour:
   itemNameText: {fileID: 653002548}
   itemDescriptionText: {fileID: 1789596347}
   possessorText: {fileID: 3420764475109287673}
+  primaryActionText: {fileID: 129163118}
   inventoryOrganizer: {fileID: 964057048}
   templateButton: {fileID: 2730796564339181656, guid: 9c039f5c6e695e64a9fc59c63a354f5d,
     type: 3}
@@ -4967,7 +4968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1588846201
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13037,6 +13038,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Confirm
+      objectReference: {fileID: 0}
+    - target: {fileID: 2222588199426161770, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: requiredHoldTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347343561628113569, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: requiredHoldTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2347343561942084624, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: requiredHoldTime
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4783644776448709578, guid: 1631478bcdc9e264780998eab6866eca,
         type: 3}

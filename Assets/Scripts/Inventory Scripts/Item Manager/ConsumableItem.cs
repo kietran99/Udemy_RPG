@@ -5,15 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Consumable Item", menuName = "RPG Generator/Items/Consumable Item", order = 51)]
 public class ConsumableItem : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    protected const string primaryAction = "USE";
 
-    // Update is called once per frame
-    void Update()
+    public override string GetPrimaryAction()
     {
-        
+        return primaryAction;
     }
 }

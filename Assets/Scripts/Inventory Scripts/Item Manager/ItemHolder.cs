@@ -12,37 +12,22 @@ public class ItemHolder
 
     [SerializeField]
     private int amount = 0;
-
-    private int invPosition;
-
-    private PossessorSearcher.ItemPossessor possessor;
-
+   
     public Item TheItem { get { return theItem; } set { theItem = value; } }
     public int Amount { get { return amount; } set { amount = value; } }
-    public int InvPosition { get { return invPosition; } set { invPosition = value; } }
-    public PossessorSearcher.ItemPossessor Possessor { get { return possessor; } set { possessor = value; } }
-
+    
     private static ItemHolder nullHolder;
-    public static ItemHolder NullHolder { get { return nullHolder; } }
+    public static ItemHolder NullHolder { get { return nullHolder; } }    
 
-    public ItemHolder(Item theItem, int amount, int invPosition, PossessorSearcher.ItemPossessor possessor)
+    public ItemHolder(Item theItem, int amount)
     {
         this.theItem = theItem;
         this.amount = amount;
-        this.invPosition = invPosition;
-        this.possessor = possessor;
-    }
-
-    public ItemHolder(Item theItem, int amount, PossessorSearcher.ItemPossessor possessor)
-    {
-        this.theItem = theItem;
-        this.amount = amount;
-        this.possessor = possessor;
     }
 
     public static void InitNullHolder()
     {
-        nullHolder = new ItemHolder(ItemManager.Instance.NullItem, -1, -1, PossessorSearcher.ItemPossessor.NONE);
+        nullHolder = new ItemHolder(ItemManager.Instance.NullItem, -1);
     }
 
     public bool IdenticalItem(ItemHolder other)

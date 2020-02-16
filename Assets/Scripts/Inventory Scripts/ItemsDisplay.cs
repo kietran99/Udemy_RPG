@@ -11,6 +11,10 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
     public Text ItemDescriptionText { get { return itemDescriptionText; } }
 
     [SerializeField]
+    private Text primaryActionText;
+    public Text PrimaryActionText { get { return primaryActionText; } }
+
+    [SerializeField]
     private GameObject inventoryOrganizer = null, templateButton = null;
 
     [SerializeField]
@@ -37,7 +41,7 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
     // Start is called before the first frame update
     void Start()
     {
-        InitPossessors();
+        InitPossessors(); 
         currentInv = ItemManager.Instance.GetInventory(currentPossessor);
         InitInvStates();
         InitButtonsGUI();
@@ -105,7 +109,6 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
 
     private void Reset()
     {
-        currentState = defaultState;
         itemNameText.text = "";
         itemDescriptionText.text = "";
         selectedPos = -1;
@@ -118,7 +121,8 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
     }
 
     public void OnItemSelected(int pos)
-    {       
+    {
+        selectedPos = pos;
         currentState.OnItemSelected(pos);
     }
 
@@ -168,31 +172,12 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
         DisplayAllItems();
     }
 
-    /*public void Discard()
-    {
-        // Remove selected item from the main inventory
-        ItemManager.Instance.RemoveItemAt(currentPossessor, selectedPos, changeAmount);
-
-        // Reduce button amount text
-        ItemButton button = itemButtons[selectedPos];
-        int amount;
-        System.Int32.TryParse(button.AmountText.text, out amount);
-        amount -= changeAmount;
-        if (amount != 0) button.DisplayItem(button.ItemImage.sprite, amount);
-        else
-        {
-            button.DisplayItem(null, -1);
-            itemNameText.text = "";
-            itemDescriptionText.text = "";
-        }
-    }*/
-
     public void Discard()
     {
         if (selectedPos < 0) return;
 
         currentState = discardState;
-        EnableAmountSelector();
+        EnableAmountSelector(currentInv[selectedPos].Amount);
     }
 
     public void EnableAmountSelector()
@@ -201,9 +186,17 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
         amountSelector.GetComponent<AmountSelector>().SetEnabler(this, gameObject, currentInv[selectedPos].Amount);
     }
 
+    public void EnableAmountSelector(int quantity)
+    {
+        SetItemInteractor(false, true, false);
+        amountSelector.GetComponent<AmountSelector>().SetEnabler(this, gameObject, quantity);
+    }
+
     public void OnAmountConfirm(int changeAmount)
     {       
         currentState.OnAmountConfirm(changeAmount);
+        currentState = defaultState;
+        DisplayAllItems();
     }
 
     public void ReduceItemAmount(int changeAmount)
@@ -223,7 +216,7 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
     {
         if (selectedPos <= 0) return;
 
-        (itemMoveState as ItemMoveState).SetItemToBeMoved(currentPossessor, selectedPos);
+        (itemMoveState as ItemMoveState).SetItemToBeMoved(currentPossessor, selectedPos, currentInv[selectedPos].Amount);
         currentState = itemMoveState;
         SetItemInteractor(false, false, true);
     }
