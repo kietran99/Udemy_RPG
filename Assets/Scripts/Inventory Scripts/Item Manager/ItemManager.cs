@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    #region
+    public static ItemManager Instance { get { return instance; } set { instance = value; } }
+    #endregion
+
     public const int MAX_INVENTORY_SIZE = 16;
 
-    private static ItemManager instance;
-    public static ItemManager Instance { get { return instance; } set { instance = value; } }
+    private static ItemManager instance;   
 
     [SerializeField]
     private Item nullItem = null;
-    public Item NullItem { get { return nullItem; } }
-
+    
     [SerializeField]
     private Item[] itemLibrary = null;
 
-    //private ItemHolder ItemHolder.NullHolder = null;
-
-    private ItemHolder[] itemHolders;
-    public ItemHolder[] ItemHolders { get { return itemHolders; } }
-
     private InventoryHolder[] invHolders;
+
+    private ItemHolder nullHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +35,7 @@ public class ItemManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        InitItemLibrary();
+        InitInventoryHolders();
         TestItemData();
     }
 
@@ -46,50 +45,48 @@ public class ItemManager : MonoBehaviour
         
     }
 
-    private void InitItemLibrary()
+    private void InitInventoryHolders()
     {
-        ItemHolder.InitNullHolder();
-        itemHolders = new ItemHolder[MAX_INVENTORY_SIZE * (GameManager.NUM_OF_CHARS + 1)];
+        nullHolder = new ItemHolderFactory().CreateNullHolder(nullItem);
 
         int pos = 0;
-        invHolders = new InventoryHolder[GameManager.NUM_OF_CHARS + 1];
+        invHolders = new InventoryHolder[GameManager.MAX_PARTY_MEMBERS + 1]; // +1 for the bag inventory
 
         foreach (PossessorSearcher.ItemPossessor possessor in (PossessorSearcher.ItemPossessor[]) System.Enum.GetValues(typeof(PossessorSearcher.ItemPossessor)))
         {
             if (possessor == PossessorSearcher.ItemPossessor.NONE) continue;
-            invHolders[pos] = new InventoryHolder(possessor, MAX_INVENTORY_SIZE);
+            invHolders[pos] = new InventoryHolder(possessor, MAX_INVENTORY_SIZE, nullHolder);
             pos++;
         }
     }
 
-    private void FillInvSlots(ItemHolder[] holders)
+    private void FillInventorySlots(ItemHolder[] holders)
     {
-        for (int i = 0; i < holders.Length; i++) holders[i] = ItemHolder.NullHolder;
+        for (int i = 0; i < holders.Length; i++) holders[i] = nullHolder;
     }
 
     private void TestItemData()
     {       
-        // Inventory holder test
         foreach (InventoryHolder myHolder in invHolders)
         {
-            FillInvSlots(myHolder.ItemHolders);
+            FillInventorySlots(myHolder.ItemHolders);
         }
 
-        InventoryHolder holder = invHolders[0];
+        InventoryHolder invHolder = invHolders[0];
 
-        holder.ItemHolders[0] = new ItemHolder(itemLibrary[2], 5);
-        holder.ItemHolders[3] = new ItemHolder(itemLibrary[0], 1);
-        holder.ItemHolders[6] = new ItemHolder(itemLibrary[1], 10);
-        holder.ItemHolders[7] = new ItemHolder(itemLibrary[4], 9);
-        holder.ItemHolders[9] = new ItemHolder(itemLibrary[3], 40);
-        holder.ItemHolders[15] = new ItemHolder(itemLibrary[5], 6);
+        invHolder.ItemHolders[0] = new ItemHolder(itemLibrary[2], 5);
+        invHolder.ItemHolders[3] = new ItemHolder(itemLibrary[0], 1);
+        invHolder.ItemHolders[6] = new ItemHolder(itemLibrary[1], 10);
+        invHolder.ItemHolders[7] = new ItemHolder(itemLibrary[4], 99);
+        invHolder.ItemHolders[9] = new ItemHolder(itemLibrary[3], 40);
+        invHolder.ItemHolders[15] = new ItemHolder(itemLibrary[5], 6);
 
-        holder = invHolders[1];
-        holder.ItemHolders[1] = new ItemHolder(itemLibrary[6], 1);
-        holder.ItemHolders[4] = new ItemHolder(itemLibrary[7], 2);
-        holder.ItemHolders[7] = new ItemHolder(itemLibrary[8], 1);
-        holder.ItemHolders[8] = new ItemHolder(itemLibrary[9], 2);
-        holder.ItemHolders[13] = new ItemHolder(itemLibrary[10], 1);
+        invHolder = invHolders[1];
+        invHolder.ItemHolders[1] = new ItemHolder(itemLibrary[6], 1);
+        invHolder.ItemHolders[4] = new ItemHolder(itemLibrary[7], 2);
+        invHolder.ItemHolders[7] = new ItemHolder(itemLibrary[8], 1);
+        invHolder.ItemHolders[8] = new ItemHolder(itemLibrary[9], 2);
+        invHolder.ItemHolders[13] = new ItemHolder(itemLibrary[10], 1);
     }   
 
     public void Organize(PossessorSearcher.ItemPossessor possessor)
@@ -105,11 +102,26 @@ public class ItemManager : MonoBehaviour
                     if (holders[j].IsEmpty()) continue;
 
                     holders[i] = holders[j];
-                    holders[j] = ItemHolder.NullHolder;
+                    holders[j] = nullHolder;
                     break;
                 }
             }
         }
+    }
+
+    public InventoryHolder GetInvHolder(PossessorSearcher.ItemPossessor possessor)
+    {
+        foreach (InventoryHolder invHolder in invHolders)
+        {
+            if (invHolder.Possessor == possessor) return invHolder;
+        }
+
+        return null;
+    }
+
+    public ItemHolder[] GetInventory(PossessorSearcher.ItemPossessor possessor)
+    {
+        return GetInvHolder(possessor).ItemHolders;
     }
 
     public Item GetItemAt(int pos, PossessorSearcher.ItemPossessor possessor)
@@ -121,45 +133,32 @@ public class ItemManager : MonoBehaviour
         return inv[pos].TheItem;
     }
 
-    public ItemHolder[] GetInventory(PossessorSearcher.ItemPossessor possessor)
-    {       
-        foreach (InventoryHolder holder in invHolders)
-        {
-            if (holder.Possessor == possessor) return holder.ItemHolders;
-        }
+    public int GetNumOfItemsAt(int pos, PossessorSearcher.ItemPossessor possessor)
+    {
+        ItemHolder[] inv = GetInventory(possessor);
 
-        return null;
+        if (inv == null) return 0;
+
+        return inv[pos].Amount;
+    }   
+
+    public void AddItem(PossessorSearcher.ItemPossessor possessor, ItemHolder itemToAdd)
+    {
+        GetInvHolder(possessor).Add(itemToAdd);
     }
 
-    public void AddItem(PossessorSearcher.ItemPossessor possessor, Item itemToAdd, int amount)
+    public void AddItemAt(PossessorSearcher.ItemPossessor possessor, ItemHolder itemToAdd, int posToAdd)
     {
-        foreach (InventoryHolder holder in invHolders)
-        {
-            if (holder.Possessor == possessor) holder.Add(itemToAdd, amount);
-        }
-    }
-
-    public void AddItemAt(PossessorSearcher.ItemPossessor possessor, ItemHolder itemToAdd, int posToAdd, int amount)
-    {
-        foreach (InventoryHolder holder in invHolders)
-        {
-            if (holder.Possessor == possessor) holder.AddAt(itemToAdd, posToAdd, amount);
-        }
-    }
-
-    public void RemoveItem(PossessorSearcher.ItemPossessor possessor, Item itemToRemove, int amount)
-    {
-        foreach (InventoryHolder holder in invHolders)
-        {
-            if (holder.Possessor == possessor) holder.Remove(itemToRemove, amount);
-        }
+        GetInvHolder(possessor).AddAt(itemToAdd, posToAdd);
     }
 
     public void RemoveItemAt(PossessorSearcher.ItemPossessor possessor, int posToRemove, int amount)
     {
-        foreach (InventoryHolder holder in invHolders)
-        {
-            if (holder.Possessor == possessor) holder.RemoveAt(posToRemove, amount);
-        }
+        GetInvHolder(possessor).RemoveAt(posToRemove, amount);         
     }
+
+    public void UseItem(PossessorSearcher.ItemPossessor possessor, int pos, CharStats charToUse)
+    {
+        GetInvHolder(possessor).UseItem(pos, charToUse);       
+    }   
 }

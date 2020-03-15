@@ -81,4 +81,8 @@ public class CircularLinkedList<T>
         if (current.prev != null) current = current.prev;
     }
 
+    public void RevertToDefault()
+    {
+        if (head != null) current = head;
+    }
 }

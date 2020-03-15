@@ -3,55 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
-{
-    [SerializeField]
-    private Text itemNameText = null, itemDescriptionText = null, possessorText = null;
+public class ItemsDisplay : AmountConfirmableDisplay
+{  
+    #region
     public Text ItemNameText { get { return itemNameText; } }
     public Text ItemDescriptionText { get { return itemDescriptionText; } }
+    public Text PrimaryActionText { get { return primaryActionText; } }
+    public PossessorSearcher.ItemPossessor CurrentPossessor { get { return currentPossessor; } }
+    public ItemHolder[] CurrentInv { get { return currentInv; } }
+    public int SelectedPos { get { return selectedPos; } set { selectedPos = value; } }
+    #endregion
 
     [SerializeField]
-    private Text primaryActionText;
-    public Text PrimaryActionText { get { return primaryActionText; } }
+    private Text itemNameText = null, itemDescriptionText = null, possessorText = null;
 
+    [SerializeField]
+    private Text primaryActionText = null;
+    
     [SerializeField]
     private GameObject inventoryOrganizer = null, templateButton = null;
 
     [SerializeField]
-    private GameObject itemInteractor = null, amountSelector = null, itemMovement = null;
+    private GameObject itemInteractor = null, amountSelector = null, itemMovement = null, userChooser = null;
+
+    [SerializeField]
+    private Button primaryActionButton = null;
+
+    private PrimaryActionInvoker primInvoker;
 
     private PossessorSearcher.ItemPossessor currentPossessor;
-    public PossessorSearcher.ItemPossessor CurrentPossessor { get { return currentPossessor; } }
 
     private ItemHolder[] currentInv;
-    public ItemHolder[] CurrentInv { get { return currentInv; } }
 
     private ItemButton[] itemButtons;
-    public ItemButton[] ItemButtons { get { return itemButtons; } }
 
     private int selectedPos;
-    public int SelectedPos { get { return selectedPos; } set { selectedPos = value; } }
 
     private CircularLinkedList<PossessorSearcher.ItemPossessor> invList;
 
-    // Inventory states
-    private InventoryState defaultState, itemMoveState, discardState;
+    private InventoryState defaultState, itemMoveState, discardState, itemUseState;
     private InventoryState currentState;
 
     // Start is called before the first frame update
     void Start()
     {
-        InitPossessors(); 
-        currentInv = ItemManager.Instance.GetInventory(currentPossessor);
+        InitEssentials(); 
         InitInvStates();
         InitButtonsGUI();
-        DisplayAllItems();
+        DisplayAll(); 
     }
 
     void OnEnable()
     {
+        DisableInteractors();
+        EnableButtons();
         currentPossessor = PossessorSearcher.ItemPossessor.BAG;
-        if (itemButtons != null) DisplayAllItems();
+        currentState = defaultState;
+        if (invList != null) invList.RevertToDefault();
+        if (itemButtons != null) DisplayAll();
     }
 
     // Update is called once per frame
@@ -60,21 +69,36 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
         
     }
 
-    private void InitPossessors()
+    private void DisableInteractors()
+    {
+        amountSelector.SetActive(false);
+        userChooser.SetActive(false);
+        itemMovement.SetActive(false);
+    }
+
+    private void EnableButtons()
+    {
+        foreach (Button button in gameObject.GetComponentsInChildren<Button>()) button.interactable = true;
+        foreach (Button button in itemInteractor.gameObject.GetComponentsInChildren<Button>()) button.interactable = true;
+    }
+
+    private void InitEssentials()
     {
         selectedPos = -1;
         currentPossessor = PossessorSearcher.ItemPossessor.BAG;
         possessorText.text = PossessorSearcher.bagPossessor;
         invList = new CircularLinkedList<PossessorSearcher.ItemPossessor>();
         PossessorSearcher.FillPossessorList(invList);
+        primInvoker = new PrimaryActionInvoker(this);
     }
 
     private void InitInvStates()
     {
-        defaultState = new DefaultState(this);
-        itemMoveState = new ItemMoveState(this);
-        discardState = new DiscardState(this);
-        currentState = defaultState;
+        defaultState    = new DefaultState(this);
+        itemMoveState   = new ItemMoveState(this);
+        discardState    = new DiscardState(this);
+        itemUseState    = new ItemUseState();
+        currentState    = defaultState;
     }
 
     private void InitButtonsGUI()
@@ -93,37 +117,44 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
         }
     }
 
-    public void DisplayAllItems()
+    public override void DisplayAll()
     {
-        SetItemInteractor(true, false, false);
-        Reset();
+        if (currentState == defaultState) Reset();
 
         currentInv = ItemManager.Instance.GetInventory(currentPossessor);
-        possessorText.text = PossessorSearcher.GetPossessor(currentPossessor);
+        possessorText.text = PossessorSearcher.GetPossessorName(currentPossessor);
 
         for (int i = 0; i < ItemManager.MAX_INVENTORY_SIZE; i++)
         {
-            itemButtons[i].DisplayItem(currentInv[i].TheItem.Image, currentInv[i].Amount);
+            itemButtons[i].DisplayItem(currentInv[i].TheItem.Image, currentInv[i].Amount, currentInv[i].IsEquipped);
         }
     }
 
     private void Reset()
-    {
-        itemNameText.text = "";
-        itemDescriptionText.text = "";
+    {        
+        itemInteractor.SetActive(true);
         selectedPos = -1;
+        itemNameText.text = "";
+        itemDescriptionText.text = "";       
+        primaryActionText.text = "USE";
+    }
+
+    public void ToDefaultState()
+    {
+        currentState = defaultState;
     }
 
     public void Organize()
     {
         ItemManager.Instance.Organize(currentPossessor);
-        DisplayAllItems();
+        DisplayAll();
     }
 
     public void OnItemSelected(int pos)
     {
         selectedPos = pos;
         currentState.OnItemSelected(pos);
+        if (currentState == defaultState) primaryActionButton.interactable = SetPrimaryButtonInteractable();
     }
 
     public void DisplayItemDetails(int pos)
@@ -148,13 +179,13 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
         do
         {
             invList.NextPos();
-            possText = PossessorSearcher.GetPossessor(invList.current.value);            
+            possText = PossessorSearcher.GetPossessorName(invList.current.value);            
         }
         while (possText.Equals(""));
 
         currentPossessor = invList.current.value;
         possessorText.text = possText;
-        DisplayAllItems();
+        DisplayAll();
     }
 
     public void PrevPossessor()
@@ -163,68 +194,89 @@ public class ItemsDisplay : MonoBehaviour, AmountSelector.IEnabler
         do
         {
             invList.PrevPos();
-            possText = PossessorSearcher.GetPossessor(invList.current.value);            
+            possText = PossessorSearcher.GetPossessorName(invList.current.value);            
         }
         while (possText.Equals(""));
 
         currentPossessor = invList.current.value;
         possessorText.text = possText;
-        DisplayAllItems();
+        DisplayAll();
     }
 
     public void Discard()
     {
-        if (selectedPos < 0) return;
+        if (IsEmptySlot()) return;
 
         currentState = discardState;
         EnableAmountSelector(currentInv[selectedPos].Amount);
     }
 
-    public void EnableAmountSelector()
-    {
-        SetItemInteractor(false, true, false);
-        amountSelector.GetComponent<AmountSelector>().SetEnabler(this, gameObject, currentInv[selectedPos].Amount);
-    }
-
     public void EnableAmountSelector(int quantity)
     {
-        SetItemInteractor(false, true, false);
-        amountSelector.GetComponent<AmountSelector>().SetEnabler(this, gameObject, quantity);
+        amountSelector.GetComponent<AmountSelector>().Activate(this, itemInteractor, quantity);
     }
 
-    public void OnAmountConfirm(int changeAmount)
+    public override void OnAmountConfirm(int changeAmount)
     {       
         currentState.OnAmountConfirm(changeAmount);
         currentState = defaultState;
-        DisplayAllItems();
-    }
-
-    public void ReduceItemAmount(int changeAmount)
-    {
-        ItemButton button = itemButtons[selectedPos];
-        int amount = int.Parse(button.AmountText.text) - changeAmount;
-        if (amount != 0) button.DisplayItem(button.ItemImage.sprite, amount);
-        else
-        {
-            button.DisplayItem(null, -1);
-            itemNameText.text = "";
-            itemDescriptionText.text = "";
-        }
+        DisplayAll();
     }
 
     public void Move()
     {
-        if (selectedPos <= 0) return;
+        if (IsEmptySlot()) return;
 
-        (itemMoveState as ItemMoveState).SetItemToBeMoved(currentPossessor, selectedPos, currentInv[selectedPos].Amount);
         currentState = itemMoveState;
-        SetItemInteractor(false, false, true);
+        (itemMoveState as ItemMoveState).Activate(itemInteractor, itemMovement, currentPossessor, selectedPos, currentInv[selectedPos].Amount);        
     }
 
-    public void SetItemInteractor(bool interactor, bool amtSelector, bool movement)
+    public void InvokePrimaryAction()
     {
-        itemInteractor.SetActive(interactor);
-        amountSelector.SetActive(amtSelector);
-        itemMovement.SetActive(movement);
+        if (IsEmptySlot()) return;
+
+        if (primaryActionText.text.Equals("USE"))
+        {
+            currentState = itemUseState;
+            primInvoker.UseItem(itemInteractor, userChooser.GetComponent<UserChooser>());
+        }
+        else
+        {
+            ToggleEquipAbility();
+        }
+    }
+    
+    private void ToggleEquipAbility()
+    {
+        if (currentPossessor == PossessorSearcher.ItemPossessor.BAG) return;
+
+        primInvoker.ToggleEquipAbility(); 
+    }
+
+    private bool IsEmptySlot()
+    {
+        if (selectedPos < 0) return true;
+
+        if (currentInv[selectedPos].IsEmpty()) return true;
+
+        return false;
+    }
+
+    private bool SetPrimaryButtonInteractable()
+    {
+        if (currentPossessor == PossessorSearcher.ItemPossessor.BAG)
+        {
+            if (!primaryActionText.text.Equals(Item.USE_ACTION))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        if (primaryActionText.text.Equals(Item.USE_ACTION)) return true;
+
+        if (((ItemManager.Instance.GetItemAt(selectedPos, currentPossessor)) as Equipment).CanEquip(PossessorSearcher.GetPossessorName(currentPossessor))) return true;
+
+        return false;
     }
 }

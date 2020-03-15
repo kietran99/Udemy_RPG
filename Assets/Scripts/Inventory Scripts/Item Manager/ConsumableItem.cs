@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Consumable Item", menuName = "RPG Generator/Items/Consumable Item", order = 51)]
+[CreateAssetMenu(fileName = "Consumable Item", menuName = "RPG Generator/Items/Consumable Item")]
 public class ConsumableItem : Item
 {
-    protected const string primaryAction = "USE";
-
     public override string GetPrimaryAction()
     {
-        return primaryAction;
+        return USE_ACTION;
+    }
+
+    public override void SetPrimaryAction(bool isEquipped)
+    {
+        
+    }
+
+    public override void InvokePrimaryAction(CharStats charStats)
+    {
+        Use(charStats);
     }
 }

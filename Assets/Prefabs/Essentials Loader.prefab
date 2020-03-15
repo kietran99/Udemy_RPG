@@ -48,3 +48,5 @@ MonoBehaviour:
     type: 3}
   gameManager: {fileID: 4186544816920298656, guid: ead7f7eb89b294649b374a8f1ff0362d,
     type: 3}
+  itemManager: {fileID: 7531060466099561544, guid: a090f13dbf87c124191da6ff2e63a824,
+    type: 3}

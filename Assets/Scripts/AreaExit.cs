@@ -29,7 +29,7 @@ public class AreaExit : MonoBehaviour, UIFade.IFade
         {
             UIFade.instance.FadeToBlack(this);
 
-            GameManager.instance.fadingBetweenAreas = true;
+            GameManager.Instance.fadingBetweenAreas = true;
 
             PlayerController.instance.areaTransitionName = areaTransitionName;
         }

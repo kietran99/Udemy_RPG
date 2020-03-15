@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f346b9af9909434aade0b969352d439, type: 3}
+  m_Name: Head Scarf
+  m_EditorClassIdentifier: 
+  itemName: Head Scarf
+  description: A pretty stylish headwear.
+  image: {fileID: 21300000, guid: 96fb4089ca4bfed41a616a84537297cc, type: 3}
+  sellValue: 5
+  changeToHP: 0
+  changeToMP: 0
+  changeToStrength: 0
+  changeToDefence: 0
+  changeToIntellect: 0
+  changeToVitality: 0
+  changeToAgility: 0
+  changeToLuck: 0
+  equipableCharacters:
+  - {fileID: 11400000, guid: 41fba36c23dc0fd458aca4f90de8ecf8, type: 2}

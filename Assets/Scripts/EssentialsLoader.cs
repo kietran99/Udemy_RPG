@@ -24,9 +24,9 @@ public class EssentialsLoader : MonoBehaviour
             UIFade.instance = Instantiate(fadeScreen).GetComponent<UIFade>();
         }
 
-        if (GameManager.instance == null)
+        if (GameManager.Instance == null)
         {
-            GameManager.instance = Instantiate(gameManager).GetComponent<GameManager>();
+            GameManager.Instance = Instantiate(gameManager).GetComponent<GameManager>();
         }
 
         if (ItemManager.Instance == null)

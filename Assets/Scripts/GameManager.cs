@@ -4,25 +4,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    #region
+    public static GameManager Instance { get { return instance; } set { instance = value; } }
+    public CharStats[] PlayerStats { get { return playerStats; } }  
+    #endregion
 
-    public const int NUM_OF_CHARS = 5;
+    private static GameManager instance;
+
+    public const int MAX_PARTY_MEMBERS = 5;
 
     [SerializeField]
     private CharStats[] playerStats = null;
-    public CharStats[] PlayerStats { get { return playerStats; } }
-
+    
     [HideInInspector]
     public bool fadingBetweenAreas, dialogActive, openingGameMenu;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
@@ -37,7 +41,31 @@ public class GameManager : MonoBehaviour
         else PlayerController.instance.canMove = true;
     }
 
-    public CharStats GetCharacter(int pos)
+    public int GetNumberOfActives()
+    {
+        int num = 0;
+
+        foreach (CharStats stats in playerStats)
+        {
+            if (stats.gameObject.activeInHierarchy) num++;
+        }
+
+        return num;
+    }
+
+    public CharStats[] GetActiveMembers()
+    {
+        List<CharStats> temp = new List<CharStats>();
+
+        foreach (CharStats stats in playerStats)
+        {
+            if (stats.gameObject.activeInHierarchy) temp.Add(stats);
+        }
+
+        return temp.ToArray();
+    }
+
+    public CharStats GetCharacterAt(int pos)
     {
         return playerStats[pos];
     }

@@ -41,19 +41,19 @@ public class GameMenu : MonoBehaviour
     {
         theMenu.SetActive(true);
         UpdateMainStats();
-        GameManager.instance.openingGameMenu = true;
+        GameManager.Instance.openingGameMenu = true;
     }
 
     public void CloseMenu()
     {
         foreach (GameObject window in windows) window.SetActive(false);
         theMenu.SetActive(false);
-        GameManager.instance.openingGameMenu = false;
+        GameManager.Instance.openingGameMenu = false;
     }
 
     public void UpdateMainStats()
     {
-        playerStats = GameManager.instance.PlayerStats;
+        playerStats = GameManager.Instance.PlayerStats;
 
         for(int i = 0; i < playerStats.Length; i++)
         {
@@ -61,15 +61,15 @@ public class GameMenu : MonoBehaviour
             {
                 charStatsHolders[i].SetActive(true);
 
-                nameTexts[i].text = playerStats[i].characterName;
-                lvTexts[i].text = "Lv: " + playerStats[i].playerLevel.ToString();
-                hpTexts[i].text = "" + playerStats[i].currentHP + "/" + playerStats[i].maxHP;
-                mpTexts[i].text = "" + playerStats[i].currentMP + "/" + playerStats[i].maxMP;
-                hpSliders[i].maxValue = playerStats[i].maxHP;
-                hpSliders[i].value = playerStats[i].currentHP;
-                mpSliders[i].maxValue = playerStats[i].maxMP;
-                mpSliders[i].value = playerStats[i].currentMP;
-                charImages[i].sprite = playerStats[i].charImage;
+                nameTexts[i].text = playerStats[i].CharacterName;
+                lvTexts[i].text = "Lv: " + playerStats[i].PlayerLevel.ToString();
+                hpTexts[i].text = "" + playerStats[i].CurrentHP + "/" + playerStats[i].MaxHP;
+                mpTexts[i].text = "" + playerStats[i].CurrentMP + "/" + playerStats[i].MaxMP;
+                hpSliders[i].maxValue = playerStats[i].MaxHP;
+                hpSliders[i].value = playerStats[i].CurrentHP;
+                mpSliders[i].maxValue = playerStats[i].MaxMP;
+                mpSliders[i].value = playerStats[i].CurrentMP;
+                charImages[i].sprite = playerStats[i].CharImage;
             }
             else
             {
