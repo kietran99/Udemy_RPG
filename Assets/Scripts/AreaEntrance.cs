@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class AreaEntrance : MonoBehaviour, UIFade.IFade
 {
-    public string areaTransitionName;
+    public string AreaTransitionName { set { areaTransitionName = value; } }
+
+    [SerializeField]
+    private string fadeScreenTag;
+
+    [SerializeField]
+    private string areaTransitionName;
+
+    private UIFade fadeScreen;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (areaTransitionName.Equals(PlayerController.instance.areaTransitionName))
+        if (areaTransitionName.Equals(PlayerController.Instance.AreaTransitionName))
         {
-            PlayerController.instance.transform.position = transform.position;
+            PlayerController.Instance.transform.position = GetComponent<BoxCollider2D>().bounds.center;
         }
-
-        UIFade.instance.FadeFromBlack(this);
+       
+        fadeScreen = FindObjectOfType<UIFade>();
+        if (fadeScreen != null) fadeScreen.FadeFromBlack(this);
 
         GameManager.Instance.fadingBetweenAreas = false;
     }
@@ -27,6 +36,6 @@ public class AreaEntrance : MonoBehaviour, UIFade.IFade
 
     public void OnCompleted()
     {
-
+        Destroy(fadeScreen.gameObject);
     }
 }

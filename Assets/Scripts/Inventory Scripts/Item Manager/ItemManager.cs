@@ -22,6 +22,12 @@ public class ItemManager : MonoBehaviour
 
     private ItemHolder nullHolder;
 
+    private void Awake()
+    {
+        InitInventoryHolders();
+        TestItemData();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,10 +39,7 @@ public class ItemManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
-
-        InitInventoryHolders();
-        TestItemData();
+        DontDestroyOnLoad(gameObject);        
     }
 
     // Update is called once per frame

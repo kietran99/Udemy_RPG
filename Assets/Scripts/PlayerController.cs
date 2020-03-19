@@ -1,18 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public static PlayerController instance;
+    #region  
+    public static PlayerController Instance { get { return instance; } set { instance = value; } }
+    public string AreaTransitionName { get { return areaTransitionName; } set { areaTransitionName = value; } }
+    #endregion
+
+    private static PlayerController instance;
 
     public Rigidbody2D theRB;
     public float moveSpeed;
     public bool canMove = true;
 
-    public Animator myAnim;
+    public Animator animator;
 
-    public string areaTransitionName;
+    private string areaTransitionName;
 
     private Vector3 bottomLeftLimit, topRightLimit;
 
@@ -22,7 +25,8 @@ public class PlayerController : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-        } else if (instance != this)
+        } 
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -45,15 +49,15 @@ public class PlayerController : MonoBehaviour
             theRB.velocity = Vector2.zero;
         }
 
-        myAnim.SetFloat("moveX", theRB.velocity.x);
-        myAnim.SetFloat("moveY", theRB.velocity.y);
+        animator.SetFloat("moveX", theRB.velocity.x);
+        animator.SetFloat("moveY", theRB.velocity.y);
 
         if (moveX == 1 || moveX == -1 || moveY == 1 || moveY == -1)
         {
             if (!canMove) return;
 
-            myAnim.SetFloat("lastMoveX", moveX);
-            myAnim.SetFloat("lastMoveY", moveY);
+            animator.SetFloat("lastMoveX", moveX);
+            animator.SetFloat("lastMoveY", moveY);
         }
 
         transform.position = new Vector3(

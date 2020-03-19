@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class AreaExit : MonoBehaviour, UIFade.IFade
@@ -11,10 +9,13 @@ public class AreaExit : MonoBehaviour, UIFade.IFade
 
     public AreaEntrance areaEntrance;
 
+    [SerializeField]
+    private GameObject fadeScreen = null;
+
     // Start is called before the first frame update
     void Start()
     {
-        areaEntrance.areaTransitionName = areaTransitionName;
+        areaEntrance.AreaTransitionName = areaTransitionName;
     }
 
     // Update is called once per frame
@@ -26,12 +27,12 @@ public class AreaExit : MonoBehaviour, UIFade.IFade
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
-            UIFade.instance.FadeToBlack(this);
+        {           
+            Instantiate(fadeScreen).GetComponent<UIFade>().FadeToBlack(this);
 
             GameManager.Instance.fadingBetweenAreas = true;
 
-            PlayerController.instance.areaTransitionName = areaTransitionName;
+            PlayerController.Instance.AreaTransitionName = areaTransitionName;
         }
     }
 

@@ -264,6 +264,8 @@ public class ItemsDisplay : AmountConfirmableDisplay
 
     private bool SetPrimaryButtonInteractable()
     {
+        if (currentInv[selectedPos].IsEmpty()) return false;
+
         if (currentPossessor == PossessorSearcher.ItemPossessor.BAG)
         {
             if (!primaryActionText.text.Equals(Item.USE_ACTION))

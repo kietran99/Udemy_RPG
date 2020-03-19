@@ -94,7 +94,7 @@ public class CharStats : MonoBehaviour
     private Equipment equippedWeapon, equippedArmor, equippedHelmet, equippedSecondary, equippedFootwear, equippedAccessory;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         mpLvlBonus = new int[maxLevel];
         InitEXPs();

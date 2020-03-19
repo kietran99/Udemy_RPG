@@ -1,38 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EssentialsLoader : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject fadeScreen;
-    public GameObject gameManager;
-
     [SerializeField]
-    private GameObject itemManager = null;
+    public GameObject player            = null,
+                      gameMenuCanvas    = null,
+                      dialogCanvas      = null,
+                      gameManager       = null, 
+                      itemManager       = null;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerController.instance == null)
-        {
-            PlayerController.instance = Instantiate(player).GetComponent<PlayerController>();
-        }
+        if (PlayerController.Instance == null) PlayerController.Instance = Instantiate(player).GetComponent<PlayerController>(); 
 
-        if (UIFade.instance == null)
-        {
-            UIFade.instance = Instantiate(fadeScreen).GetComponent<UIFade>();
-        }
+        Instantiate(gameMenuCanvas);
 
-        if (GameManager.Instance == null)
-        {
-            GameManager.Instance = Instantiate(gameManager).GetComponent<GameManager>();
-        }
+        if (DialogManager.Instance == null) DialogManager.Instance = Instantiate(dialogCanvas).GetComponent<DialogManager>();
 
-        if (ItemManager.Instance == null)
-        {
-            ItemManager.Instance = Instantiate(itemManager).GetComponent<ItemManager>();
-        }
+        if (GameManager.Instance == null) GameManager.Instance = Instantiate(gameManager).GetComponent<GameManager>();
+
+        if (ItemManager.Instance == null) ItemManager.Instance = Instantiate(itemManager).GetComponent<ItemManager>();
     }
 
     // Update is called once per frame

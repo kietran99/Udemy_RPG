@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UIFade : MonoBehaviour
@@ -9,8 +7,6 @@ public class UIFade : MonoBehaviour
     {
         void OnCompleted();
     }
-
-    public static UIFade instance;
 
     private IFade fadeCaller;
 
@@ -22,15 +18,7 @@ public class UIFade : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        } else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
-
+    {       
         DontDestroyOnLoad(gameObject);
     }
 

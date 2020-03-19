@@ -37,8 +37,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fadingBetweenAreas || dialogActive || openingGameMenu) PlayerController.instance.canMove = false;
-        else PlayerController.instance.canMove = true;
+        if (fadingBetweenAreas || dialogActive || openingGameMenu) PlayerController.Instance.canMove = false;
+        else PlayerController.Instance.canMove = true;
     }
 
     public int GetNumberOfActives()

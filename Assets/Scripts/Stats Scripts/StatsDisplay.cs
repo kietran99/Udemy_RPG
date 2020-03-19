@@ -12,6 +12,11 @@ public class StatsDisplay : UIDisplay
     public Text nameText, lvText, classText, strengthText, defenceText, intellectText, vitalityText, agilityText, luckText,
                 maxHPText, maxMPText, currentEXPText, toNextLvText, descriptionText;
 
+    private void Awake()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {

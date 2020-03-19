@@ -1,35 +1,45 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour
 {
-    public static DialogManager instance;
+    #region
+    public static DialogManager Instance { get { return instance; } set { instance = value; } }
+    public float SecsToNextDialog { get { return secsToNextDialog; } }
+    public GameObject DialogBox { get { return dialogBox; } }
+    #endregion
 
-    public GameObject dialogBox, nameBox;
-    public Text dialogText, nameText;
+    private static DialogManager instance;
 
-    public string[] dialogLines;
+    [SerializeField]
+    private GameObject dialogBox = null, nameBox = null;
 
-    public int currentLine;
+    [SerializeField]
+    private Text dialogText = null, nameText = null;
 
-    // Make each line is typed more fluid
-    private const float charWaitTime = 0.02f;
+    private string[] dialogLines;
+
+    private int currentLine;
+
+    // Make each line be typed more fluidly
+    [SerializeField]
+    private float charWaitTime = 0.02f;
     private bool isTyping = false;
 
     // Seconds to next dialog display since closing current dialog
+    [SerializeField]
     private const float dialogDelay = 1f;
-    public float secsToNextDialog;
+    private float secsToNextDialog;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         } 
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
