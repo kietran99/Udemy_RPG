@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     private CharStats[] playerStats = null;
     
     [HideInInspector]
-    public bool fadingBetweenAreas, dialogActive, openingGameMenu;
+    public bool fadingBetweenAreas, dialogActive, gameMenuActive, shopMenuActive;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fadingBetweenAreas || dialogActive || openingGameMenu) PlayerController.Instance.canMove = false;
+        if (fadingBetweenAreas || dialogActive || gameMenuActive || shopMenuActive) PlayerController.Instance.canMove = false;
         else PlayerController.Instance.canMove = true;
     }
 

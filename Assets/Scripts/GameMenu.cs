@@ -39,14 +39,14 @@ public class GameMenu : MonoBehaviour
     {
         theMenu.SetActive(true);
         UpdateMainStats();
-        GameManager.Instance.openingGameMenu = true;
+        GameManager.Instance.gameMenuActive = true;
     }
 
     public void CloseMenu()
     {
         foreach (GameObject window in windows) window.SetActive(false);
         theMenu.SetActive(false);
-        GameManager.Instance.openingGameMenu = false;
+        GameManager.Instance.gameMenuActive = false;
     }
 
     public void UpdateMainStats()
