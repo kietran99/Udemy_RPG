@@ -21,6 +21,8 @@ public abstract class Equipment : Item
         bareEquipment = (Equipment) AssetDatabase.LoadAssetAtPath(pathToBareEquipment, typeof(Equipment));
     }
 
+    public abstract string GetStatBoostName();
+
     public override string GetPrimaryAction()
     {
         return currentAction;
@@ -45,4 +47,5 @@ public abstract class Equipment : Item
 
         return false;
     }
+
 }

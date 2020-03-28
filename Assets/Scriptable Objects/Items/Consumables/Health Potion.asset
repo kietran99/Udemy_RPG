@@ -15,6 +15,7 @@ MonoBehaviour:
   itemName: Health Potion
   description: Heals 20 HP.
   image: {fileID: 21300000, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
+  buyValue: 10
   sellValue: 5
   effects:
   - {fileID: 11400000, guid: 1b571e45ecb265a418935967adef05eb, type: 2}

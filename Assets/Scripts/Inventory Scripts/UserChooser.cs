@@ -90,7 +90,7 @@ public class UserChooser : MonoBehaviour
 
     private void InitButtonsGUI()
     {
-        int numOfActives = GameManager.Instance.GetNumberOfActives();
+        int numOfActives = GameManager.Instance.GetNumOfActives();
         userButtons = new UserButton[numOfActives];
 
         // Init first button

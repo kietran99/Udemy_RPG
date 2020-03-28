@@ -6,6 +6,9 @@ public class GameMenu : MonoBehaviour
     public GameObject theMenu;
     public GameObject[] windows;
 
+    [SerializeField]
+    private Text currentGoldText = null;
+
     private CharStats[] playerStats;
 
     public Text[] nameTexts, lvTexts, hpTexts, mpTexts;
@@ -39,6 +42,7 @@ public class GameMenu : MonoBehaviour
     {
         theMenu.SetActive(true);
         UpdateMainStats();
+        currentGoldText.text = ItemManager.Instance.CurrentGold.ToString();
         GameManager.Instance.gameMenuActive = true;
     }
 

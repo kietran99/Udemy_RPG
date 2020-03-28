@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class ShopMerchandise : MonoBehaviour
 {
+    #region
+    public List<Item> Weapons { get { return weapons; } }
+    public List<Item> Armours { get { return armours; } }
+    public List<Item> Consumables { get { return consumables; } }
+    #endregion
+
     [SerializeField]
     private Item[] merchandise = null;
 
@@ -26,6 +32,13 @@ public class ShopMerchandise : MonoBehaviour
 
     private void FilterMerch()
     {
+        if (merchandise.Length == 0) return;
 
+        foreach (Item merch in merchandise)
+        {          
+            if (merch is ConsumableItem) consumables.Add(merch);
+            else if (merch is Weapon) weapons.Add(merch);
+            else armours.Add(merch);
+        }
     }
 }

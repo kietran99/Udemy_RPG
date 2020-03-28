@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Helmet", menuName = "RPG Generator/Items/Equipments/Helmet")]
-public class Helmet : Equipment
+public class Helmet : Protector
 {
     public override void ToggleEquipAbility(CharStats stats)
     {

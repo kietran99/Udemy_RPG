@@ -15,15 +15,9 @@ MonoBehaviour:
   itemName: Sturdy Wooden Sword
   description: Made with sturdier wood.
   image: {fileID: 21300074, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
+  buyValue: 40
   sellValue: 20
-  changeToHP: 0
-  changeToMP: 0
-  changeToStrength: 0
-  changeToDefence: 0
-  changeToIntellect: 0
-  changeToVitality: 0
-  changeToAgility: 0
-  changeToLuck: 0
+  effects: []
   equipableCharacters:
   - {fileID: 11400000, guid: 41fba36c23dc0fd458aca4f90de8ecf8, type: 2}
   - {fileID: 11400000, guid: d7922a49fbd8ede4f9dcd3e5229e1613, type: 2}

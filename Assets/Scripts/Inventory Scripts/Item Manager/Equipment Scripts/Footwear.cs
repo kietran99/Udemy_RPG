@@ -5,6 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Footwear", menuName = "RPG Generator/Items/Equipments/Footwear")]
 public class Footwear : Equipment
 {
+    public override string GetStatBoostName()
+    {
+        return "Agility";
+    }
+
     public override void ToggleEquipAbility(CharStats stats)
     {
         if (stats.EquippedFootwear.IsEqual(bareEquipment) || !stats.EquippedFootwear.IsEqual(this)) stats.EquippedFootwear = this;

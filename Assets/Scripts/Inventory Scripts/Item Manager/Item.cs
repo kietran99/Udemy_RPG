@@ -9,6 +9,7 @@ public abstract class Item : ScriptableObject
     public string Description { get { return description; } }
     public Sprite Image { get { return image; } }
     public int SellValue { get { return sellValue; } }
+    public int BuyValue { get { return buyValue; } }
     public Effect[] Effects { get { return effects; } }
     #endregion
 
@@ -23,7 +24,7 @@ public abstract class Item : ScriptableObject
     protected Sprite image = null;
 
     [SerializeField]
-    protected int sellValue = 0;
+    protected int buyValue = 0, sellValue = 0;
 
     [SerializeField]
     protected Effect[] effects;

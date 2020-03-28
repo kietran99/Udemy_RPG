@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         else PlayerController.Instance.canMove = true;
     }
 
-    public int GetNumberOfActives()
+    public int GetNumOfActives()
     {
         int num = 0;
 

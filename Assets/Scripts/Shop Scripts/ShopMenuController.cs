@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShopMenuController : MonoBehaviour
 {
     [SerializeField]
-    private ShopMenuDisplay display = null;
+    private ShopActionDisplay actionDisplay = null;
+
+    [SerializeField]
+    private MerchDisplay merchDisplay = null;
 
     [SerializeField]
     private ShopMerchandise merchandise = null;
@@ -16,8 +17,8 @@ public class ShopMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        display.ToggleActionPanel(true);
-        display.ToggleShopDialog(true);
+        actionDisplay.ToggleActionCanvas(true);
+        //actionDisplay.ToggleShopDialog(true);
     }
 
     // Update is called once per frame
@@ -28,12 +29,12 @@ public class ShopMenuController : MonoBehaviour
 
     public void BuyItem()
     {
-        display.ToggleItemTypePanel(true);
+        actionDisplay.ToggleItemTypeCanvas(true);
     }
 
     public void SellItem()
     {
-        display.ToggleItemSellMenu(true);
+        actionDisplay.ToggleItemSellMenu(true);
     }
 
     public void ExitShop()
@@ -44,21 +45,23 @@ public class ShopMenuController : MonoBehaviour
 
     public void BuyWeapons()
     {
-
+        OpenMerchMenu(merchandise.Weapons.ToArray());
     }
 
     public void BuyArmours()
     {
-
+        OpenMerchMenu(merchandise.Armours.ToArray());
     }
 
     public void BuyConsumables()
     {
-
+        OpenMerchMenu(merchandise.Consumables.ToArray());
     }
-
-    public void CancelItemType()
+    
+    private void OpenMerchMenu(Item[] merchToDisplay)
     {
-
+        actionDisplay.ToggleMenuDisplay(false);
+        merchDisplay.Activate(merchandise.Weapons.ToArray());
+        merchDisplay.DisplayAll();
     }
 }

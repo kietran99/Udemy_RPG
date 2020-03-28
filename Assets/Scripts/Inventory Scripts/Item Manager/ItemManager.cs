@@ -6,11 +6,15 @@ public class ItemManager : MonoBehaviour
 {
     #region
     public static ItemManager Instance { get { return instance; } set { instance = value; } }
+    public int CurrentGold { get { return currentGold; } set { currentGold = value; } }
     #endregion
 
     public const int MAX_INVENTORY_SIZE = 16;
 
-    private static ItemManager instance;   
+    private static ItemManager instance;
+
+    [SerializeField]
+    private int currentGold = 0;
 
     [SerializeField]
     private Item nullItem = null;

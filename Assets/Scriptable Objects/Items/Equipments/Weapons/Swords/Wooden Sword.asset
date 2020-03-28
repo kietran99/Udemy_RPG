@@ -15,14 +15,8 @@ MonoBehaviour:
   itemName: Wooden Sword
   description: Simple sword made out of wood.
   image: {fileID: 21300000, guid: 394ffc60c66e6cc4592621c0b55718f3, type: 3}
+  buyValue: 30
   sellValue: 10
-  changeToHP: 0
-  changeToMP: 0
-  changeToStrength: 0
-  changeToDefence: 0
-  changeToIntellect: 0
-  changeToVitality: 0
-  changeToAgility: 0
-  changeToLuck: 0
+  effects: []
   equipableCharacters:
   - {fileID: 11400000, guid: d7922a49fbd8ede4f9dcd3e5229e1613, type: 2}
