@@ -17,7 +17,9 @@ MonoBehaviour:
   image: {fileID: 21300074, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   buyValue: 40
   sellValue: 20
-  effects: []
-  equipableCharacters:
+  statChange: 5
+  bonusEffects: []
+  equippableChars:
   - {fileID: 11400000, guid: 41fba36c23dc0fd458aca4f90de8ecf8, type: 2}
+  - {fileID: 11400000, guid: 4905ed3a8b956b6408d44a5ee34b545e, type: 2}
   - {fileID: 11400000, guid: d7922a49fbd8ede4f9dcd3e5229e1613, type: 2}

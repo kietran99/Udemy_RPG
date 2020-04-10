@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopActionDisplay : UIDisplay
+public class ShopActionDisplay : MonoBehaviour
 {
     [SerializeField]
     private GameObject actionCanvas = null, itemTypeCanvas = null;
@@ -11,19 +11,8 @@ public class ShopActionDisplay : UIDisplay
     [SerializeField]
     private Button[] actionButtons = null;
 
-    public override void DisplayAll()
-    {
-
-    }
-
     // Start is called before the first frame update
     void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
     {
 
     }

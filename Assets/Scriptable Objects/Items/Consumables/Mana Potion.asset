@@ -17,5 +17,6 @@ MonoBehaviour:
   image: {fileID: 21300004, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
   buyValue: 15
   sellValue: 10
-  effects:
+  statChange: 10
+  bonusEffects:
   - {fileID: 11400000, guid: 0aca1b78c84bbb146b7b140f777ae2fd, type: 2}

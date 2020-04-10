@@ -10,7 +10,7 @@ public abstract class Item : ScriptableObject
     public Sprite Image { get { return image; } }
     public int SellValue { get { return sellValue; } }
     public int BuyValue { get { return buyValue; } }
-    public Effect[] Effects { get { return effects; } }
+    public Effect[] Effects { get { return bonusEffects; } }
     #endregion
 
     public const string USE_ACTION = "USE";
@@ -27,7 +27,9 @@ public abstract class Item : ScriptableObject
     protected int buyValue = 0, sellValue = 0;
 
     [SerializeField]
-    protected Effect[] effects;
+    protected Effect[] bonusEffects;
+
+    public abstract string GetItemType();
 
     public abstract string GetPrimaryAction();
 
@@ -37,9 +39,9 @@ public abstract class Item : ScriptableObject
 
     public void Use(CharStats charStats)
     {
-        if (effects.Length == 0) return;
+        if (bonusEffects.Length == 0) return;
 
-        foreach (Effect effect in effects)
+        foreach (Effect effect in bonusEffects)
         {
             effect.Invoke(charStats);
         }

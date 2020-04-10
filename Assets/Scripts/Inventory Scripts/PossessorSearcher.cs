@@ -16,7 +16,7 @@ public class PossessorSearcher
         P3,
         P4,
         P5,
-        NONE
+        NONE = 101
     }
 
     private static int GetCharPos(ItemPossessor possessor)
@@ -43,6 +43,7 @@ public class PossessorSearcher
     public static CharStats GetPossessor(ItemPossessor possessor)
     {
         int converted = GetCharPos(possessor);
+        //int converted = (int) possessor;
 
         switch (converted)
         {            
@@ -63,6 +64,8 @@ public class PossessorSearcher
     public static string GetPossessorName(ItemPossessor possessor)
     {
         int converted = GetCharPos(possessor);
+        //int converted = (int) possessor;
+
         switch (converted)
         {
             case BAG:

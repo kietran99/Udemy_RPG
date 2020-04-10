@@ -10,13 +10,15 @@ public class ConsumableItem : Item
         return USE_ACTION;
     }
 
-    public override void SetPrimaryAction(bool isEquipped)
-    {
-        
-    }
+    public override void SetPrimaryAction(bool isEquipped) { }
 
     public override void InvokePrimaryAction(CharStats charStats)
     {
         Use(charStats);
+    }
+
+    public override string GetItemType()
+    {
+        return "CONSUMABLES";
     }
 }

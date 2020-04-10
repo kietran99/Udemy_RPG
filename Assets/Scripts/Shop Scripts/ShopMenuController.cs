@@ -6,7 +6,7 @@ public class ShopMenuController : MonoBehaviour
     private ShopActionDisplay actionDisplay = null;
 
     [SerializeField]
-    private MerchDisplay merchDisplay = null;
+    private BuyMenuController buyMenuController = null;
 
     [SerializeField]
     private ShopMerchandise merchandise = null;
@@ -61,7 +61,11 @@ public class ShopMenuController : MonoBehaviour
     private void OpenMerchMenu(Item[] merchToDisplay)
     {
         actionDisplay.ToggleMenuDisplay(false);
-        merchDisplay.Activate(merchandise.Weapons.ToArray());
-        merchDisplay.DisplayAll();
+        buyMenuController.Activate(this, merchToDisplay);        
+    }
+
+    public void CloseMerchMenu()
+    {
+        actionDisplay.ToggleMenuDisplay(true);
     }
 }

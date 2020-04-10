@@ -15,4 +15,12 @@ MonoBehaviour:
   itemName: Bronze Armor
   description: Quite heavy.
   image: {fileID: 21300010, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
+  buyValue: 50
   sellValue: 20
+  bonusEffects: []
+  statChange: 5
+  equippableChars:
+  - {fileID: 11400000, guid: e2eced725f6947240aefc671a19437d8, type: 2}
+  - {fileID: 11400000, guid: 41fba36c23dc0fd458aca4f90de8ecf8, type: 2}
+  - {fileID: 11400000, guid: 4905ed3a8b956b6408d44a5ee34b545e, type: 2}
+  - {fileID: 11400000, guid: d7922a49fbd8ede4f9dcd3e5229e1613, type: 2}

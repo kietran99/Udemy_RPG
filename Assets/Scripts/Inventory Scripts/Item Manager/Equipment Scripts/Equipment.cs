@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEditor;
 
 public abstract class Equipment : Item
 {
-    public const string pathToBareEquipment = "Assets/Scriptable Objects/Items/Equipments/Bare Equipment.asset";      
+    #region
+    public CharName[] EquippableChars { get { return equippableChars; } }
+    public int StatChange { get { return statChange; } }
+    #endregion
 
     [SerializeField]
-    protected CharName[] equipableCharacters;
+    protected int statChange;
 
-    protected Equipment bareEquipment;
+    [SerializeField]
+    protected CharName[] equippableChars;
 
     private string currentAction;
-    
+
     private void Awake()
     {
         currentAction = EQUIP_ACTION;
-        bareEquipment = (Equipment) AssetDatabase.LoadAssetAtPath(pathToBareEquipment, typeof(Equipment));
     }
-
-    public abstract string GetStatBoostName();
 
     public override string GetPrimaryAction()
     {
@@ -43,9 +43,11 @@ public abstract class Equipment : Item
 
     public bool CanEquip(string charName)
     { 
-        if (equipableCharacters.Where(x => x.CharacterName.Equals(charName)).ToArray().Length > 0) return true;
+        if (equippableChars.Where(x => x.CharacterName.Equals(charName)).ToArray().Length > 0) return true;
 
         return false;
     }
 
+    public abstract int GetCorreStat(CharStats stats);
+    public abstract int GetPostChangeStat(CharStats stats);
 }

@@ -26,9 +26,9 @@ public class CharStats : MonoBehaviour
     public int Vitality { get { return vitality; } set { vitality = value; } }
     public int Agility { get { return agility; } set { agility = value; } }
     public int Luck { get { return luck; } set { luck = value; } }
-    public Equipment EquippedWeapon { get { return equippedWeapon; } set { equippedWeapon = value; } }
+    public Weapon EquippedWeapon { get { return equippedWeapon; } set { equippedWeapon = value; } }
     public Equipment EquippedArmor { get { return equippedArmor; } set { equippedArmor = value; } }
-    public Equipment EquippedHelmet { get { return equippedHelmet; } set { equippedHelmet = value; } }
+    public Equipment EquippedHeadgear { get { return equippedHeadgear; } set { equippedHeadgear = value; } }
     public Equipment EquippedSecondary { get { return equippedSecondary; } set { equippedSecondary = value; } }
     public Equipment EquippedFootwear { get { return equippedFootwear; } set { equippedFootwear = value; } }
     public Equipment EquippedAccessory { get { return equippedAccessory; } set { equippedAccessory = value; } }
@@ -91,7 +91,8 @@ public class CharStats : MonoBehaviour
     private int defence = 0, intellect = 0, vitality = 0, agility = 0, luck = 0;
 
     [Header("Equipments")]
-    private Equipment equippedWeapon, equippedArmor, equippedHelmet, equippedSecondary, equippedFootwear, equippedAccessory;
+    private Weapon equippedWeapon;
+    private Equipment equippedArmor, equippedHeadgear, equippedSecondary, equippedFootwear, equippedAccessory;
 
     // Start is called before the first frame update
     void Awake()
@@ -123,13 +124,12 @@ public class CharStats : MonoBehaviour
 
     private void InitEquipments()
     {
-        Equipment bareEquipment = (Equipment)AssetDatabase.LoadAssetAtPath(Equipment.pathToBareEquipment, typeof(Equipment));
-        equippedWeapon = bareEquipment;
-        equippedArmor = bareEquipment;
-        equippedHelmet = bareEquipment;
-        equippedFootwear = bareEquipment;
-        equippedSecondary = bareEquipment;
-        equippedAccessory = bareEquipment;
+        equippedWeapon = Resources.Load<Weapon>(NullEquipmentsRef.noWeapon);
+        equippedArmor = Resources.Load<Armor>(NullEquipmentsRef.noArmor);
+        equippedHeadgear = Resources.Load<Headgear>(NullEquipmentsRef.noHeadgear);
+        equippedFootwear = Resources.Load<Footwear>(NullEquipmentsRef.noFootwear);
+        equippedSecondary = Resources.Load<Shield>(NullEquipmentsRef.noShield);
+        //equippedAccessory = Resources.Load<Weapon>(NullEquipmentsRef.noWeapon);
     }
 
     private void AddEXP(int expToAdd)

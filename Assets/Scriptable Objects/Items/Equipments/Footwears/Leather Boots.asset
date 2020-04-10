@@ -15,14 +15,12 @@ MonoBehaviour:
   itemName: Leather Boots
   description: Just some old pair of boots.
   image: {fileID: 21300000, guid: 008863f35f21ada4fa5c1d09f81fa2a3, type: 3}
+  buyValue: 12
   sellValue: 6
-  changeToHP: 0
-  changeToMP: 0
-  changeToStrength: 0
-  changeToDefence: 0
-  changeToIntellect: 0
-  changeToVitality: 0
-  changeToAgility: 0
-  changeToLuck: 0
-  equipableCharacters:
+  bonusEffects: []
+  statChange: 1
+  equippableChars:
+  - {fileID: 11400000, guid: e2eced725f6947240aefc671a19437d8, type: 2}
   - {fileID: 11400000, guid: 41fba36c23dc0fd458aca4f90de8ecf8, type: 2}
+  - {fileID: 11400000, guid: d7922a49fbd8ede4f9dcd3e5229e1613, type: 2}
+  - {fileID: 11400000, guid: 4905ed3a8b956b6408d44a5ee34b545e, type: 2}

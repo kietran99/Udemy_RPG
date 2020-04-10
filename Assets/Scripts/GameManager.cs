@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
         else PlayerController.Instance.canMove = true;
     }
 
-    public int GetNumOfActives()
+    public int GetNumActives()
     {
         int num = 0;
 
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         return num;
     }
 
-    public CharStats[] GetActiveMembers()
+    public CharStats[] GetActiveChars()
     {
         List<CharStats> temp = new List<CharStats>();
 
@@ -68,5 +68,19 @@ public class GameManager : MonoBehaviour
     public CharStats GetCharacterAt(int pos)
     {
         return playerStats[pos];
+    }
+
+    public CharStats[] GetEquippableChars(Equipment equipment)
+    {
+        List <CharStats> equippables = new List<CharStats>();
+
+        CharStats[] activeChars = GetActiveChars();
+
+        foreach (CharName charName in equipment.EquippableChars)
+        {
+            equippables.Add(activeChars.Where(x => x.CharacterName.Equals(charName.CharacterName)).ToArray()[0]);
+        }
+
+        return equippables.ToArray();
     }
 }

@@ -90,7 +90,7 @@ public class UserChooser : MonoBehaviour
 
     private void InitButtonsGUI()
     {
-        int numOfActives = GameManager.Instance.GetNumOfActives();
+        int numOfActives = GameManager.Instance.GetNumActives();
         userButtons = new UserButton[numOfActives];
 
         // Init first button
@@ -121,7 +121,7 @@ public class UserChooser : MonoBehaviour
 
     private void DisplayParty()
     {
-        CharStats[] party = GameManager.Instance.GetActiveMembers();
+        CharStats[] party = GameManager.Instance.GetActiveChars();
 
         Item selectedItem = ItemManager.Instance.GetItemAt(display.SelectedPos, display.CurrentPossessor);
 
