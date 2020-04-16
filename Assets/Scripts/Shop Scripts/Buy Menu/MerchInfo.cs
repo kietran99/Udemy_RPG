@@ -5,7 +5,7 @@ public class MerchInfo : MonoBehaviour
 {    
     public interface IClickable
     {
-        void OnClick(int pos);
+        void OnMerchClick(int pos);
     }
 
     [SerializeField]
@@ -35,6 +35,6 @@ public class MerchInfo : MonoBehaviour
     
     private void GetOrder()
     {
-        clickable.OnClick(order);
+        clickable.OnMerchClick(order);
     }
 }

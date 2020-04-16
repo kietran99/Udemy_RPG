@@ -5,22 +5,23 @@ using UnityEngine;
 public class ShopMerchandise : MonoBehaviour
 {
     #region
-    public List<Item> Weapons { get { return weapons; } }
-    public List<Item> Armours { get { return armours; } }
-    public List<Item> Consumables { get { return consumables; } }
+    public List<Equipment> Weapons { get { return weapons; } }
+    public List<Equipment> Armours { get { return armours; } }
+    public List<ConsumableItem> Consumables { get { return consumables; } }
     #endregion
 
     [SerializeField]
     private Item[] merchandise = null;
 
-    private List<Item> weapons, armours, consumables;
+    private List<Equipment> weapons, armours;
+    private List<ConsumableItem> consumables;
 
     // Start is called before the first frame update
     void Start()
     {
-        weapons = new List<Item>();
-        armours = new List<Item>();
-        consumables = new List<Item>();
+        weapons = new List<Equipment>();
+        armours = new List<Equipment>();
+        consumables = new List<ConsumableItem>();
         FilterMerch();
     }
 
@@ -36,9 +37,9 @@ public class ShopMerchandise : MonoBehaviour
 
         foreach (Item merch in merchandise)
         {          
-            if (merch is ConsumableItem) consumables.Add(merch);
-            else if (merch is Weapon) weapons.Add(merch);
-            else armours.Add(merch);
+            if (merch is ConsumableItem) consumables.Add(merch as ConsumableItem);
+            else if (merch is Weapon) weapons.Add(merch as Equipment);
+            else armours.Add(merch as Equipment);
         }
     }
 }

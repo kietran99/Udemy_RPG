@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PossessorSearcher
+﻿public static class PossessorSearcher
 {
     private const int BAG = -1;
     private const int NONE = -2;

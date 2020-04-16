@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuyMenuController : IMenuController
+public class BuyMenuController : IMenuController, IAmountConfirmable
 {
+    private const int MAX_BUYABLE = 99;
+
     private ShopMenuController shopMenu;
 
     [SerializeField]
@@ -11,6 +13,12 @@ public class BuyMenuController : IMenuController
 
     [SerializeField]
     private MerchDescription merchDescription = null;
+
+    [SerializeField]
+    private AmountSelector amtSelector = null;
+
+    [SerializeField]
+    private GameObject defaultActions = null;
 
     private List<Item> merchToDisplay;
 
@@ -49,10 +57,10 @@ public class BuyMenuController : IMenuController
 
     public void Buy()
     {
-
+        amtSelector.Activate((IAmountConfirmable) this, merchDisplay.gameObject, defaultActions, (ILiveAmountObserver) merchDescription, MAX_BUYABLE);
     }
 
-    public void Cancel()
+    public void Exit()
     {
         Reset();
         gameObject.SetActive(false);
@@ -63,9 +71,25 @@ public class BuyMenuController : IMenuController
         merchToDisplay.Clear();
     }
 
-    public override void OnClick(int pos)
+    public override void OnMerchClick(int pos)
     {
         selectedMerch = merchToDisplay[pos];
-        merchDescription.UpdateDesc(selectedMerch as Equipment);
+        if (selectedMerch is Equipment) merchDescription.UpdateDesc(selectedMerch as Equipment);
+        else merchDescription.UpdateDesc(selectedMerch as ConsumableItem);
+    }
+
+    public void OnAmountConfirm(int changeAmount)
+    {
+        if (ItemManager.Instance.CurrentGold < changeAmount * selectedMerch.BuyValue)
+        {
+            Debug.Log("NOT ENOUGH GOLD!");
+            return;
+        }
+
+        int invAvail = ItemManager.Instance.AddItem(PossessorSearcher.ItemPossessor.BAG, new ItemHolder(selectedMerch, changeAmount));
+        if (invAvail == -1)
+        {
+            Debug.Log("INVENTORY FULL!!");
+        }
     }
 }

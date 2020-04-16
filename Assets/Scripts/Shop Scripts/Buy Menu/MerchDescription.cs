@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MerchDescription : MonoBehaviour
+public class MerchDescription : MonoBehaviour, ILiveAmountObserver
 {
     [SerializeField]
     private Text changeStatText = null;
@@ -15,6 +15,14 @@ public class MerchDescription : MonoBehaviour
     private GameObject statChangeLayout = null;
 
     private CharStatChange[] statChanges;
+
+    private int buyValue;
+
+    [SerializeField]
+    private Text totalCostText = null;
+
+    [SerializeField]
+    private Text currentGoldText = null;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +54,7 @@ public class MerchDescription : MonoBehaviour
     public void UpdateDesc(Equipment merch)
     {
         changeStatText.text = merch.GetItemType();
+        this.buyValue = merch.BuyValue;
 
         CharStats[] equippables = GameManager.Instance.GetEquippableChars(merch);
 
@@ -56,11 +65,11 @@ public class MerchDescription : MonoBehaviour
 
             if (currStats.EquippedWeapon.ItemName.Equals(merch.ItemName))
             {                
-                statChanges[i].DisplayUnchangeStat(currStats.CharacterName, merch.GetCorreStat(currStats));
+                statChanges[i].DisplayUnchangeStat(currStats.CharacterName, merch.GetCorresStat(currStats));
             }
             else
             {                
-                statChanges[i].DisplayChangeStat(currStats.CharacterName, merch.GetCorreStat(currStats), merch.GetPostChangeStat(currStats));
+                statChanges[i].DisplayChangeStat(currStats.CharacterName, merch.GetCorresStat(currStats), merch.GetPostChangeStat(currStats));
             }
         }
 
@@ -68,6 +77,8 @@ public class MerchDescription : MonoBehaviour
         {
             statChanges[i].gameObject.SetActive(false);
         }
+
+        currentGoldText.text = ItemManager.Instance.CurrentGold.ToString();
     }
 
     public void UpdateDesc(ConsumableItem merch)
@@ -80,4 +91,10 @@ public class MerchDescription : MonoBehaviour
         changeStatText.text = "";
         foreach (CharStatChange statChange in statChanges) statChange.gameObject.SetActive(false);
     }
+
+    void ILiveAmountObserver.OnValueChanged(int value)
+    {
+        totalCostText.text = value * buyValue + " G";
+    }
+
 }

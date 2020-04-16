@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemsDisplay : AmountConfirmableDisplay
+public class ItemsDisplay : UIDisplay, IAmountConfirmable
 {  
     #region
     public Text ItemNameText { get { return itemNameText; } }
@@ -213,10 +213,10 @@ public class ItemsDisplay : AmountConfirmableDisplay
 
     public void EnableAmountSelector(int quantity)
     {
-        amountSelector.GetComponent<AmountSelector>().Activate(this, itemInteractor, quantity);
+        amountSelector.GetComponent<AmountSelector>().Activate(this, gameObject, itemInteractor, quantity);
     }
 
-    public override void OnAmountConfirm(int changeAmount)
+    public void OnAmountConfirm(int changeAmount)
     {       
         currentState.OnAmountConfirm(changeAmount);
         currentState = defaultState;

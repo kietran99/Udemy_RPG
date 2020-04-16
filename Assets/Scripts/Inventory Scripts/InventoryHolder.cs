@@ -51,11 +51,18 @@ public class InventoryHolder
         if (itemHolders[posToRemove].Amount <= 0) itemHolders[posToRemove] = nullHolder;
     }
 
-    public void Add(ItemHolder itemHolderToAdd)
+    public int Add(ItemHolder itemHolderToAdd)
     {
         int posToCheck = CheckExists(itemHolderToAdd);
         if (posToCheck > -1) AddToExistingItem(itemHolderToAdd, posToCheck);
-        else itemHolders[FindFirstEmptySlot()] = itemHolderToAdd;
+        else
+        {
+            int emptySlot = FindFirstEmptySlot();
+            if (emptySlot == POSITION_INVALID) return POSITION_INVALID;
+            itemHolders[emptySlot] = itemHolderToAdd;
+        }
+
+        return 0;
     }
 
     public void AddAt(ItemHolder itemHolderToAdd, int posToAdd)
@@ -77,8 +84,8 @@ public class InventoryHolder
 
         if (itemHolders[posToAdd].Amount > ItemHolder.ITEM_CAPACITY)
         {
-            itemHolders[posToAdd].Amount = ItemHolder.ITEM_CAPACITY;
             itemHolders[FindFirstEmptySlot()] = new ItemHolder(itemHolderToAdd.TheItem, itemHolders[posToAdd].Amount - ItemHolder.ITEM_CAPACITY);
+            itemHolders[posToAdd].Amount = ItemHolder.ITEM_CAPACITY;
         }
     }
 
@@ -109,13 +116,6 @@ public class InventoryHolder
         else toHolder.AddAt(holderToMove, toPos);
 
         RemoveAt(fromPos, amount);
-    }
-
-    // Only for toggling equip ability
-    public void MoveEquipment(int fromPos, int toPos)
-    {       
-        AddAt(new ItemHolderFactory().CreateEquipmentHolder(itemHolders[fromPos].TheItem), toPos);
-        RemoveAt(fromPos, 1);
     }
 
     public void UseItem(int pos, CharStats charToUse)
