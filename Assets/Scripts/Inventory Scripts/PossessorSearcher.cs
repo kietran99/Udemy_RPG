@@ -39,7 +39,6 @@
     public static CharStats GetPossessor(ItemPossessor possessor)
     {
         int converted = GetCharPos(possessor);
-        //int converted = (int) possessor;
 
         switch (converted)
         {            
@@ -60,7 +59,6 @@
     public static string GetPossessorName(ItemPossessor possessor)
     {
         int converted = GetCharPos(possessor);
-        //int converted = (int) possessor;
 
         switch (converted)
         {
@@ -86,6 +84,6 @@
         {
             if (possessor == ItemPossessor.NONE) continue;
             list.Append(possessor);
-        }       
+        }   
     }
 }

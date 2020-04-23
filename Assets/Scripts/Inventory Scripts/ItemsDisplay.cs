@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿ using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemsDisplay : UIDisplay, IAmountConfirmable
+public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
 {  
     #region
     public Text ItemNameText { get { return itemNameText; } }
@@ -111,9 +109,10 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable
             temp = Instantiate(templateButton);
             temp.transform.SetParent(inventoryOrganizer.transform);
             itemButtons[i] = temp.GetComponent<ItemButton>();
-            itemButtons[i].ButtonPos = i;
-            int tempInt = i;
-            itemButtons[i].GetComponent<Button>().onClick.AddListener(() => OnItemSelected(tempInt)); // lambdas expressions -> pass by ref
+            itemButtons[i].Init((IClickInvoker) this, i);
+            //itemButtons[i].ButtonPos = i;
+            //int tempInt = i;
+            //itemButtons[i].GetComponent<Button>().onClick.AddListener(() => OnItemSelected(tempInt)); // lambdas expressions -> pass by ref
         }
     }
 
@@ -150,12 +149,12 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable
         DisplayAll();
     }
 
-    public void OnItemSelected(int pos)
+    /*public void OnItemSelected(int pos)
     {
         selectedPos = pos;
         currentState.OnItemSelected(pos);
         if (currentState == defaultState) primaryActionButton.interactable = SetPrimaryButtonInteractable();
-    }
+    }*/
 
     public void DisplayItemDetails(int pos)
     {
@@ -280,5 +279,12 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable
         if (((ItemManager.Instance.GetItemAt(selectedPos, currentPossessor)) as Equipment).CanEquip(PossessorSearcher.GetPossessorName(currentPossessor))) return true;
 
         return false;
+    }
+
+    public void OnInvokeeClick(int val)
+    {
+        selectedPos = val;
+        currentState.OnItemSelected(val);
+        if (currentState == defaultState) primaryActionButton.interactable = SetPrimaryButtonInteractable();
     }
 }

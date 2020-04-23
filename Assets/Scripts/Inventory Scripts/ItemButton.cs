@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemButton : MonoBehaviour
@@ -11,17 +9,25 @@ public class ItemButton : MonoBehaviour
     public int ButtonPos { get { return buttonPos; } set { buttonPos = value; } }
     #endregion
 
+    private IClickInvoker invoker;
+
     [SerializeField]
     private Image itemImage = null;
     
     [SerializeField]
     private Text amountText = null;
-    
+
     private int buttonPos;
 
     void Start()
     {
-        
+        GetComponent<Button>().onClick.AddListener(() => GetPos());
+    }
+
+    public void Init(IClickInvoker invoker, int buttonPos)
+    {
+        this.invoker = invoker;
+        this.buttonPos = buttonPos;
     }
 
     public void DisplayItem(Sprite itemSprite, int amount, bool isEquipped)
@@ -39,5 +45,10 @@ public class ItemButton : MonoBehaviour
             if (isEquipped) amountText.text = "E";
             else amountText.text = amount.ToString();
         }
+    }
+
+    private void GetPos()
+    {
+        invoker.OnInvokeeClick(buttonPos);
     }
 }

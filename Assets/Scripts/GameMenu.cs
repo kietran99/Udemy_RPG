@@ -3,18 +3,19 @@ using UnityEngine.UI;
 
 public class GameMenu : MonoBehaviour
 {
-    public GameObject theMenu;
-    public GameObject[] windows;
+    [SerializeField]
+    private GameObject theMenu = null;
+
+    [SerializeField]
+    private GameObject[] windows = null;
 
     [SerializeField]
     private Text currentGoldText = null;
 
-    private CharStats[] playerStats;
+    [SerializeField]
+    private MenuCharInfo[] charInfos = null;
 
-    public Text[] nameTexts, lvTexts, hpTexts, mpTexts;
-    public Slider[] hpSliders, mpSliders;
-    public Image[] charImages;
-    public GameObject[] charStatsHolders;
+    private CharStats[] playerStats;
 
     // Start is called before the first frame update
     void Start()
@@ -61,21 +62,11 @@ public class GameMenu : MonoBehaviour
         {
             if (playerStats[i].gameObject.activeInHierarchy)
             {
-                charStatsHolders[i].SetActive(true);
-
-                nameTexts[i].text = playerStats[i].CharacterName;
-                lvTexts[i].text = "Lv: " + playerStats[i].PlayerLevel.ToString();
-                hpTexts[i].text = "" + playerStats[i].CurrentHP + "/" + playerStats[i].MaxHP;
-                mpTexts[i].text = "" + playerStats[i].CurrentMP + "/" + playerStats[i].MaxMP;
-                hpSliders[i].maxValue = playerStats[i].MaxHP;
-                hpSliders[i].value = playerStats[i].CurrentHP;
-                mpSliders[i].maxValue = playerStats[i].MaxMP;
-                mpSliders[i].value = playerStats[i].CurrentMP;
-                charImages[i].sprite = playerStats[i].CharImage;
+                charInfos[i].Activate(playerStats[i]);              
             }
             else
             {
-                charStatsHolders[i].SetActive(false);
+                charInfos[i].gameObject.SetActive(false);
             }
         }
     }

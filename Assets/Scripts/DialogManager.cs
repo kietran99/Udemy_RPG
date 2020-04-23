@@ -84,7 +84,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    public IEnumerator TypeSentence()
+    private IEnumerator TypeSentence()
     {
         isTyping = true;
         dialogText.text = "";

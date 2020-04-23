@@ -6,7 +6,7 @@ public class ShopMenuController : MonoBehaviour
     private ShopActionDisplay actionDisplay = null;
 
     [SerializeField]
-    private BuyMenuController buyMenuController = null;
+    private TradeMenuToggler tradeMenuToggler = null;
 
     [SerializeField]
     private ShopMerchandise merchandise = null;
@@ -17,8 +17,7 @@ public class ShopMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        actionDisplay.ToggleActionCanvas(true);
-        //actionDisplay.ToggleShopDialog(true);
+       
     }
 
     // Update is called once per frame
@@ -27,19 +26,29 @@ public class ShopMenuController : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        actionDisplay.ToggleActionCanvas(true, dialog);
+        dialog.Greetings();
+    }
+
     public void BuyItem()
     {
-        actionDisplay.ToggleItemTypeCanvas(true);
+        dialog.Buy();
+        actionDisplay.ToggleItemTypeCanvas(true);        
     }
 
     public void SellItem()
     {
-        actionDisplay.ToggleItemSellMenu(true);
+        actionDisplay.ToggleActionCanvas(false, null);
+        dialog.Disable();
+        tradeMenuToggler.ActivateSellMenu(this, dialog);
     }
 
     public void ExitShop()
     {
         gameObject.SetActive(false);
+        dialog.Disable();
         GameManager.Instance.shopMenuActive = false;
     }
 
@@ -61,11 +70,13 @@ public class ShopMenuController : MonoBehaviour
     private void OpenMerchMenu(Item[] merchToDisplay)
     {
         actionDisplay.ToggleMenuDisplay(false);
-        buyMenuController.Activate(this, merchToDisplay);        
+        dialog.Disable();
+        tradeMenuToggler.ActivateBuyMenu(this, dialog, merchToDisplay);     
     }
 
-    public void CloseMerchMenu()
+    public void CloseTradeMenu()
     {
         actionDisplay.ToggleMenuDisplay(true);
+        actionDisplay.ToggleItemTypeCanvas(false);
     }
 }

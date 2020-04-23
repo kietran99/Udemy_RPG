@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopActionDisplay : MonoBehaviour
@@ -11,15 +9,18 @@ public class ShopActionDisplay : MonoBehaviour
     [SerializeField]
     private Button[] actionButtons = null;
 
+    private ShopDialog dialog;
+
     // Start is called before the first frame update
     void Start()
     {
 
     }
 
-    public void ToggleActionCanvas(bool flag)
+    public void ToggleActionCanvas(bool flag, ShopDialog dialog)
     {
         actionCanvas.SetActive(flag);
+        if (dialog != null) this.dialog = dialog;
         ToggleActionButtons(flag);
     }
 
@@ -27,12 +28,8 @@ public class ShopActionDisplay : MonoBehaviour
     {
         itemTypeCanvas.SetActive(flag);
         ToggleActionButtons(!flag);
-    }
-
-    public void ToggleItemSellMenu(bool flag)
-    {
-        ToggleActionCanvas(!flag);
-    }
+        if (!flag && dialog != null) dialog.Disable();
+    }  
 
     public void ToggleMenuDisplay(bool flag)
     {

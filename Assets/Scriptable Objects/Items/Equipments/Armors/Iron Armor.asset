@@ -15,4 +15,8 @@ MonoBehaviour:
   itemName: Iron Armor
   description: A sturdy, flexible armor.
   image: {fileID: 21300014, guid: 0bc4ed27aef38a44bb72e80f9beb5326, type: 3}
+  buyValue: 40
   sellValue: 30
+  bonusEffects: []
+  statChange: 0
+  equippableChars: []
