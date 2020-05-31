@@ -43,26 +43,12 @@ public class GameManager : MonoBehaviour
 
     public int GetNumActives()
     {
-        int num = 0;
-
-        foreach (CharStats stats in playerStats)
-        {
-            if (stats.gameObject.activeInHierarchy) num++;
-        }
-
-        return num;
+        return playerStats.Where(x => x.gameObject.activeInHierarchy).ToArray().Length;
     }
 
     public CharStats[] GetActiveChars()
     {
-        List<CharStats> temp = new List<CharStats>();
-
-        foreach (CharStats stats in playerStats)
-        {
-            if (stats.gameObject.activeInHierarchy) temp.Add(stats);
-        }
-
-        return temp.ToArray();
+        return playerStats.Where(x => x.gameObject.activeInHierarchy).ToArray();
     }
 
     public CharStats GetCharacterAt(int pos)

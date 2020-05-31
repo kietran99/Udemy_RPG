@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 public class InventoryHolder
 {
@@ -67,14 +69,12 @@ public class InventoryHolder
 
     public void AddAt(ItemHolder itemHolderToAdd, int posToAdd)
     {
-        // If adding to an empty slot
         if (itemHolders[posToAdd].IsEmpty())
         {
             itemHolders[posToAdd] = itemHolderToAdd;
             return;
         }
 
-        // Else adding to the same item
         AddToExistingItem(itemHolderToAdd, posToAdd);
     }
 
@@ -122,5 +122,37 @@ public class InventoryHolder
     {
         itemHolders[pos].Use(charToUse);
         RemoveAt(pos, 1);
-    }   
+    }
+
+    public void Organize()
+    {
+        var sortedItems = new Dictionary<string, int>();
+        var emptySlots = new Queue<int>();
+
+        for (int i = 0; i < itemHolders.Length; i++)
+        {
+            if (itemHolders[i].IsEmpty())
+            {
+                emptySlots.Enqueue(i);
+                continue;
+            }
+
+            string itemName = itemHolders[i].TheItem.ItemName;
+            try
+            {
+                sortedItems.Add(itemName, i);
+
+                if (emptySlots.Count != 0)
+                {
+                    MoveItem(i, emptySlots.Dequeue(), itemHolders[i].Amount);
+                    emptySlots.Enqueue(i);
+                }
+            }
+            catch (ArgumentException)
+            {
+                MoveItem(i, sortedItems[itemName], itemHolders[i].Amount);
+            }
+          
+        }
+    }
 }

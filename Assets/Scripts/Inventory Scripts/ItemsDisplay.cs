@@ -47,7 +47,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
     {
         InitEssentials(); 
         InitInvStates();
-        InitButtonsGUI();
+        InitItemButtons();
         DisplayAll(); 
     }
 
@@ -99,7 +99,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
         currentState    = defaultState;
     }
 
-    private void InitButtonsGUI()
+    private void InitItemButtons()
     {
         GameObject temp = null;
         itemButtons = new ItemButton[ItemManager.MAX_INVENTORY_SIZE];
@@ -110,9 +110,6 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
             temp.transform.SetParent(inventoryOrganizer.transform);
             itemButtons[i] = temp.GetComponent<ItemButton>();
             itemButtons[i].Init((IClickInvoker) this, i);
-            //itemButtons[i].ButtonPos = i;
-            //int tempInt = i;
-            //itemButtons[i].GetComponent<Button>().onClick.AddListener(() => OnItemSelected(tempInt)); // lambdas expressions -> pass by ref
         }
     }
 
@@ -145,7 +142,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
 
     public void Organize()
     {
-        ItemManager.Instance.Organize(currentPossessor);
+        ItemManager.Instance.GetInvHolder(currentPossessor).Organize();
         DisplayAll();
     }
 

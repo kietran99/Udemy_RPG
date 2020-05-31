@@ -16,12 +16,8 @@ public class PrimaryActionInvoker
 
     public void ToggleEquipAbility()
     {
-        // Get the current possessor's inventory
         InventoryHolder invHolder = ItemManager.Instance.GetInvHolder(itemsDisplay.CurrentPossessor);
-
-        // Equip/Unequip selected item to a CharStats
-        ItemHolder holderToToggle = invHolder.ItemHolders[itemsDisplay.SelectedPos];
-        Equipment itemToToggle = (Equipment) holderToToggle.TheItem;
+        Equipment itemToToggle = (Equipment) ItemManager.Instance.GetItemAt(itemsDisplay.SelectedPos, itemsDisplay.CurrentPossessor);
         itemToToggle.ToggleEquipAbility(PossessorSearcher.GetPossessor(itemsDisplay.CurrentPossessor));
 
         if (invHolder.ItemHolders[itemsDisplay.SelectedPos].IsEquipped)
@@ -36,8 +32,7 @@ public class PrimaryActionInvoker
             {                
                 OrganizeAfterToggle(invHolder, equippedItemPos, false);
             }
-
-            // Find first empty slot in inventory then add the item to be equipped           
+    
             OrganizeAfterToggle(invHolder, itemsDisplay.SelectedPos, true);
         }
 
