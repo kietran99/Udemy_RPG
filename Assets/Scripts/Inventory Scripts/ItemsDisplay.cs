@@ -122,7 +122,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
 
         for (int i = 0; i < ItemManager.MAX_INVENTORY_SIZE; i++)
         {
-            itemButtons[i].DisplayItem(currentInv[i].TheItem.Image, currentInv[i].Amount, currentInv[i].IsEquipped);
+            itemButtons[i].DisplayItem(currentInv[i]);
         }
     }
 

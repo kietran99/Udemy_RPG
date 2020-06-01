@@ -43,30 +43,16 @@ public class GameManager : MonoBehaviour
 
     public int GetNumActives()
     {
-        return playerStats.Where(x => x.gameObject.activeInHierarchy).ToArray().Length;
+        return Functional.HigherOrderFunc.Filter(x => x.gameObject.activeInHierarchy, playerStats).Length;
     }
 
     public CharStats[] GetActiveChars()
     {
-        return playerStats.Where(x => x.gameObject.activeInHierarchy).ToArray();
+        return Functional.HigherOrderFunc.Filter(x => x.gameObject.activeInHierarchy, playerStats);
     }
 
     public CharStats GetCharacterAt(int pos)
     {
         return playerStats[pos];
-    }
-
-    public CharStats[] GetEquippableChars(Equipment equipment)
-    {
-        List <CharStats> equippables = new List<CharStats>();
-
-        CharStats[] activeChars = GetActiveChars();
-
-        foreach (CharName charName in equipment.EquippableChars)
-        {
-            equippables.Add(activeChars.Where(x => x.CharacterName.Equals(charName.CharacterName)).ToArray()[0]);
-        }
-
-        return equippables.ToArray();
     }
 }

@@ -117,7 +117,7 @@ MonoBehaviour:
   m_MinSize: {x: 951, y: 442}
   m_MaxSize: {x: 22006, y: 10021}
   vertical: 0
-  controlID: 22
+  controlID: 176
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 442}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 190
+  controlID: 177
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,8 +189,8 @@ MonoBehaviour:
     y: 482
     width: 863
     height: 465
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_MinSize: {x: 242, y: 442}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 83
+  controlID: 153
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -319,8 +319,8 @@ MonoBehaviour:
     y: 0
     width: 352
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -689,7 +689,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b2360000
+      m_SelectedIDs: 
       m_LastClickedID: 0
       m_ExpandedIDs: 60fbffff
       m_RenameOverlay:
@@ -785,20 +785,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scriptable Objects/Items/Equipments/Weapons/Swords
+    - Assets/Scripts/Utility Scripts
   m_ViewMode: 1
   m_StartGridSize: 63
   m_LastFolders:
-  - Assets/Scriptable Objects/Items/Equipments/Weapons/Swords
+  - Assets/Scripts/Utility Scripts
   m_LastFoldersGridSize: 63
   m_LastProjectPath: D:\Unity\Udemy RPG
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: a8500000
-    m_LastClickedID: 20648
-    m_ExpandedIDs: 0000000056500000585000005a5000005c5000005e5000006050000062500000645000006650000078500000925000009450000000ca9a3b
+    m_SelectedIDs: 86500000
+    m_LastClickedID: 20614
+    m_ExpandedIDs: 00000000585000005a5000005c5000005e500000605000006250000064500000665000006850000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -826,7 +826,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000056500000585000005a5000005c5000005e50000060500000625000006450000066500000
+    m_ExpandedIDs: 00000000585000005a5000005c5000005e5000006050000062500000645000006650000068500000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -853,7 +853,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 723200005a300000fe4400004a4700005047000058470000163f0000ec4300007e3600003a3c00001c4e0000983d0000763d000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Inventory;
 
 public class SellMenuController : TradeMenuController
@@ -59,8 +57,9 @@ public class SellMenuController : TradeMenuController
     {
         if (changeAmount <= 0) return;
 
+        int totalSellValue = invController.CurrentInv[selectedPos].TheItem.SellValue;
         ItemManager.Instance.RemoveItemAt(invController.CharCycler.CurrPos, selectedPos, changeAmount);
-        ItemManager.Instance.CurrentGold += invController.CurrentInv[selectedPos].TheItem.SellValue * changeAmount;
+        ItemManager.Instance.CurrentGold += totalSellValue * changeAmount;
         itemDisplay.UpdateSlot(selectedPos, invController.CurrentInv[selectedPos]);
         dialog.TradeSuccessful();
     }

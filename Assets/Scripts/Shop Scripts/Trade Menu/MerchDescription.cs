@@ -47,60 +47,57 @@ public class MerchDescription : MonoBehaviour, ILiveAmountObserver
             GameObject panel = Instantiate(statChangePrototype);
             panel.SetActive(false);
             panel.transform.SetParent(statChangeLayout.transform);
-
             statChanges[i] = panel.GetComponent<CharStatChange>();
         }       
     }
 
     public void UpdateDesc(Equipment merch, int tradeValue)
     {
-        Reset();
+        CharStats[] equippables = merch.GetEquippableChars();
+        UpdateTextsAndTradeValue(merch, tradeValue);       
+        DisplayStatsChange(equippables, merch);     
+        HideUnequippableChars(equippables.Length);
+    }
 
+    public void UpdateDesc(Item merch, int tradeValue)
+    {
+        UpdateTextsAndTradeValue(merch, tradeValue);
+    }
+
+    private void UpdateTextsAndTradeValue(Item merch, int tradeValue)
+    {
+        Reset();
+        this.tradeValue = tradeValue;
         changeStatText.text = merch.GetItemType();
         currentGoldText.text = ItemManager.Instance.CurrentGold + " G";
-        this.tradeValue = tradeValue;
-        totalCostText.text = this.tradeValue.ToString();
-        itemDescText.text = merch.Description;
+        itemDescText.text = merch.Description;       
+        totalCostText.text = tradeValue.ToString();
+    }
 
-        CharStats[] equippables = GameManager.Instance.GetEquippableChars(merch);
-
-        // Display equippable characters' stats changes
+    private void DisplayStatsChange(CharStats[] equippables, Equipment merch)
+    {
         for (int i = 0; i < equippables.Length; i++)
         {
             CharStats currStats = equippables[i];
             statChanges[i].gameObject.SetActive(true);
 
             if (currStats.EquippedWeapon.ItemName.Equals(merch.ItemName))
-            {                
+            {
                 statChanges[i].DisplayUnchangeStat(currStats.CharacterName, merch.GetCorresStat(currStats));
             }
             else
-            {                
+            {
                 statChanges[i].DisplayChangeStat(currStats.CharacterName, merch.GetCorresStat(currStats), merch.GetPostChangeStat(currStats));
             }
         }
+    }
 
-        for (int i = equippables.Length; i < statChanges.Length; i++)
+    private void HideUnequippableChars(int nEquippables)
+    {
+        for (int i = nEquippables; i < statChanges.Length; i++)
         {
             statChanges[i].gameObject.SetActive(false);
         }
-    }
-
-    //public void UpdateDesc(ConsumableItem merch)
-    //{
-    //    changeStatText.text = merch.GetItemType();
-    //    currentGoldText.text = ItemManager.Instance.CurrentGold.ToString();
-    //    itemDescText.text = merch.Description;
-    //}
-
-    public void UpdateDesc(Item merch, int tradeValue)
-    {
-        Reset();
-        changeStatText.text = merch.GetItemType();
-        currentGoldText.text = ItemManager.Instance.CurrentGold.ToString();
-        itemDescText.text = merch.Description;
-        this.tradeValue = tradeValue;
-        totalCostText.text = tradeValue.ToString();
     }
 
     private void Reset()

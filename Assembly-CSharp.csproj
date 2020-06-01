@@ -135,6 +135,7 @@
     <Compile Include="Assets\Scripts\UI Scripts\UIDisplay.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\UIFade.cs" />
     <Compile Include="Assets\Scripts\Utility Scripts\CircularLinkedList.cs" />
+    <Compile Include="Assets\Scripts\Utility Scripts\Functional.cs" />
     <Compile Include="Assets\Scripts\Utility Scripts\LongClickInvoker.cs" />
     <None Include="Assets\Udemy RPG Assets\Licence.txt" />
     <Reference Include="UnityEngine">

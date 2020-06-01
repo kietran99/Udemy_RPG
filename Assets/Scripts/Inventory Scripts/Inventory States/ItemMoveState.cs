@@ -19,9 +19,6 @@ public class ItemMoveState : InventoryState
 
     public void OnAmountConfirm(int changeAmount)
     {       
-        //Item temp = ItemManager.Instance.GetItemAt(fromPos, fromPossessor);
-        //ItemManager.Instance.RemoveItemAt(fromPossessor, fromPos, changeAmount);
-        //ItemManager.Instance.AddItemAt(toPossessor, new ItemHolderFactory().CreateRegularHolder(temp, changeAmount), toPos);
         ItemManager.Instance.GetInvHolder(fromPossessor).MoveItem(fromPos, toPos, changeAmount, ItemManager.Instance.GetInvHolder(toPossessor));
         itemsDisplay.ToDefaultState();
     }  
@@ -30,8 +27,9 @@ public class ItemMoveState : InventoryState
     {
         this.toPos = toPos;
         toPossessor = itemsDisplay.CurrentPossessor;
+        ItemHolder[] currentInv = ItemManager.Instance.GetInventory(toPossessor);
 
-        if (ItemManager.Instance.GetInventory(toPossessor)[toPos].IsEmpty())
+        if (currentInv[toPos].IsEmpty() || currentInv[toPos].IdenticalItem(currentInv[fromPos]))
         {
             itemsDisplay.EnableAmountSelector(itemQuantity);
             promptText.SetActive(false);

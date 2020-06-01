@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Equipment : Item
 {
@@ -23,6 +20,9 @@ public abstract class Equipment : Item
         currentAction = EQUIP_ACTION;
     }
 
+    public abstract int GetCorresStat(CharStats stats);
+    public abstract int GetPostChangeStat(CharStats stats);
+
     public override string GetPrimaryAction()
     {
         return currentAction;
@@ -42,12 +42,13 @@ public abstract class Equipment : Item
     public abstract void ToggleEquipAbility(CharStats stats);   
 
     public bool CanEquip(string charName)
-    { 
-        if (equippableChars.Where(x => x.CharacterName.Equals(charName)).ToArray().Length > 0) return true;
-
-        return false;
+    {
+        return Functional.HigherOrderFunc.Filter(x => x.CharacterName.Equals(charName), equippableChars).Length > 0;
     }
 
-    public abstract int GetCorresStat(CharStats stats);
-    public abstract int GetPostChangeStat(CharStats stats);
+    public CharStats[] GetEquippableChars()
+    {        
+        CharStats[] activeChars = GameManager.Instance.GetActiveChars();     
+        return Functional.HigherOrderFunc.Filter(x => CanEquip(x.CharacterName), activeChars);
+    }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-
+using UnityEngine;
 public class InventoryHolder
 {
     #region
@@ -72,10 +71,11 @@ public class InventoryHolder
         if (itemHolders[posToAdd].IsEmpty())
         {
             itemHolders[posToAdd] = itemHolderToAdd;
-            return;
         }
-
-        AddToExistingItem(itemHolderToAdd, posToAdd);
+        else 
+        {
+            AddToExistingItem(itemHolderToAdd, posToAdd);
+        }
     }
 
     private void AddToExistingItem(ItemHolder itemHolderToAdd, int posToAdd)
@@ -91,7 +91,7 @@ public class InventoryHolder
 
     public ItemHolder[] GetEquippedItems()
     {
-        return itemHolders.Where(x => x.IsEquipped).ToArray();
+        return Functional.HigherOrderFunc.Filter(x => x.IsEquipped, itemHolders);
     }
 
     public int FindSameEquippedType(Equipment itemToCompare)
@@ -110,12 +110,25 @@ public class InventoryHolder
     {
         if (amount <= 0) return;
 
-        ItemHolder holderToMove = new ItemHolderFactory().CreateRegularHolder(itemHolders[fromPos].TheItem, amount);
+        int amountToMove = amount, destAmount = itemHolders[toPos].Amount;
+
+        if (destAmount + amount > ItemHolder.ITEM_CAPACITY) amountToMove = ItemHolder.ITEM_CAPACITY - destAmount;
+
+        ItemHolder holderToMove;
+
+        if (itemHolders[fromPos].IsEquipped)
+        {
+            holderToMove = new ItemHolderFactory().CreateEquipmentHolder(itemHolders[fromPos].TheItem);
+        }
+        else
+        {
+            holderToMove = new ItemHolderFactory().CreateRegularHolder(itemHolders[fromPos].TheItem, amountToMove);
+        }
 
         if (toHolder == null) AddAt(holderToMove, toPos);
         else toHolder.AddAt(holderToMove, toPos);
 
-        RemoveAt(fromPos, amount);
+        RemoveAt(fromPos, amountToMove);
     }
 
     public void UseItem(int pos, CharStats charToUse)
@@ -141,18 +154,23 @@ public class InventoryHolder
             try
             {
                 sortedItems.Add(itemName, i);
-
-                if (emptySlots.Count != 0)
-                {
-                    MoveItem(i, emptySlots.Dequeue(), itemHolders[i].Amount);
-                    emptySlots.Enqueue(i);
-                }
             }
             catch (ArgumentException)
             {
+                Debug.Log(sortedItems[itemName]);
                 MoveItem(i, sortedItems[itemName], itemHolders[i].Amount);
+                if (itemHolders[i].IsEmpty()) continue;
             }
-          
+            finally
+            {
+                if (emptySlots.Count != 0)
+                {
+                    int emptySlot = emptySlots.Dequeue();
+                    MoveItem(i, emptySlot, itemHolders[i].Amount);
+                    sortedItems[itemName] = emptySlot;
+                    emptySlots.Enqueue(i); 
+                }
+            }
         }
     }
 }

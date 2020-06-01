@@ -30,9 +30,9 @@ public class ItemButton : MonoBehaviour
         this.buttonPos = buttonPos;
     }
 
-    public void DisplayItem(Sprite itemSprite, int amount, bool isEquipped)
+    public void DisplayItem(ItemHolder holder)
     {
-        if (itemSprite == null)
+        if (holder.TheItem.Image == null)
         {
             itemImage.enabled = false;
             amountText.enabled = false;
@@ -41,9 +41,15 @@ public class ItemButton : MonoBehaviour
         {
             itemImage.enabled = true;
             amountText.enabled = true;
-            itemImage.sprite = itemSprite;
-            if (isEquipped) amountText.text = "E";
-            else amountText.text = amount.ToString();
+            itemImage.sprite = holder.TheItem.Image;
+            if (holder.IsEquipped)
+            {
+                amountText.text = "E";
+            }
+            else
+            {
+                amountText.text = holder.Amount.ToString();
+            }
         }
     }
 
