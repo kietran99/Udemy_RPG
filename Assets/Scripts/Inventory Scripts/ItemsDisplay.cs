@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
@@ -12,14 +12,18 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
     public int SelectedPos { get { return selectedPos; } set { selectedPos = value; } }
     #endregion
 
+    #region skip
     [SerializeField]
     private Text itemNameText = null, itemDescriptionText = null, possessorText = null;
+    #endregion
 
     [SerializeField]
     private Text primaryActionText = null;
-    
+
+    #region skip
     [SerializeField]
     private GameObject inventoryOrganizer = null, templateButton = null;
+    #endregion
 
     [SerializeField]
     private GameObject itemInteractor = null, amountSelector = null, itemMovement = null, userChooser = null;
@@ -33,14 +37,18 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
 
     private ItemHolder[] currentInv;
 
+    #region skip
     private ItemButton[] itemButtons;
+    #endregion
 
     private int selectedPos;
 
+    #region skip
     private CircularLinkedList<PossessorSearcher.ItemPossessor> invList;
 
     private InventoryState defaultState, itemMoveState, discardState, itemUseState;
     private InventoryState currentState;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -146,13 +154,6 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
         DisplayAll();
     }
 
-    /*public void OnItemSelected(int pos)
-    {
-        selectedPos = pos;
-        currentState.OnItemSelected(pos);
-        if (currentState == defaultState) primaryActionButton.interactable = SetPrimaryButtonInteractable();
-    }*/
-
     public void DisplayItemDetails(int pos)
     {
         Item selectedItem = currentInv[pos].TheItem;
@@ -169,6 +170,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
         }       
     }
 
+    #region skip
     public void NextPossessor()
     {
         string possText = "";
@@ -198,6 +200,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
         possessorText.text = possText;
         DisplayAll();
     }
+    #endregion
 
     public void Discard()
     {

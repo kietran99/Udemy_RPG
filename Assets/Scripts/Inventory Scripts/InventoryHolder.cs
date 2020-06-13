@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-public class InventoryHolder
+public class InventoryHolder: IInventoryHolder
 {
     #region
     public PossessorSearcher.ItemPossessor Possessor { get { return possessor; } set { possessor = value; } }
@@ -30,7 +30,7 @@ public class InventoryHolder
         for (int i = 0; i < itemHolders.Length; i++)
         {
             if (i == posToSkip) continue;
-            if (itemToCheck.TheItem.IsEqual(itemHolders[i].TheItem)) return i;
+            if (itemToCheck.TheItem.Equals(itemHolders[i].TheItem)) return i;
         }
 
         return POSITION_INVALID;
@@ -106,9 +106,9 @@ public class InventoryHolder
         return POSITION_INVALID;
     }
 
-    public void MoveItem(int fromPos, int toPos, int amount, InventoryHolder toHolder = null)
+    public void MoveItem(int fromPos, int toPos, int amount, IInventoryHolder toHolder = null)
     {
-        if (amount <= 0) return;
+        if (amount <= 0 || itemHolders[fromPos].IsEmpty()) return;
 
         int amountToMove = amount, destAmount = itemHolders[toPos].Amount;
 
@@ -157,13 +157,16 @@ public class InventoryHolder
             }
             catch (ArgumentException)
             {
-                Debug.Log(sortedItems[itemName]);
                 MoveItem(i, sortedItems[itemName], itemHolders[i].Amount);
-                if (itemHolders[i].IsEmpty()) continue;
+
+                if (itemHolders[sortedItems[itemName]].IsFull()) sortedItems.Remove("itemName");
+
+                if (itemHolders[i].IsEmpty()) emptySlots.Enqueue(i);
+                else sortedItems[itemName] = i;
             }
             finally
             {
-                if (emptySlots.Count != 0)
+                if (emptySlots.Count != 0 && !itemHolders[i].IsEmpty())
                 {
                     int emptySlot = emptySlots.Dequeue();
                     MoveItem(i, emptySlot, itemHolders[i].Amount);

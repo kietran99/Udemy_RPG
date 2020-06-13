@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Inventory;
+using RPG.Inventory;
 
 public class SellMenuController : TradeMenuController
 {

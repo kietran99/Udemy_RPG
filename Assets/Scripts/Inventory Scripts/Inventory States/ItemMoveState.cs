@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemMoveState : InventoryState
@@ -29,7 +27,7 @@ public class ItemMoveState : InventoryState
         toPossessor = itemsDisplay.CurrentPossessor;
         ItemHolder[] currentInv = ItemManager.Instance.GetInventory(toPossessor);
 
-        if (currentInv[toPos].IsEmpty() || currentInv[toPos].IdenticalItem(currentInv[fromPos]))
+        if (currentInv[toPos].IsEmpty() || currentInv[toPos].SameItem(currentInv[fromPos]))
         {
             itemsDisplay.EnableAmountSelector(itemQuantity);
             promptText.SetActive(false);

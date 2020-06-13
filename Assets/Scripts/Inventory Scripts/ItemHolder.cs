@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[System.Serializable]
+﻿[System.Serializable]
 public class ItemHolder
 {
     #region
@@ -33,14 +29,19 @@ public class ItemHolder
         isEquipped = itemHolder.isEquipped;
     }
 
-    public bool IdenticalItem(ItemHolder other)
+    public bool SameItem(ItemHolder other)
     {
-        return theItem.IsEqual(other.TheItem);
+        return theItem.Equals(other.TheItem);
     }
 
     public bool IsEmpty()
     {
         return amount <= 0;
+    }
+    
+    public bool IsFull()
+    {
+        return amount == ITEM_CAPACITY;
     }
 
     public void Use(CharStats stats)

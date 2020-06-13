@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using Inventory;
+using RPG.Inventory;
 
-public class ItemSaleDisplay : MonoBehaviour, IInventoryDisplay
+public class ItemSaleDisplay : MonoBehaviour, InventoryViewInterface
 {
     [SerializeField]
     private GameObject invSlotPrototype = null, invOrganizer = null;
@@ -30,17 +30,14 @@ public class ItemSaleDisplay : MonoBehaviour, IInventoryDisplay
         {
             GameObject btn = Instantiate(invSlotPrototype);
             itemButtons[i] = btn.GetComponent<ItemButton>();
-
-            // Set position
             btn.transform.SetParent(invOrganizer.transform);
 
-            // Set internal data
             itemButtons[i].Init((IClickInvoker)controller, i);
             itemButtons[i].DisplayItem(itemsToDisplay[i]);
         }
     }
 
-    public void UpdateInv(ItemHolder[] holders)
+    public void Display(ItemHolder[] holders)
     {      
         for (int i = 0; i < itemButtons.Length; i++)
         {
