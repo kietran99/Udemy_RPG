@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Cycler;
 
 namespace RPG.Inventory
@@ -15,27 +13,28 @@ namespace RPG.Inventory
         [SerializeField]
         private CharCycler charCycler = null;
 
-        private ItemHolder[] currentInv;
+        [SerializeField]
+        private GameObject invViewObject = null;
 
         private InventoryViewInterface invView;
 
-        public void Activate(InventoryViewInterface invView)
-        {
+        private ItemHolder[] currentInv;     
+
+        public void Init(InventoryViewInterface invView)
+        {          
             this.invView = invView;
-            charCycler.Activate((ICycleObserver<PossessorSearcher.ItemPossessor>) this);
+            charCycler.Activate(this);
             currentInv = ItemManager.Instance.GetInventory(PossessorSearcher.ItemPossessor.BAG);
         }
 
         // Start is called before the first frame update
         void Start()
         {
+            if (invView == null) invView = invViewObject.GetComponent<InventoryViewInterface>();
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            charCycler.Activate(this);
+            currentInv = ItemManager.Instance.GetInventory(PossessorSearcher.ItemPossessor.BAG);
+            invView.Display(currentInv);
         }
 
         public void OnCycle(PossessorSearcher.ItemPossessor possessor)

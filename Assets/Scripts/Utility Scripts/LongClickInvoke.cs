@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LongClickInvoker : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class LongClickInvoke : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool mouseHold;
     private float ptrDownTimer = 0f;
@@ -22,12 +22,6 @@ public class LongClickInvoker : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     {
         Reset();
         mouseHold = false;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame

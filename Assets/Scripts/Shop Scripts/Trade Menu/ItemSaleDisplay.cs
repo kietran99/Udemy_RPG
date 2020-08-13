@@ -7,18 +7,6 @@ public class ItemSaleDisplay : MonoBehaviour, InventoryViewInterface
     private GameObject invSlotPrototype = null, invOrganizer = null;
 
     private ItemButton[] itemButtons;
-   
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Init(SellMenuController controller, ItemHolder[] itemsToDisplay)
     {

@@ -7,12 +7,10 @@ public class ItemPickUp : MonoBehaviour
 
     private bool canPickUp;
 
-    private AbstractItemHolderFactory itemHolderFactory;
-
     // Start is called before the first frame update
     void Start()
     {
-        itemHolderFactory = new ItemHolderFactory();
+        
     }
 
     // Update is called once per frame
@@ -20,6 +18,7 @@ public class ItemPickUp : MonoBehaviour
     {
         if (canPickUp && Input.GetButtonDown("Fire1") && PlayerController.Instance.canMove)
         {
+            AbstractItemHolderFactory itemHolderFactory = new ItemHolderFactory();
             int invAvail = ItemManager.Instance.AddItem(PossessorSearcher.ItemPossessor.BAG, itemHolderFactory.CreateItemToObtainHolder(itemToPickUp));
             if (invAvail == -1) Debug.LogError("INVENTORY FULL!");
             else Destroy(gameObject);

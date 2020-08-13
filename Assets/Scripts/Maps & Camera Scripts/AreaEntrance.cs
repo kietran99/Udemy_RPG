@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class AreaEntrance : MonoBehaviour, UIFade.IFade
+public class AreaEntrance : MonoBehaviour
 {
     public string AreaTransitionName { set { areaTransitionName = value; } }
 
@@ -23,18 +21,12 @@ public class AreaEntrance : MonoBehaviour, UIFade.IFade
         }
        
         fadeScreen = FindObjectOfType<UIFade>();
-        if (fadeScreen != null) fadeScreen.FadeFromBlack(this);
+        if (fadeScreen != null) fadeScreen.FadeFromBlack();
 
         GameManager.Instance.fadingBetweenAreas = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void OnCompleted()
+    public void DestroyFadeScreenAfterFaded()
     {
         Destroy(fadeScreen.gameObject);
     }

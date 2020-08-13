@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AreaExit : MonoBehaviour, UIFade.IFade
+public class AreaExit : MonoBehaviour
 {
     public string areaToLoad;
 
@@ -16,27 +16,20 @@ public class AreaExit : MonoBehaviour, UIFade.IFade
     void Start()
     {
         areaEntrance.AreaTransitionName = areaTransitionName;
+        UIFade.OnFadeComplete += LoadSceneAfterFaded;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {           
-            Instantiate(fadeScreen).GetComponent<UIFade>().FadeToBlack(this);
+        if (!other.CompareTag("Player")) return;
 
-            GameManager.Instance.fadingBetweenAreas = true;
+        Instantiate(fadeScreen).GetComponent<UIFade>().FadeToBlack();
 
-            PlayerController.Instance.AreaTransitionName = areaTransitionName;
-        }
+        GameManager.Instance.fadingBetweenAreas = true;
+
+        PlayerController.Instance.AreaTransitionName = areaTransitionName;
     }
 
-    public void OnCompleted()
+    public void LoadSceneAfterFaded()
     {
         SceneManager.LoadScene(areaToLoad);
     }

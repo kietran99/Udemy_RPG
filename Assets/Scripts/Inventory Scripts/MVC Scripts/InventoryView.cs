@@ -1,28 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
+using Functional;
 
 namespace RPG.Inventory
 {
-    public class InventoryView : MonoBehaviour, InventoryViewInterface
+    public class InventoryView : MonoBehaviour, InventoryViewInterface, IClickInvoker
     {
-        #region
-        public Text ItemNameText { get { return itemNameText; } }
-        public Text ItemDescriptionText { get { return itemDescriptionText; } }
-        public Text PrimaryActionText { get { return primaryActionText; } }
-        #endregion
-
         [SerializeField]
-        private Text itemNameText = null,
-                        itemDescriptionText = null,
-                        possessorText = null,
-                        primaryActionText = null;
+        private ItemDetailsView itemDetails = null;
 
         [SerializeField]
         private GameObject inventoryOrganizer = null, templateButton = null;
 
         private ItemButton[] itemButtons;
+
+        public Func<int, Item> OnItemButtonClick;
 
         // Start is called before the first frame update
         void Start()
@@ -34,19 +27,22 @@ namespace RPG.Inventory
                 GameObject itemBtn = Instantiate(templateButton);
                 itemBtn.transform.SetParent(inventoryOrganizer.transform);
                 itemButtons[i] = itemBtn.GetComponent<ItemButton>();
-                itemButtons[i].Init((IClickInvoker)this, i);
+                itemButtons[i].Init((IClickInvoker) this, i);
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         public void Display(ItemHolder[] holders)
         {
-            throw new System.NotImplementedException();
+            //HigherOrderFunc.Map((button) => button.DisplayItem(), itemButtons);
+            for (int i = 0; i < ItemManager.MAX_INVENTORY_SIZE; i++)
+            {
+                itemButtons[i].DisplayItem(holders[i]);
+            }
+        }
+
+        public void OnInvokeeClick(int idx)
+        {
+            
         }
     }
 }

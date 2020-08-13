@@ -15,21 +15,15 @@ public class StatsDisplay : UIDisplay
         linkedPlayerStats.Append(GameManager.Instance.PlayerStats);
         DisplayAll();
     }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     void OnEnable()
     {
         if (linkedPlayerStats == null) return;
+
         linkedPlayerStats.RevertToDefault();
         DisplayAll();
     }
 
-    // Iterate through the next player that is active
     public void NextChar()
     {
         do

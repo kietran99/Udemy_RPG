@@ -1,20 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIFade : MonoBehaviour
-{
-    public interface IFade
-    {
-        void OnCompleted();
-    }
-
-    private IFade fadeCaller;
-
+{    
     public Image fadeScreen;
 
     public float fadeSpeed;
 
     private bool shouldFadeToBlack, shouldFadeFromBlack;
+
+    public static Action OnFadeComplete;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +29,7 @@ public class UIFade : MonoBehaviour
             if (fadeScreen.color.a == 1f)
             {
                 shouldFadeToBlack = false;
-                fadeCaller.OnCompleted();
+                OnFadeComplete();
             }
 
             return;
@@ -47,21 +43,19 @@ public class UIFade : MonoBehaviour
             if (fadeScreen.color.a == 0f)
             {
                 shouldFadeFromBlack = false;
-                fadeCaller.OnCompleted();
+                OnFadeComplete();
             }
         }
     }
 
-    public void FadeToBlack(IFade fadeCaller)
+    public void FadeToBlack()
     {
-        this.fadeCaller = fadeCaller;
         shouldFadeToBlack = true;
         shouldFadeFromBlack = false;
     }
 
-    public void FadeFromBlack(IFade fadeCaller)
+    public void FadeFromBlack()
     {
-        this.fadeCaller = fadeCaller;
         shouldFadeToBlack = false;
         shouldFadeFromBlack = true;
     }

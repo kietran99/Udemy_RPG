@@ -6,7 +6,6 @@ public class DialogManager : MonoBehaviour
 {
     #region
     public static DialogManager Instance { get { return instance; } set { instance = value; } }
-    public float SecsToNextDialog { get { return secsToNextDialog; } }
     public GameObject DialogBox { get { return dialogBox; } }
     #endregion
 
@@ -35,11 +34,11 @@ public class DialogManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
         } 
-        else if (Instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -50,7 +49,6 @@ public class DialogManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // disable any dialog activation for dialogDelay seconds
         if (secsToNextDialog >= 0f)
         {
             secsToNextDialog -= Time.deltaTime;
@@ -59,7 +57,6 @@ public class DialogManager : MonoBehaviour
 
         if (dialogBox.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
         {
-            // if a dialog sentence is being typed, stop the current typing then show the whole sentence
             if (isTyping)
             {
                 StopCoroutine("TypeSentence");
@@ -68,7 +65,6 @@ public class DialogManager : MonoBehaviour
                 return;
             }
 
-            // else move to next line of dialog
             currentLine++;
 
             if (currentLine >= dialogLines.Length)
@@ -82,6 +78,11 @@ public class DialogManager : MonoBehaviour
                 StartCoroutine("TypeSentence");
             }
         }
+    }
+
+    public bool CanLoadNextSentence()
+    {
+        return secsToNextDialog <= 0f;
     }
 
     private IEnumerator TypeSentence()

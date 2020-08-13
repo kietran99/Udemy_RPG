@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace RPG.Inventory
+﻿namespace RPG.Inventory
 {
     public interface InventoryControllerInterface
     {

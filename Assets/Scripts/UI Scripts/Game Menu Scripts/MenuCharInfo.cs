@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Text;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuCharInfo : MonoBehaviour
@@ -16,8 +17,8 @@ public class MenuCharInfo : MonoBehaviour
     {
         nameText.text = playerStats.CharacterName;
         lvText.text = "Lv: " + playerStats.PlayerLevel.ToString();
-        hpText.text = "" + playerStats.CurrentHP + "/" + playerStats.MaxHP;
-        mpText.text = "" + playerStats.CurrentMP + "/" + playerStats.MaxMP;
+        hpText.text = AmountStringFormat(playerStats.CurrentHP, playerStats.MaxHP);
+        mpText.text = AmountStringFormat(playerStats.CurrentMP, playerStats.MaxMP);
         hpSlider.maxValue = playerStats.MaxHP;
         hpSlider.value = playerStats.CurrentHP;
         mpSlider.maxValue = playerStats.MaxMP;
@@ -27,15 +28,14 @@ public class MenuCharInfo : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private string AmountStringFormat(int current, int max)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StringBuilder sb = new StringBuilder();
+        sb.Append((current < 10) ? "0" : "");
+        sb.Append(current);
+        sb.Append("/");
+        sb.Append((max < 10) ? "0" : "");
+        sb.Append(max);
+        return sb.ToString();
     }
 }

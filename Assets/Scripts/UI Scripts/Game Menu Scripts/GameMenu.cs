@@ -17,25 +17,18 @@ public class GameMenu : MonoBehaviour
 
     private CharStats[] playerStats;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire2"))
+        if (!Input.GetButtonDown("Fire2")) return;
+
+        if (theMenu.activeInHierarchy)
         {
-            if (theMenu.activeInHierarchy)
-            {
-                CloseMenu();
-            }
-            else 
-            {
-                OpenMenu();
-            }
+            CloseMenu();
+        }
+        else
+        {
+            OpenMenu();
         }
     }
 

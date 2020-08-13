@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class CameraController : MonoBehaviour
@@ -33,10 +31,8 @@ public class CameraController : MonoBehaviour
     {
         if (smallScene) return;
 
-        // Make the camera follow the player
         transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
 
-        // Keep the camera inside the map
         transform.position = new Vector3(
                             Mathf.Clamp(transform.position.x, bottomLeftLimit.x, topRightLimit.x),
                             Mathf.Clamp(transform.position.y, bottomLeftLimit.y, topRightLimit.y),

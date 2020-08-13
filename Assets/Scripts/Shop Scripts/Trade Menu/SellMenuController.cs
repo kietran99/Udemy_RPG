@@ -35,7 +35,7 @@ public class SellMenuController : TradeMenuController
 
     private void OnEnable()
     {
-        invController.Activate(itemDisplay);
+        invController.Init(itemDisplay);
         itemDisplay.Init(this, invController.CurrentInv);
     }
 
