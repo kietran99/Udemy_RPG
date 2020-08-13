@@ -59,7 +59,7 @@ public class BuyMenuController : TradeMenuController
         gameObject.SetActive(false);
     }
 
-    public override void OnInvokeeClick(int pos)
+    public override void OnButtonClick(int pos)
     {
         selectedMerch = merchToDisplay[pos];
         if (selectedMerch is Equipment) merchDescription.UpdateDesc(selectedMerch as Equipment, selectedMerch.BuyValue);

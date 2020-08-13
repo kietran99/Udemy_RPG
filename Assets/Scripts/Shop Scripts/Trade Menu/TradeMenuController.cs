@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class TradeMenuController : MonoBehaviour, IClickInvoker, IAmountConfirmable
+public abstract class TradeMenuController : MonoBehaviour, IClickObserve, IAmountConfirmable
 {
     protected ShopDialog dialog;
 
@@ -14,5 +14,5 @@ public abstract class TradeMenuController : MonoBehaviour, IClickInvoker, IAmoun
     protected GameObject defaultActions = null;
 
     public abstract void OnAmountConfirm(int changeAmount);
-    public abstract void OnInvokeeClick(int pos);
+    public abstract void OnButtonClick(int pos);
 }

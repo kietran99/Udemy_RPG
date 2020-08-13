@@ -1,11 +1,19 @@
-﻿using UnityEngine.UI;
-
-namespace RPG.Inventory
+﻿namespace RPG.Inventory
 {
+    public struct DetailData
+    {
+        public string name;
+        public string description;
+
+        public DetailData(string name, string description)
+        {
+            this.name = name;
+            this.description = description;
+        }
+    }
+
     public interface ItemDetailsInterface
     {
-        Text ItemNameText { get; }
-        Text ItemDescriptionText { get; }
         void Show(string name, string description);
     }
 }

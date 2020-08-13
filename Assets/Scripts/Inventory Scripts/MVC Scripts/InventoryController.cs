@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Cycler;
+using System;
 
 namespace RPG.Inventory
 {
@@ -30,7 +31,13 @@ namespace RPG.Inventory
         // Start is called before the first frame update
         void Start()
         {
-            if (invView == null) invView = invViewObject.GetComponent<InventoryViewInterface>();
+            if (invView == null)
+            {
+                invView = invViewObject.GetComponent<InventoryViewInterface>();
+                //-----------------------------
+                ((InventoryView)invView).OnItemButtonClick += GetItemDetails;
+                    //------------------------
+            }
 
             charCycler.Activate(this);
             currentInv = ItemManager.Instance.GetInventory(PossessorSearcher.ItemPossessor.BAG);
@@ -41,6 +48,13 @@ namespace RPG.Inventory
         {
             currentInv = ItemManager.Instance.GetInventory(possessor);
             invView.Display(currentInv);
+        }
+
+        private DetailData GetItemDetails(int idx)
+        {
+            Item item = currentInv[idx].TheItem;
+
+            return new DetailData(item.ItemName, item.Description);
         }
     }
 }

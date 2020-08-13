@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
+public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
 {  
     #region
     public Text ItemNameText { get { return itemNameText; } }
@@ -117,7 +117,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
             temp = Instantiate(templateButton);
             temp.transform.SetParent(inventoryOrganizer.transform);
             itemButtons[i] = temp.GetComponent<ItemButton>();
-            itemButtons[i].Init((IClickInvoker) this, i);
+            itemButtons[i].Init((IClickObserve) this, i);
         }
     }
 
@@ -281,7 +281,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickInvoker
         return false;
     }
 
-    public void OnInvokeeClick(int val)
+    public void OnButtonClick(int val)
     {
         selectedPos = val;
         currentState.OnItemSelected(val);

@@ -5,7 +5,7 @@ using Functional;
 
 namespace RPG.Inventory
 {
-    public class InventoryView : MonoBehaviour, InventoryViewInterface, IClickInvoker
+    public class InventoryView : MonoBehaviour, InventoryViewInterface, IClickObserve
     {
         [SerializeField]
         private ItemDetailsView itemDetails = null;
@@ -15,7 +15,7 @@ namespace RPG.Inventory
 
         private ItemButton[] itemButtons;
 
-        public Func<int, Item> OnItemButtonClick;
+        public Func<int, DetailData> OnItemButtonClick;
 
         // Start is called before the first frame update
         void Start()
@@ -27,7 +27,7 @@ namespace RPG.Inventory
                 GameObject itemBtn = Instantiate(templateButton);
                 itemBtn.transform.SetParent(inventoryOrganizer.transform);
                 itemButtons[i] = itemBtn.GetComponent<ItemButton>();
-                itemButtons[i].Init((IClickInvoker) this, i);
+                itemButtons[i].Init((IClickObserve) this, i);
             }
         }
 
@@ -40,9 +40,12 @@ namespace RPG.Inventory
             }
         }
 
-        public void OnInvokeeClick(int idx)
+        public void OnButtonClick(int idx)
         {
-            
+            if (OnItemButtonClick == null) return;
+
+            DetailData data = OnItemButtonClick(idx);
+            itemDetails.Show(data.name, data.description);
         }
     }
 }

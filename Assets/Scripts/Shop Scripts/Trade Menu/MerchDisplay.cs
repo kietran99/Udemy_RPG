@@ -42,7 +42,7 @@ public class MerchDisplay : MonoBehaviour
             
             // Set internal data
             Item currentItem = merchToDisplay[i];
-            btn.GetComponent<MerchInfo>().SetData((IClickInvoker) controller, currentItem.Image, currentItem.ItemName, currentItem.BuyValue, i);
+            btn.GetComponent<MerchInfo>().SetData((IClickObserve) controller, currentItem.Image, currentItem.ItemName, currentItem.BuyValue, i);
         }
     }
 

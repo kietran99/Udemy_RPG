@@ -21,12 +21,6 @@ public class SellMenuController : TradeMenuController
         gameObject.SetActive(true);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -64,7 +58,7 @@ public class SellMenuController : TradeMenuController
         dialog.TradeSuccessful();
     }
 
-    public override void OnInvokeeClick(int pos)
+    public override void OnButtonClick(int pos)
     {
         selectedPos = pos;
         ItemHolder selectedItem = invController.CurrentInv[pos];

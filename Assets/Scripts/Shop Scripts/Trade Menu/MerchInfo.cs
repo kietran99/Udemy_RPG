@@ -11,7 +11,7 @@ public class MerchInfo : MonoBehaviour
 
     private int order;
 
-    private IClickInvoker invoker;
+    private IClickObserve invoker;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +19,7 @@ public class MerchInfo : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(() => GetOrder());
     }
 
-    public void SetData(IClickInvoker clickable, Sprite sprite, string merchName, int price, int order)
+    public void SetData(IClickObserve clickable, Sprite sprite, string merchName, int price, int order)
     {
         this.invoker = clickable;
         this.image.sprite = sprite;
@@ -30,6 +30,6 @@ public class MerchInfo : MonoBehaviour
     
     private void GetOrder()
     {
-        invoker.OnInvokeeClick(order);
+        invoker.OnButtonClick(order);
     }
 }

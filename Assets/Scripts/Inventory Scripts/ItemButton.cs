@@ -9,7 +9,7 @@ public class ItemButton : MonoBehaviour
     public int ButtonPos { get { return buttonPos; } set { buttonPos = value; } }
     #endregion
 
-    private IClickInvoker invoker;
+    private IClickObserve invoker;
 
     [SerializeField]
     private Image itemImage = null;
@@ -24,7 +24,7 @@ public class ItemButton : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(() => GetPos());
     }
 
-    public void Init(IClickInvoker invoker, int buttonPos)
+    public void Init(IClickObserve invoker, int buttonPos)
     {
         this.invoker = invoker;
         this.buttonPos = buttonPos;
@@ -55,6 +55,6 @@ public class ItemButton : MonoBehaviour
 
     private void GetPos()
     {
-        invoker.OnInvokeeClick(buttonPos);
+        invoker.OnButtonClick(buttonPos);
     }
 }
