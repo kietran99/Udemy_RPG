@@ -4,19 +4,19 @@ using UnityEngine;
 public class InventoryHolder: IInventoryHolder
 {
     #region
-    public PossessorSearcher.ItemPossessor Possessor { get { return possessor; } set { possessor = value; } }
+    public ItemPossessor Possessor { get { return possessor; } set { possessor = value; } }
     public ItemHolder[] ItemHolders { get { return itemHolders; } set { itemHolders = value; } }
     #endregion
 
     public const int POSITION_INVALID = -1;
 
-    private PossessorSearcher.ItemPossessor possessor;
+    private ItemPossessor possessor;
 
     private ItemHolder[] itemHolders;
 
     private ItemHolder nullHolder;
 
-    public InventoryHolder(PossessorSearcher.ItemPossessor possessor, int size, ItemHolder nullHolder)
+    public InventoryHolder(ItemPossessor possessor, int size, ItemHolder nullHolder)
     {
         this.possessor = possessor;
         itemHolders = new ItemHolder[size];

@@ -11,22 +11,22 @@ namespace Cycler
     public class CharCycler : MonoBehaviour
     {
         #region
-        public PossessorSearcher.ItemPossessor CurrPos { get { return currPoss; } }
+        public ItemPossessor CurrPos { get { return currPoss; } }
         #endregion
 
         [SerializeField]
         private Text possessorText = null;
 
-        private ICycleObserver<PossessorSearcher.ItemPossessor> observer;
+        private ICycleObserver<ItemPossessor> observer;
 
-        private CircularLinkedList<PossessorSearcher.ItemPossessor> charList;
+        private CircularLinkedList<ItemPossessor> charList;
 
-        private PossessorSearcher.ItemPossessor currPoss;
+        private ItemPossessor currPoss;
 
-        public void Activate(ICycleObserver<PossessorSearcher.ItemPossessor> observer)
+        public void Activate(ICycleObserver<ItemPossessor> observer)
         {
             this.observer = observer;
-            charList = new CircularLinkedList<PossessorSearcher.ItemPossessor>();
+            charList = new CircularLinkedList<ItemPossessor>();
             PossessorSearcher.FillPossessorList(charList);
             currPoss = charList.current.value;
         }

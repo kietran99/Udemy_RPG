@@ -59,9 +59,9 @@ public class ItemManager : MonoBehaviour
         int pos = 0;
         invHolders = new InventoryHolder[GameManager.MAX_PARTY_MEMBERS + 1]; // +1 for the bag inventory
 
-        foreach (PossessorSearcher.ItemPossessor possessor in (PossessorSearcher.ItemPossessor[]) System.Enum.GetValues(typeof(PossessorSearcher.ItemPossessor)))
+        foreach (ItemPossessor possessor in (ItemPossessor[]) System.Enum.GetValues(typeof(ItemPossessor)))
         {
-            if (possessor == PossessorSearcher.ItemPossessor.NONE) continue;
+            if (possessor == ItemPossessor.NONE) continue;
             invHolders[pos] = new InventoryHolder(possessor, MAX_INVENTORY_SIZE, nullHolder);
             pos++;
         }
@@ -96,7 +96,7 @@ public class ItemManager : MonoBehaviour
         invHolder.ItemHolders[13] = new ItemHolder(itemLibrary[10], 1);
     }   
 
-    public void Organize(PossessorSearcher.ItemPossessor possessor)
+    public void Organize(ItemPossessor possessor)
     {
         ItemHolder[] holders = GetInventory(possessor);
 
@@ -116,7 +116,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public InventoryHolder GetInvHolder(PossessorSearcher.ItemPossessor possessor)
+    public InventoryHolder GetInvHolder(ItemPossessor possessor)
     {
         foreach (InventoryHolder invHolder in invHolders)
         {
@@ -126,12 +126,12 @@ public class ItemManager : MonoBehaviour
         return null;
     }
 
-    public ItemHolder[] GetInventory(PossessorSearcher.ItemPossessor possessor)
+    public ItemHolder[] GetInventory(ItemPossessor possessor)
     {
         return GetInvHolder(possessor).ItemHolders;
     }
 
-    public Item GetItemAt(int pos, PossessorSearcher.ItemPossessor possessor)
+    public Item GetItemAt(int pos, ItemPossessor possessor)
     {
         ItemHolder[] inv = GetInventory(possessor);
 
@@ -140,7 +140,7 @@ public class ItemManager : MonoBehaviour
         return inv[pos].TheItem;
     }
 
-    public int GetNumOfItemsAt(int pos, PossessorSearcher.ItemPossessor possessor)
+    public int GetNumOfItemsAt(int pos, ItemPossessor possessor)
     {
         ItemHolder[] inv = GetInventory(possessor);
 
@@ -149,22 +149,22 @@ public class ItemManager : MonoBehaviour
         return inv[pos].Amount;
     }   
 
-    public int AddItem(PossessorSearcher.ItemPossessor possessor, ItemHolder itemToAdd)
+    public int AddItem(ItemPossessor possessor, ItemHolder itemToAdd)
     {
         return GetInvHolder(possessor).Add(itemToAdd);
     }
 
-    public void AddItemAt(PossessorSearcher.ItemPossessor possessor, ItemHolder itemToAdd, int posToAdd)
+    public void AddItemAt(ItemPossessor possessor, ItemHolder itemToAdd, int posToAdd)
     {
         GetInvHolder(possessor).AddAt(itemToAdd, posToAdd);
     }
 
-    public void RemoveItemAt(PossessorSearcher.ItemPossessor possessor, int posToRemove, int amount)
+    public void RemoveItemAt(ItemPossessor possessor, int posToRemove, int amount)
     {
         GetInvHolder(possessor).RemoveAt(posToRemove, amount);         
     }
 
-    public void UseItem(PossessorSearcher.ItemPossessor possessor, int pos, CharStats charToUse)
+    public void UseItem(ItemPossessor possessor, int pos, CharStats charToUse)
     {
         GetInvHolder(possessor).UseItem(pos, charToUse);       
     }   

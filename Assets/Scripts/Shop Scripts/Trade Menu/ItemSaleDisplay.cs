@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using RPG.Inventory;
+using System;
 
 public class ItemSaleDisplay : MonoBehaviour, InventoryViewInterface
 {
@@ -7,6 +8,8 @@ public class ItemSaleDisplay : MonoBehaviour, InventoryViewInterface
     private GameObject invSlotPrototype = null, invOrganizer = null;
 
     private ItemButton[] itemButtons;
+
+    public Func<int, DetailData> OnItemButtonClick { get; set; }
 
     public void Init(SellMenuController controller, ItemHolder[] itemsToDisplay)
     {

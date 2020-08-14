@@ -7,7 +7,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
     public Text ItemNameText { get { return itemNameText; } }
     public Text ItemDescriptionText { get { return itemDescriptionText; } }
     public Text PrimaryActionText { get { return primaryActionText; } }
-    public PossessorSearcher.ItemPossessor CurrentPossessor { get { return currentPossessor; } }
+    public ItemPossessor CurrentPossessor { get { return currentPossessor; } }
     public ItemHolder[] CurrentInv { get { return currentInv; } }
     public int SelectedPos { get { return selectedPos; } set { selectedPos = value; } }
     #endregion
@@ -33,7 +33,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
 
     private PrimaryActionInvoker primInvoker;
 
-    private PossessorSearcher.ItemPossessor currentPossessor;
+    private ItemPossessor currentPossessor;
 
     private ItemHolder[] currentInv;
 
@@ -44,7 +44,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
     private int selectedPos;
 
     #region skip
-    private CircularLinkedList<PossessorSearcher.ItemPossessor> invList;
+    private CircularLinkedList<ItemPossessor> invList;
 
     private InventoryState defaultState, itemMoveState, discardState, itemUseState;
     private InventoryState currentState;
@@ -63,7 +63,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
     {
         DisableInteractors();
         EnableButtons();
-        currentPossessor = PossessorSearcher.ItemPossessor.BAG;
+        currentPossessor = ItemPossessor.BAG;
         currentState = defaultState;
         if (invList != null) invList.RevertToDefault();
         if (itemButtons != null) DisplayAll();
@@ -91,9 +91,9 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
     private void InitEssentials()
     {
         selectedPos = -1;
-        currentPossessor = PossessorSearcher.ItemPossessor.BAG;
+        currentPossessor = ItemPossessor.BAG;
         possessorText.text = PossessorSearcher.bagPossessor;
-        invList = new CircularLinkedList<PossessorSearcher.ItemPossessor>();
+        invList = new CircularLinkedList<ItemPossessor>();
         PossessorSearcher.FillPossessorList(invList);
         primInvoker = new PrimaryActionInvoker(this);
     }
@@ -247,7 +247,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
     
     private void ToggleEquipAbility()
     {
-        if (currentPossessor == PossessorSearcher.ItemPossessor.BAG) return;
+        if (currentPossessor == ItemPossessor.BAG) return;
 
         primInvoker.ToggleEquipAbility(); 
     }
@@ -265,7 +265,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
     {
         if (currentInv[selectedPos].IsEmpty()) return false;
 
-        if (currentPossessor == PossessorSearcher.ItemPossessor.BAG)
+        if (currentPossessor == ItemPossessor.BAG)
         {
             if (!primaryActionText.text.Equals(Item.USE_ACTION))
             {

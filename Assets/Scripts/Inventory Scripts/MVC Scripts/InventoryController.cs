@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using Cycler;
-using System;
 
 namespace RPG.Inventory
 {
-    public class InventoryController : MonoBehaviour, InventoryControllerInterface, ICycleObserver<PossessorSearcher.ItemPossessor>
+    public class InventoryController : MonoBehaviour, InventoryControllerInterface, ICycleObserver<ItemPossessor>
     {
         #region
         public ItemHolder[] CurrentInv { get { return currentInv; } set { currentInv = value; } }
@@ -25,7 +24,7 @@ namespace RPG.Inventory
         {          
             this.invView = invView;
             charCycler.Activate(this);
-            currentInv = ItemManager.Instance.GetInventory(PossessorSearcher.ItemPossessor.BAG);
+            currentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
         }
 
         // Start is called before the first frame update
@@ -34,17 +33,15 @@ namespace RPG.Inventory
             if (invView == null)
             {
                 invView = invViewObject.GetComponent<InventoryViewInterface>();
-                //-----------------------------
-                ((InventoryView)invView).OnItemButtonClick += GetItemDetails;
-                    //------------------------
+                invView.OnItemButtonClick += GetItemDetails;
             }
 
             charCycler.Activate(this);
-            currentInv = ItemManager.Instance.GetInventory(PossessorSearcher.ItemPossessor.BAG);
+            currentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
             invView.Display(currentInv);
         }
 
-        public void OnCycle(PossessorSearcher.ItemPossessor possessor)
+        public void OnCycle(ItemPossessor possessor)
         {
             currentInv = ItemManager.Instance.GetInventory(possessor);
             invView.Display(currentInv);

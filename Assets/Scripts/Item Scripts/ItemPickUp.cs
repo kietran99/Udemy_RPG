@@ -19,7 +19,7 @@ public class ItemPickUp : MonoBehaviour
         if (canPickUp && Input.GetButtonDown("Fire1") && PlayerController.Instance.canMove)
         {
             AbstractItemHolderFactory itemHolderFactory = new ItemHolderFactory();
-            int invAvail = ItemManager.Instance.AddItem(PossessorSearcher.ItemPossessor.BAG, itemHolderFactory.CreateItemToObtainHolder(itemToPickUp));
+            int invAvail = ItemManager.Instance.AddItem(ItemPossessor.BAG, itemHolderFactory.CreateItemToObtainHolder(itemToPickUp));
             if (invAvail == -1) Debug.LogError("INVENTORY FULL!");
             else Destroy(gameObject);
         }

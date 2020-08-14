@@ -1,19 +1,19 @@
-﻿public static class PossessorSearcher
+﻿public enum ItemPossessor
+{
+    BAG,
+    P1,
+    P2,
+    P3,
+    P4,
+    P5,
+    NONE = 101
+}
+
+public static class PossessorSearcher
 {
     private const int BAG = -1;
     private const int NONE = -2;
     public const string bagPossessor = "Bag";
-
-    public enum ItemPossessor
-    {
-        BAG,
-        P1,
-        P2,
-        P3,
-        P4,
-        P5,
-        NONE = 101
-    }
 
     private static int GetCharPos(ItemPossessor possessor)
     {

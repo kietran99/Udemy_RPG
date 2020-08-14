@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System;
-using Functional;
 
 namespace RPG.Inventory
 {
@@ -15,7 +13,7 @@ namespace RPG.Inventory
 
         private ItemButton[] itemButtons;
 
-        public Func<int, DetailData> OnItemButtonClick;
+        public Func<int, DetailData> OnItemButtonClick { get; set; }
 
         // Start is called before the first frame update
         void Start()
@@ -27,13 +25,12 @@ namespace RPG.Inventory
                 GameObject itemBtn = Instantiate(templateButton);
                 itemBtn.transform.SetParent(inventoryOrganizer.transform);
                 itemButtons[i] = itemBtn.GetComponent<ItemButton>();
-                itemButtons[i].Init((IClickObserve) this, i);
+                itemButtons[i].Init(this, i);
             }
         }
 
         public void Display(ItemHolder[] holders)
         {
-            //HigherOrderFunc.Map((button) => button.DisplayItem(), itemButtons);
             for (int i = 0; i < ItemManager.MAX_INVENTORY_SIZE; i++)
             {
                 itemButtons[i].DisplayItem(holders[i]);
