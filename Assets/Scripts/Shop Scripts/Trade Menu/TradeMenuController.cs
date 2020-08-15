@@ -1,7 +1,15 @@
 ﻿using UnityEngine;
 
-public abstract class TradeMenuController : MonoBehaviour, IClickObserve, IAmountConfirmable
+public abstract class TradeMenuController : MonoBehaviour, IClickObserve
 {
+    protected void SubscribeToDelegates()
+    {
+        amtSelector.OnAmountConfirm += OnAmountConfirm;
+        amtSelector.OnValueChange += merchDescription.UpdateShownValue;
+        amtSelector.OnActivate += () => defaultActions.SetActive(false);
+        amtSelector.OnDeactivate += () => defaultActions.SetActive(true);
+    }
+
     protected ShopDialog dialog;
 
     [SerializeField]

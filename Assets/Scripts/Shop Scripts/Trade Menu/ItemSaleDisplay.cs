@@ -23,7 +23,7 @@ public class ItemSaleDisplay : MonoBehaviour, InventoryViewInterface
             itemButtons[i] = btn.GetComponent<ItemButton>();
             btn.transform.SetParent(invOrganizer.transform);
 
-            itemButtons[i].Init((IClickObserve)controller, i);
+            itemButtons[i].Init(controller, i);
             itemButtons[i].DisplayItem(itemsToDisplay[i]);
         }
     }

@@ -23,14 +23,6 @@ namespace Cycler
             CurrPos = charList.current.value;
         }
 
-        //public void Activate(ICycleObserver<ItemPossessor> observer)
-        //{
-        //    this.observer = observer;
-        //    charList = new CircularLinkedList<ItemPossessor>();
-        //    PossessorSearcher.FillPossessorList(charList);
-        //    CurrPos = charList.current.value;
-        //}
-
         public void NextChar()
         {
             string possText = "";

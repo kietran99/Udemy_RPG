@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BuyMenuController : TradeMenuController
@@ -19,16 +18,11 @@ public class BuyMenuController : TradeMenuController
     public void Activate(ShopDialog dialog, Item[] merchToDisplay)
     {
         this.dialog = dialog;
+        SubscribeToDelegates();
         UpdateMerch(merchToDisplay);
         buyButton.SetActive(true);
         gameObject.SetActive(true);
         merchDisplay.Init(this, merchToDisplay);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -51,7 +45,7 @@ public class BuyMenuController : TradeMenuController
 
     public void Buy()
     {
-        amtSelector.Activate((IAmountConfirmable) this, merchDisplay.gameObject, defaultActions, (ILiveAmountObserver) merchDescription, MAX_BUYABLE);
+        amtSelector.Activate(merchDisplay.gameObject, MAX_BUYABLE);
     }
 
     public void Exit()

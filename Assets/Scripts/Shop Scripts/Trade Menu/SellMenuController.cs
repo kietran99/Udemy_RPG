@@ -17,6 +17,7 @@ public class SellMenuController : TradeMenuController
     public void Activate(ShopDialog dialog)
     {
         this.dialog = dialog;
+        SubscribeToDelegates();
         sellButton.SetActive(true);
         gameObject.SetActive(true);
     }
@@ -40,7 +41,7 @@ public class SellMenuController : TradeMenuController
 
     public void Sell()
     {
-        amtSelector.Activate(this, itemDisplay.gameObject, defaultActions, (ILiveAmountObserver)merchDescription, invController.CurrentInv[selectedPos].Amount);
+        amtSelector.Activate(itemDisplay.gameObject, invController.CurrentInv[selectedPos].Amount);
     }
 
     public override void OnAmountConfirm(int changeAmount)

@@ -8,5 +8,6 @@ namespace RPG.Inventory
         ICycler<ItemPossessor> CharCycler { get; }
 
         void ShowInventory();
+        bool HasChosenEmptySlot();
     }
 }

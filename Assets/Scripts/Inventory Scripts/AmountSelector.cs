@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class AmountSelector : MonoBehaviour, IAmountSelector
@@ -9,15 +10,20 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
     private const string STARTING_VAL = "01";   
     private int itemQuantity;
     
-    private GameObject display, itemInteractor;
-    private IAmountConfirmable confirmable;
-    private ILiveAmountObserver amtObserver;
+    private GameObject display;
 
     [SerializeField]
     private float requiredHoldTime = 0f;
 
     private float startTime = 0f;
     private KeyCode lastKey;
+
+    #region DELEGATES
+    public Action<int> OnAmountConfirm { get; set; }
+    public Action<int> OnValueChange { get; set; }
+    public Action OnActivate { get ; set; }
+    public Action OnDeactivate { get; set; }
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -78,33 +84,23 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         startTime = 0f;
     }
 
-    public void Activate(IAmountConfirmable confirmable, GameObject display, GameObject itemInteractor, int itemQuantity)
+    public void Activate(GameObject display, int itemQuantity)
     {
-        this.confirmable = confirmable;
         this.display = display;
         this.itemQuantity = itemQuantity;
-        if (itemInteractor != null) this.itemInteractor = itemInteractor;
-        this.itemInteractor.SetActive(false);
+        OnActivate?.Invoke();
         SetBtnsInteraction();
         gameObject.SetActive(true);
-    }
-
-    public void Activate(IAmountConfirmable confirmable, GameObject display, GameObject itemInteractor, ILiveAmountObserver observer, int itemQuantity)
-    {
-        Activate(confirmable, display, itemInteractor, itemQuantity);
-        amtObserver = observer;
-        amtObserver.OnValueChanged(1);
+        OnValueChange?.Invoke(1);
     }
 
     private void SetBtnsInteraction(bool flag = false)
     {
-        // Disable button click for every button in the display including this gameObject's buttons
         foreach (Button button in display.GetComponentsInChildren<Button>())
         {
             button.interactable = flag; 
         }
 
-        // Enable button click for this gameObject's buttons
         foreach (Button button in gameObject.GetComponentsInChildren<Button>())
         {
             button.interactable = !flag;
@@ -135,24 +131,23 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
     private string GetIncrement()
     {
         int increaseVal = IntFastParse(amountText.text);
-        if (increaseVal == itemQuantity) increaseVal = 1;
-        else increaseVal++;
-        if (amtObserver != null) amtObserver.OnValueChanged(increaseVal);
-        string str = "";
-        if (increaseVal < 10) str = "0";
-        return str + increaseVal;
+        increaseVal = increaseVal == itemQuantity ? 1 : increaseVal + 1;
+        OnValueChange?.Invoke(increaseVal);
+        return FormatText(increaseVal);
     }
 
     private string GetDecrement()
     {
         int decreaseVal = IntFastParse(amountText.text);
-        if (decreaseVal == 1) decreaseVal = itemQuantity;
-        else decreaseVal--;
-        if (amtObserver != null) amtObserver.OnValueChanged(decreaseVal);
-        string str = "";
-        if (decreaseVal < 10) str = "0";
-        return str + decreaseVal;
+        decreaseVal = decreaseVal == 1 ? itemQuantity : decreaseVal - 1;
+        OnValueChange?.Invoke(decreaseVal);
+        return FormatText(decreaseVal);
     }  
+
+    private string FormatText(int num)
+    {
+        return (num >= 10 ? "" : "0") + num;
+    }
 
     public void Confirm()
     {
@@ -166,11 +161,11 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
 
     private void ReturnValue(int val)
     {
-        if (confirmable == null) return;
-        
-        confirmable.OnAmountConfirm(val);
+        if (OnAmountConfirm == null) return;
+
+        OnAmountConfirm(val);
         SetBtnsInteraction(true);
-        if (itemInteractor != null) itemInteractor.SetActive(true);
+        OnDeactivate?.Invoke();
         gameObject.SetActive(false);       
     }
 

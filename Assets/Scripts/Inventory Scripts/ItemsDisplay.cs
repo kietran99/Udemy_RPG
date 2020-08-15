@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
+public class ItemsDisplay : UIDisplay, IClickObserve
 {  
     #region
     public Text ItemNameText { get { return itemNameText; } }
@@ -208,7 +208,7 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
 
     public void EnableAmountSelector(int quantity)
     {
-        amountSelector.GetComponent<AmountSelector>().Activate(this, gameObject, itemInteractor, quantity);
+        amountSelector.GetComponent<AmountSelector>().Activate(gameObject, quantity);
     }
 
     public void OnAmountConfirm(int changeAmount)

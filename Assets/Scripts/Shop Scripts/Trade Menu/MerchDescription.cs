@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class MerchDescription : MonoBehaviour, ILiveAmountObserver
+public class MerchDescription : MonoBehaviour
 {
     [SerializeField]
     private Text changeStatText = null;
@@ -24,12 +24,6 @@ public class MerchDescription : MonoBehaviour, ILiveAmountObserver
 
     [SerializeField]
     private Text itemDescText = null;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void OnEnable()
     {
@@ -107,7 +101,7 @@ public class MerchDescription : MonoBehaviour, ILiveAmountObserver
         foreach (CharStatChange statChange in statChanges) statChange.gameObject.SetActive(false);
     }
 
-    void ILiveAmountObserver.OnValueChanged(int value)
+    public void UpdateShownValue(int value)
     {
         totalCostText.text = value * tradeValue + " G";
     }

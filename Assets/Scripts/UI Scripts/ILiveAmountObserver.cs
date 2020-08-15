@@ -1,4 +1,4 @@
 ﻿public interface ILiveAmountObserver
 {
-    void OnValueChanged(int value);
+    void OnValueChange(int value);
 }

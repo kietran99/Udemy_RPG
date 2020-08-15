@@ -5,6 +5,8 @@ namespace RPG.Inventory
 {
     public class InventoryController : MonoBehaviour, InventoryControllerInterface
     {
+        private const int NONE_CHOSEN = -1;
+
         #region PUBLIC
         public ItemHolder[] CurrentInv { get; private set; }
         public ICycler<ItemPossessor> CharCycler { get; private set; }
@@ -27,15 +29,20 @@ namespace RPG.Inventory
 
         // Start is called before the first frame update
         void Start()
-        {                      
-            invView = invViewObject.GetComponent<InventoryViewInterface>();
-            invView.OnItemButtonClick += GetItemDetails;
+        {
+            if (invView == null)
+            {
+                invView = invViewObject.GetComponent<InventoryViewInterface>();
+                invView.OnItemButtonClick += GetItemDetails;
+            }
+
             Init();
             ShowInventory();
         }
 
         private void Init()
         {
+            ChosenPosition = NONE_CHOSEN;
             CharCycler = charCyclerObject.GetComponent<ICycler<ItemPossessor>>();
             CharCycler.OnCycle += ShowNextInventory;
             CurrentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
@@ -58,6 +65,13 @@ namespace RPG.Inventory
         public void ShowInventory()
         {
             invView.Display(CurrentInv);
+        }
+
+        public bool HasChosenEmptySlot()
+        {
+            if (ChosenPosition == NONE_CHOSEN) return true;
+
+            return CurrentInv[ChosenPosition].IsEmpty();
         }
     }
 }
