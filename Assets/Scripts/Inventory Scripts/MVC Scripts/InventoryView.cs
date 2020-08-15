@@ -13,7 +13,9 @@ namespace RPG.Inventory
 
         private ItemButton[] itemButtons;
 
+        #region DELEGATES
         public Func<int, DetailData> OnItemButtonClick { get; set; }
+        #endregion
 
         // Start is called before the first frame update
         void Start()

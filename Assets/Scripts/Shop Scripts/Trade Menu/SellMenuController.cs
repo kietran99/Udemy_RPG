@@ -29,7 +29,7 @@ public class SellMenuController : TradeMenuController
 
     private void OnEnable()
     {
-        invController.Init(itemDisplay);
+        invController.BindController(itemDisplay);
         itemDisplay.Init(this, invController.CurrentInv);
     }
 
@@ -40,11 +40,7 @@ public class SellMenuController : TradeMenuController
 
     public void Sell()
     {
-        amtSelector.Activate(   (IAmountConfirmable)this, 
-                                itemDisplay.gameObject, 
-                                defaultActions, 
-                                (ILiveAmountObserver)merchDescription, 
-                                invController.CurrentInv[selectedPos].Amount);
+        amtSelector.Activate(this, itemDisplay.gameObject, defaultActions, (ILiveAmountObserver)merchDescription, invController.CurrentInv[selectedPos].Amount);
     }
 
     public override void OnAmountConfirm(int changeAmount)

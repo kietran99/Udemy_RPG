@@ -69,12 +69,6 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
         if (itemButtons != null) DisplayAll();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void DisableInteractors()
     {
         amountSelector.SetActive(false);
@@ -148,11 +142,13 @@ public class ItemsDisplay : UIDisplay, IAmountConfirmable, IClickObserve
         currentState = defaultState;
     }
 
+    #region skip
     public void Organize()
     {
         ItemManager.Instance.GetInvHolder(currentPossessor).Organize();
         DisplayAll();
     }
+    #endregion
 
     public void DisplayItemDetails(int pos)
     {

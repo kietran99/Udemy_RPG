@@ -1,28 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace RPG.Inventory
 {
-    public abstract class InventoryAction : MonoBehaviour
+    public abstract class InventoryAction : MonoBehaviour, InventoryActionInterface
     {
         [SerializeField]
-        private Button invokeButton;
+        protected GameObject invControllerObject = null;
 
-        [SerializeField]
-        private InventoryControllerInterface invController;
+        protected InventoryControllerInterface invController;
 
         // Start is called before the first frame update
         void Start()
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            invController = invControllerObject.GetComponent<InventoryControllerInterface>();
         }
 
         public abstract void OnInvoke();

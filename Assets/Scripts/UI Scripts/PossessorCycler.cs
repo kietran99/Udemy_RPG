@@ -1,39 +1,40 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Cycler
 {
-    public interface ICycleObserver<T>
-    {
-        void OnCycle(T value);
-    }
-
-    public class CharCycler : MonoBehaviour
+    public class PossessorCycler : MonoBehaviour, ICycler<ItemPossessor>
     {
         #region
-        public ItemPossessor CurrPos { get { return currPoss; } }
+        public ItemPossessor CurrPos { get; set; }
+        public Action<ItemPossessor> OnCycle { get ; set; }
         #endregion
 
         [SerializeField]
         private Text possessorText = null;
 
-        private ICycleObserver<ItemPossessor> observer;
-
         private CircularLinkedList<ItemPossessor> charList;
 
-        private ItemPossessor currPoss;
-
-        public void Activate(ICycleObserver<ItemPossessor> observer)
+        void Start()
         {
-            this.observer = observer;
             charList = new CircularLinkedList<ItemPossessor>();
             PossessorSearcher.FillPossessorList(charList);
-            currPoss = charList.current.value;
+            CurrPos = charList.current.value;
         }
+
+        //public void Activate(ICycleObserver<ItemPossessor> observer)
+        //{
+        //    this.observer = observer;
+        //    charList = new CircularLinkedList<ItemPossessor>();
+        //    PossessorSearcher.FillPossessorList(charList);
+        //    CurrPos = charList.current.value;
+        //}
 
         public void NextChar()
         {
             string possText = "";
+
             do
             {
                 charList.NextPos();
@@ -41,15 +42,13 @@ namespace Cycler
             }
             while (possText.Equals(""));
 
-            currPoss = charList.current.value;
-            possessorText.text = possText;
-
-            observer.OnCycle(charList.current.value);
+            ProcessPostCycle(possText);
         }
 
         public void PrevChar()
         {
             string possText = "";
+
             do
             {
                 charList.PrevPos();
@@ -57,10 +56,14 @@ namespace Cycler
             }
             while (possText.Equals(""));
 
-            currPoss = charList.current.value;
-            possessorText.text = possText;
+            ProcessPostCycle(possText);
+        }
 
-            observer.OnCycle(charList.current.value);
+        private void ProcessPostCycle(string possText)
+        {
+            CurrPos = charList.current.value;
+            possessorText.text = possText;
+            OnCycle?.Invoke(charList.current.value);
         }
     }
 }

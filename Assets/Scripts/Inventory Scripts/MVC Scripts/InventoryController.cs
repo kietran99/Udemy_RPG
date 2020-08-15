@@ -3,55 +3,61 @@ using Cycler;
 
 namespace RPG.Inventory
 {
-    public class InventoryController : MonoBehaviour, InventoryControllerInterface, ICycleObserver<ItemPossessor>
+    public class InventoryController : MonoBehaviour, InventoryControllerInterface
     {
-        #region
-        public ItemHolder[] CurrentInv { get { return currentInv; } set { currentInv = value; } }
-        public CharCycler CharCycler { get { return charCycler; } set { charCycler = value; } }
+        #region PUBLIC
+        public ItemHolder[] CurrentInv { get; private set; }
+        public ICycler<ItemPossessor> CharCycler { get; private set; }
+        public int ChosenPosition { get; private set; }
         #endregion
 
         [SerializeField]
-        private CharCycler charCycler = null;
+        private GameObject charCyclerObject = null;
 
         [SerializeField]
         private GameObject invViewObject = null;
 
         private InventoryViewInterface invView;
 
-        private ItemHolder[] currentInv;     
-
-        public void Init(InventoryViewInterface invView)
-        {          
+        public void BindController(InventoryViewInterface invView)
+        {
             this.invView = invView;
-            charCycler.Activate(this);
-            currentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
+            Init();
         }
 
         // Start is called before the first frame update
         void Start()
-        {
-            if (invView == null)
-            {
-                invView = invViewObject.GetComponent<InventoryViewInterface>();
-                invView.OnItemButtonClick += GetItemDetails;
-            }
-
-            charCycler.Activate(this);
-            currentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
-            invView.Display(currentInv);
+        {                      
+            invView = invViewObject.GetComponent<InventoryViewInterface>();
+            invView.OnItemButtonClick += GetItemDetails;
+            Init();
+            ShowInventory();
         }
 
-        public void OnCycle(ItemPossessor possessor)
+        private void Init()
         {
-            currentInv = ItemManager.Instance.GetInventory(possessor);
-            invView.Display(currentInv);
+            CharCycler = charCyclerObject.GetComponent<ICycler<ItemPossessor>>();
+            CharCycler.OnCycle += ShowNextInventory;
+            CurrentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
+        }
+
+        public void ShowNextInventory(ItemPossessor possessor)
+        {
+            CurrentInv = ItemManager.Instance.GetInventory(possessor);
+            invView.Display(CurrentInv);
         }
 
         private DetailData GetItemDetails(int idx)
         {
-            Item item = currentInv[idx].TheItem;
+            ChosenPosition = idx;
 
+            Item item = CurrentInv[idx].TheItem;
             return new DetailData(item.ItemName, item.Description);
+        }
+
+        public void ShowInventory()
+        {
+            invView.Display(CurrentInv);
         }
     }
 }
