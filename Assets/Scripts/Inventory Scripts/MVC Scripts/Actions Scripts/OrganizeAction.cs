@@ -2,7 +2,7 @@
 {
     public class OrganizeAction : InventoryAction
     {        
-        public override void OnInvoke()
+        public override void Invoke()
         {
             ItemManager.Instance.GetInvHolder(invController.CharCycler.CurrPos).Organize();
             invController.ShowInventory();

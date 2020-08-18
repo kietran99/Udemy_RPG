@@ -8,9 +8,11 @@ namespace RPG.Inventory
         private const int NONE_CHOSEN = -1;
 
         #region PUBLIC
+        public GameObject View { get { return invViewObject; } }
         public ItemHolder[] CurrentInv { get; private set; }
         public ICycler<ItemPossessor> CharCycler { get; private set; }
         public int ChosenPosition { get; private set; }
+        public ItemHolder ChosenItemHolder { get { return CurrentInv[ChosenPosition]; } }
         #endregion
 
         [SerializeField]
@@ -72,6 +74,12 @@ namespace RPG.Inventory
             if (ChosenPosition == NONE_CHOSEN) return true;
 
             return CurrentInv[ChosenPosition].IsEmpty();
+        }
+
+        public void DiscardItem(int amount)
+        {
+            ItemManager.Instance.RemoveItemAt(CharCycler.CurrPos, ChosenPosition, amount);
+            ShowInventory();
         }
     }
 }

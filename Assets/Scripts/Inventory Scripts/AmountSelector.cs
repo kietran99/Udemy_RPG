@@ -84,17 +84,17 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         startTime = 0f;
     }
 
-    public void Activate(GameObject display, int itemQuantity)
+    public void Activate(GameObject view, int itemQuantity)
     {
-        this.display = display;
+        this.display = view;
         this.itemQuantity = itemQuantity;
         OnActivate?.Invoke();
-        SetBtnsInteraction();
+        SetButtonsInteractability();
         gameObject.SetActive(true);
         OnValueChange?.Invoke(1);
     }
 
-    private void SetBtnsInteraction(bool flag = false)
+    private void SetButtonsInteractability(bool flag = false)
     {
         foreach (Button button in display.GetComponentsInChildren<Button>())
         {
@@ -133,7 +133,7 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         int increaseVal = IntFastParse(amountText.text);
         increaseVal = increaseVal == itemQuantity ? 1 : increaseVal + 1;
         OnValueChange?.Invoke(increaseVal);
-        return FormatText(increaseVal);
+        return FormatNumText(increaseVal);
     }
 
     private string GetDecrement()
@@ -141,10 +141,10 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         int decreaseVal = IntFastParse(amountText.text);
         decreaseVal = decreaseVal == 1 ? itemQuantity : decreaseVal - 1;
         OnValueChange?.Invoke(decreaseVal);
-        return FormatText(decreaseVal);
+        return FormatNumText(decreaseVal);
     }  
 
-    private string FormatText(int num)
+    private string FormatNumText(int num)
     {
         return (num >= 10 ? "" : "0") + num;
     }
@@ -164,7 +164,7 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         if (OnAmountConfirm == null) return;
 
         OnAmountConfirm(val);
-        SetBtnsInteraction(true);
+        SetButtonsInteractability(true);
         OnDeactivate?.Invoke();
         gameObject.SetActive(false);       
     }

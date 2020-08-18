@@ -148,7 +148,6 @@ public class ItemsDisplay : UIDisplay, IClickObserve
         ItemManager.Instance.GetInvHolder(currentPossessor).Organize();
         DisplayAll();
     }
-    #endregion
 
     public void DisplayItemDetails(int pos)
     {
@@ -165,8 +164,6 @@ public class ItemsDisplay : UIDisplay, IClickObserve
             itemDescriptionText.text = "";
         }       
     }
-
-    #region skip
     public void NextPossessor()
     {
         string possText = "";

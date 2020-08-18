@@ -4,17 +4,17 @@ namespace RPG.Inventory
 {
     public abstract class InventoryAction : MonoBehaviour, InventoryActionInterface
     {
-        [SerializeField]
-        protected GameObject invControllerObject = null;
+        [SerializeField] protected ActionController actionController = null;
 
         protected InventoryControllerInterface invController;
 
-        // Start is called before the first frame update
-        void Start()
+        protected virtual void Start()
         {
-            invController = invControllerObject.GetComponent<InventoryControllerInterface>();
+            if (actionController == null) return;
+
+            invController = actionController.InvController;
         }
 
-        public abstract void OnInvoke();
+        public abstract void Invoke();
     }
 }

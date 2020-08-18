@@ -2,6 +2,6 @@
 {
     public interface InventoryActionInterface
     {
-        void OnInvoke();
+        void Invoke();
     }
 }
