@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Cycler;
+using System;
 
 namespace RPG.Inventory
 {
@@ -13,6 +14,10 @@ namespace RPG.Inventory
         public ICycler<ItemPossessor> CharCycler { get; private set; }
         public int ChosenPosition { get; private set; }
         public ItemHolder ChosenItemHolder { get { return CurrentInv[ChosenPosition]; } }
+        #endregion
+
+        #region DELEGATES
+        public Action OnHide { get; set; }
         #endregion
 
         [SerializeField]
@@ -29,7 +34,6 @@ namespace RPG.Inventory
             Init();
         }
 
-        // Start is called before the first frame update
         void Start()
         {
             if (invView == null)
@@ -48,6 +52,11 @@ namespace RPG.Inventory
             CharCycler = charCyclerObject.GetComponent<ICycler<ItemPossessor>>();
             CharCycler.OnCycle += ShowNextInventory;
             CurrentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
+        }
+
+        void OnDisable()
+        {
+            OnHide?.Invoke();
         }
 
         public void ShowNextInventory(ItemPossessor possessor)
@@ -71,14 +80,31 @@ namespace RPG.Inventory
 
         public bool HasChosenEmptySlot()
         {
-            if (ChosenPosition == NONE_CHOSEN) return true;
+            return IsEmptySlot(ChosenPosition);
+        }
 
-            return CurrentInv[ChosenPosition].IsEmpty();
+        public bool IsEmptySlot(int idx)
+        {
+            if (idx == NONE_CHOSEN) return true;
+
+            return CurrentInv[idx].IsEmpty();
         }
 
         public void DiscardItem(int amount)
         {
             ItemManager.Instance.RemoveItemAt(CharCycler.CurrPos, ChosenPosition, amount);
+            ShowInventory();
+        }
+
+        public bool HasChosenSameItemAt(int idx)
+        {
+            return CurrentInv[idx].SameItem(CurrentInv[ChosenPosition]);
+        }
+    
+        public void MoveItem(int from, int amount, ItemPossessor receivingInv)
+        {
+            var curInv = ItemManager.Instance.GetInvHolder(CharCycler.CurrPos);
+            curInv.MoveItem(from, ChosenPosition, amount, null);
             ShowInventory();
         }
     }

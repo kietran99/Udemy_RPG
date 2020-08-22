@@ -2,13 +2,16 @@
 {
     public struct DetailData
     {
-        public string name;
-        public string description;
+        public bool shouldShow;
 
-        public DetailData(string name, string description)
+        public string name;
+        public string description;      
+
+        public DetailData(string name, string description, bool shouldShow = true)
         {
             this.name = name;
             this.description = description;
+            this.shouldShow = shouldShow;
         }
     }
 

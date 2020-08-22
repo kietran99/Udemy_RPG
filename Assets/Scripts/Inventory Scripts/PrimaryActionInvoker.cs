@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Inventory;
+using UnityEngine;
 
 public class PrimaryActionInvoker
 {
@@ -11,7 +12,7 @@ public class PrimaryActionInvoker
 
     public void UseItem(GameObject itemInteractor, UserChooser userChooser)
     {
-        userChooser.Activate(itemInteractor, itemsDisplay);
+        userChooser.Activate(itemsDisplay);
     }
 
     public void ToggleEquipAbility()

@@ -5,11 +5,13 @@ namespace RPG.Inventory
 {
     public class InventoryView : MonoBehaviour, InventoryViewInterface, IClickObserve
     {
+        #region SERIALIZE FIELD
         [SerializeField]
         private ItemDetailsView itemDetails = null;
 
         [SerializeField]
         private GameObject inventoryOrganizer = null, templateButton = null;
+        #endregion
 
         private ItemButton[] itemButtons;
 
@@ -17,7 +19,6 @@ namespace RPG.Inventory
         public Func<int, DetailData> OnItemButtonClick { get; set; }
         #endregion
 
-        // Start is called before the first frame update
         void Start()
         {
             itemButtons = new ItemButton[ItemManager.MAX_INVENTORY_SIZE];
@@ -44,6 +45,9 @@ namespace RPG.Inventory
             if (OnItemButtonClick == null) return;
 
             DetailData data = OnItemButtonClick(idx);
+
+            if (!data.shouldShow) return;
+
             itemDetails.Show(data.name, data.description);
         }
     }

@@ -6,13 +6,13 @@ namespace RPG.Inventory
     {
         [SerializeField] protected ActionController actionController = null;
 
-        protected InventoryControllerInterface invController;
+        protected InventoryControllerInterface inventoryController;
 
         protected virtual void Start()
         {
             if (actionController == null) return;
 
-            invController = actionController.InvController;
+            inventoryController = actionController.InventoryController;
         }
 
         public abstract void Invoke();

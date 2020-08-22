@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RPG.Inventory;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemsDisplay : UIDisplay, IClickObserve
@@ -33,22 +34,19 @@ public class ItemsDisplay : UIDisplay, IClickObserve
 
     private PrimaryActionInvoker primInvoker;
 
+    #region skip
     private ItemPossessor currentPossessor;
 
     private ItemHolder[] currentInv;
 
-    #region skip
     private ItemButton[] itemButtons;
-    #endregion
 
     private int selectedPos;
 
-    #region skip
     private CircularLinkedList<ItemPossessor> invList;
 
     private InventoryState defaultState, itemMoveState, discardState, itemUseState;
     private InventoryState currentState;
-    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -141,6 +139,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     {
         currentState = defaultState;
     }
+    #endregion
 
     #region skip
     public void Organize()
@@ -193,7 +192,6 @@ public class ItemsDisplay : UIDisplay, IClickObserve
         possessorText.text = possText;
         DisplayAll();
     }
-    #endregion
 
     public void Discard()
     {
@@ -214,6 +212,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
         currentState = defaultState;
         DisplayAll();
     }
+    #endregion
 
     public void Move()
     {

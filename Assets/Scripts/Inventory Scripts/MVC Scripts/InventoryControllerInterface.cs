@@ -1,5 +1,6 @@
 ﻿using Cycler;
 using UnityEngine;
+using System;
 
 namespace RPG.Inventory
 {
@@ -10,8 +11,13 @@ namespace RPG.Inventory
         ItemHolder ChosenItemHolder { get; }
         ICycler<ItemPossessor> CharCycler { get; }
 
+        Action OnHide { get; set; }
+
         void ShowInventory();
+        bool HasChosenSameItemAt(int idx);
         bool HasChosenEmptySlot();
+        bool IsEmptySlot(int idx);
         void DiscardItem(int amount);
+        void MoveItem(int from, int amount, ItemPossessor receivingInv);
     }
 }

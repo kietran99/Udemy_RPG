@@ -1,10 +1,12 @@
-﻿using UnityEngine;
-
-namespace RPG.Inventory
+﻿namespace RPG.Inventory
 {
     public interface IActionController
     {
         IAmountSelector AmountSelector { get; }
-        InventoryControllerInterface InvController { get; }
+        IUserChooser UserChooser { get; }
+        InventoryControllerInterface InventoryController { get; }
+
+        void ShowInteractButtons();
+        void HideInteractButtons();
     }
 }

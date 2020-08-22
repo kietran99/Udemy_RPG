@@ -4,9 +4,11 @@ namespace RPG.Inventory
 {
     public class ActionController : MonoBehaviour, IActionController
     {
-        public InventoryControllerInterface InvController { get { return invController.GetComponent<InventoryControllerInterface>(); } }
+        public InventoryControllerInterface InventoryController { get { return invController.GetComponent<InventoryControllerInterface>(); } }
 
         public IAmountSelector AmountSelector { get { return amountSelector.GetComponent<IAmountSelector>(); } }
+
+        public IUserChooser UserChooser { get { return userChooser.GetComponent<IUserChooser>(); } }
 
         [SerializeField]
         private GameObject interactButtons = null;
@@ -17,10 +19,26 @@ namespace RPG.Inventory
         [SerializeField]
         private GameObject amountSelector = null;
 
+        [SerializeField]
+        private GameObject userChooser = null;
+
         void Start()
         {
-            AmountSelector.OnActivate += () => interactButtons.SetActive(false);
-            AmountSelector.OnAmountConfirm += (int amount) => { InvController.DiscardItem(amount); interactButtons.SetActive(true); };
+            AmountSelector.OnActivate += HideInteractButtons;
+            AmountSelector.OnAmountConfirm += (int amount) => { InventoryController.DiscardItem(amount); ShowInteractButtons(); };
+
+            UserChooser.OnActivate += HideInteractButtons;
+            UserChooser.OnDeactivate += ShowInteractButtons;
+        }
+
+        public void ShowInteractButtons()
+        {
+            interactButtons.SetActive(true);
+        }
+
+        public void HideInteractButtons()
+        {
+            interactButtons.SetActive(false);
         }
     }
 }

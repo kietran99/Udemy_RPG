@@ -1,9 +1,13 @@
-﻿using System;
+﻿using RPG.Inventory;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AmountSelector : MonoBehaviour, IAmountSelector
 {
+    [SerializeField]
+    private GameObject inventoryController = null;
+
     [SerializeField]
     private Text amountText = null;
 
@@ -25,20 +29,19 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
     public Action OnDeactivate { get; set; }
     #endregion
 
-    // Start is called before the first frame update
     void Start()
     {
         amountText.text = STARTING_VAL;
+        inventoryController.GetComponent<InventoryControllerInterface>().OnHide += Cancel;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) Cancel();
         else HoldKey();    
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         amountText.text = STARTING_VAL;
     }
@@ -86,7 +89,7 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
 
     public void Activate(GameObject view, int itemQuantity)
     {
-        this.display = view;
+        display = view;
         this.itemQuantity = itemQuantity;
         OnActivate?.Invoke();
         SetButtonsInteractability();
