@@ -4,7 +4,7 @@
     {        
         public override void Invoke()
         {
-            ItemManager.Instance.GetInvHolder(inventoryController.CharCycler.CurrPos).Organize();
+            ItemManager.Instance.GetInvHolder(inventoryController.CharCycler.Current).Organize();
             inventoryController.ShowInventory();
         }
     }

@@ -13,11 +13,11 @@ namespace RPG.Inventory
         private GameObject inventoryOrganizer = null, templateButton = null;
         #endregion
 
-        private ItemButton[] itemButtons;
-
         #region DELEGATES
         public Func<int, DetailData> OnItemButtonClick { get; set; }
         #endregion
+
+        private ItemButton[] itemButtons;
 
         void Start()
         {

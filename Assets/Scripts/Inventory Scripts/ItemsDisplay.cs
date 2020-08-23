@@ -139,9 +139,6 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     {
         currentState = defaultState;
     }
-    #endregion
-
-    #region skip
     public void Organize()
     {
         ItemManager.Instance.GetInvHolder(currentPossessor).Organize();
@@ -212,7 +209,6 @@ public class ItemsDisplay : UIDisplay, IClickObserve
         currentState = defaultState;
         DisplayAll();
     }
-    #endregion
 
     public void Move()
     {
@@ -221,6 +217,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
         currentState = itemMoveState;
         (itemMoveState as ItemMoveState).Activate(itemInteractor, itemMovement, currentPossessor, selectedPos, currentInv[selectedPos].Amount);        
     }
+    #endregion
 
     public void InvokePrimaryAction()
     {
@@ -244,15 +241,6 @@ public class ItemsDisplay : UIDisplay, IClickObserve
         primInvoker.ToggleEquipAbility(); 
     }
 
-    private bool IsEmptySlot()
-    {
-        if (selectedPos < 0) return true;
-
-        if (currentInv[selectedPos].IsEmpty()) return true;
-
-        return false;
-    }
-
     private bool SetPrimaryButtonInteractable()
     {
         if (currentInv[selectedPos].IsEmpty()) return false;
@@ -273,10 +261,21 @@ public class ItemsDisplay : UIDisplay, IClickObserve
         return false;
     }
 
+    #region skip
+    private bool IsEmptySlot()
+    {
+        if (selectedPos < 0) return true;
+
+        if (currentInv[selectedPos].IsEmpty()) return true;
+
+        return false;
+    }
+
     public void OnButtonClick(int val)
     {
         selectedPos = val;
         currentState.OnItemSelected(val);
         if (currentState == defaultState) primaryActionButton.interactable = SetPrimaryButtonInteractable();
     }
+    #endregion
 }

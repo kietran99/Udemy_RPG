@@ -49,7 +49,7 @@ public class SellMenuController : TradeMenuController
         if (changeAmount <= 0) return;
 
         int totalSellValue = invController.CurrentInv[selectedPos].TheItem.SellValue;
-        ItemManager.Instance.RemoveItemAt(invController.CharCycler.CurrPos, selectedPos, changeAmount);
+        ItemManager.Instance.RemoveItemAt(invController.CharCycler.Current, selectedPos, changeAmount);
         ItemManager.Instance.CurrentGold += totalSellValue * changeAmount;
         itemDisplay.UpdateSlot(selectedPos, invController.CurrentInv[selectedPos]);
         dialog.TradeSuccessful();

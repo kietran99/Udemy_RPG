@@ -92,7 +92,7 @@ namespace RPG.Inventory
 
         public void DiscardItem(int amount)
         {
-            ItemManager.Instance.RemoveItemAt(CharCycler.CurrPos, ChosenPosition, amount);
+            ItemManager.Instance.RemoveItemAt(CharCycler.Current, ChosenPosition, amount);
             ShowInventory();
         }
 
@@ -101,10 +101,11 @@ namespace RPG.Inventory
             return CurrentInv[idx].SameItem(CurrentInv[ChosenPosition]);
         }
     
-        public void MoveItem(int from, int amount, ItemPossessor receivingInv)
+        public void MoveItem(int fromPos, ItemPossessor sender, int amount)
         {
-            var curInv = ItemManager.Instance.GetInvHolder(CharCycler.CurrPos);
-            curInv.MoveItem(from, ChosenPosition, amount, null);
+            var sendingInventory = ItemManager.Instance.GetInvHolder(sender);
+            if (sender.Equals(CharCycler.Current)) sendingInventory.MoveItem(fromPos, ChosenPosition, amount);
+            else sendingInventory.MoveItem(fromPos, ChosenPosition, amount, ItemManager.Instance.GetInvHolder(CharCycler.Current));
             ShowInventory();
         }
     }

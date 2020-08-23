@@ -7,7 +7,7 @@ namespace Cycler
     public class PossessorCycler : MonoBehaviour, ICycler<ItemPossessor>
     {
         #region
-        public ItemPossessor CurrPos { get; set; }
+        public ItemPossessor Current { get; set; }
         public Action<ItemPossessor> OnCycle { get ; set; }
         #endregion
 
@@ -20,7 +20,7 @@ namespace Cycler
         {
             charList = new CircularLinkedList<ItemPossessor>();
             PossessorSearcher.FillPossessorList(charList);
-            CurrPos = charList.current.value;
+            Current = charList.current.value;
         }
 
         public void NextChar()
@@ -53,7 +53,7 @@ namespace Cycler
 
         private void ProcessPostCycle(string possText)
         {
-            CurrPos = charList.current.value;
+            Current = charList.current.value;
             possessorText.text = possText;
             OnCycle?.Invoke(charList.current.value);
         }

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-public class InventoryHolder: IInventoryHolder
+
+public class InventoryHolder : IInventoryHolder
 {
     #region
     public ItemPossessor Possessor { get { return possessor; } set { possessor = value; } }
@@ -21,7 +22,7 @@ public class InventoryHolder: IInventoryHolder
         this.possessor = possessor;
         itemHolders = new ItemHolder[size];
         this.nullHolder = nullHolder;
-    }      
+    }
 
     private int CheckExists(ItemHolder itemToCheck)
     {
@@ -44,7 +45,7 @@ public class InventoryHolder: IInventoryHolder
         }
 
         return POSITION_INVALID;
-    }   
+    }
 
     public void RemoveAt(int posToRemove, int amount)
     {
@@ -71,22 +72,20 @@ public class InventoryHolder: IInventoryHolder
         if (itemHolders[posToAdd].IsEmpty())
         {
             itemHolders[posToAdd] = itemHolderToAdd;
+            return;
         }
-        else 
-        {
-            AddToExistingItem(itemHolderToAdd, posToAdd);
-        }
+
+        AddToExistingItem(itemHolderToAdd, posToAdd);
     }
 
     private void AddToExistingItem(ItemHolder itemHolderToAdd, int posToAdd)
     {
         itemHolders[posToAdd].Amount += itemHolderToAdd.Amount;
 
-        if (itemHolders[posToAdd].Amount > ItemHolder.ITEM_CAPACITY)
-        {
-            itemHolders[FindFirstEmptySlot()] = new ItemHolder(itemHolderToAdd.TheItem, itemHolders[posToAdd].Amount - ItemHolder.ITEM_CAPACITY);
-            itemHolders[posToAdd].Amount = ItemHolder.ITEM_CAPACITY;
-        }
+        if (itemHolders[posToAdd].Amount <= ItemHolder.ITEM_CAPACITY) return;
+
+        itemHolders[FindFirstEmptySlot()] = new ItemHolder(itemHolderToAdd.TheItem, itemHolders[posToAdd].Amount - ItemHolder.ITEM_CAPACITY);
+        itemHolders[posToAdd].Amount = ItemHolder.ITEM_CAPACITY;
     }
 
     public ItemHolder[] GetEquippedItems()
@@ -115,20 +114,15 @@ public class InventoryHolder: IInventoryHolder
         if (destAmount + amount > ItemHolder.ITEM_CAPACITY) amountToMove = ItemHolder.ITEM_CAPACITY - destAmount;
 
         ItemHolder holderToMove;
+        var factory = new ItemHolderFactory();
 
-        if (itemHolders[fromPos].IsEquipped)
-        {
-            holderToMove = new ItemHolderFactory().CreateEquipmentHolder(itemHolders[fromPos].TheItem);
-        }
-        else
-        {
-            holderToMove = new ItemHolderFactory().CreateRegularHolder(itemHolders[fromPos].TheItem, amountToMove);
-        }
+        holderToMove = itemHolders[fromPos].IsEquipped ? factory.CreateEquipmentHolder(itemHolders[fromPos].TheItem) :
+                                                         factory.CreateRegularHolder(itemHolders[fromPos].TheItem, amountToMove);
 
         if (toHolder == null) AddAt(holderToMove, toPos);
         else toHolder.AddAt(holderToMove, toPos);
 
-        RemoveAt(fromPos, amountToMove);
+        RemoveAt(fromPos, amountToMove);        
     }
 
     public void UseItem(int pos, CharStats charToUse)

@@ -4,7 +4,7 @@ namespace Cycler
 {
     public interface ICycler<T>
     {
-        T CurrPos { get; set; }
+        T Current { get; set; }
         Action<T> OnCycle { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace RPG.Inventory
         void Start()
         {
             AmountSelector.OnActivate += HideInteractButtons;
-            AmountSelector.OnAmountConfirm += (int amount) => { InventoryController.DiscardItem(amount); ShowInteractButtons(); };
+            AmountSelector.OnDeactivate += () => ShowInteractButtons();
 
             UserChooser.OnActivate += HideInteractButtons;
             UserChooser.OnDeactivate += ShowInteractButtons;

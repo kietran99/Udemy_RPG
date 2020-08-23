@@ -18,6 +18,6 @@ namespace RPG.Inventory
         bool HasChosenEmptySlot();
         bool IsEmptySlot(int idx);
         void DiscardItem(int amount);
-        void MoveItem(int from, int amount, ItemPossessor receivingInv);
+        void MoveItem(int fromPos, ItemPossessor sender, int amount);
     }
 }

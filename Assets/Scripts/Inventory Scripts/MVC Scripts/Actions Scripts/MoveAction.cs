@@ -11,24 +11,40 @@ namespace RPG.Inventory
         [SerializeField]
         private Text promptText = null;
 
+        private int idxToMove;
+        private ItemPossessor sender;
+        private int originalAmount;
         private IAmountSelector amountSelector;
-        private int idxToMove = -1;
-
-        private bool boundWithAmountSelector;
 
         protected override void Start()
         {
             base.Start();
             inventoryController.OnHide += Cancel;
-            amountSelector = actionController.AmountSelector;
+        }
+
+        void BindDelegates()
+        {
+            amountSelector.OnAmountConfirm += MoveItemThenCancel;
+        }
+
+        void UnbindDelegates()
+        {
+            amountSelector.OnAmountConfirm -= MoveItemThenCancel;
+            amountSelector.OnActivate -= BindDelegates;
+            amountSelector.OnDeactivate -= UnbindDelegates;
         }
 
         public override void Invoke()
         {
             if (inventoryController.HasChosenEmptySlot()) return;
 
-            boundWithAmountSelector = false;
+            amountSelector = actionController.AmountSelector;
+            amountSelector.OnActivate += BindDelegates;
+            amountSelector.OnDeactivate += UnbindDelegates;
+
             idxToMove = inventoryController.ChosenPosition;
+            originalAmount = inventoryController.ChosenItemHolder.Amount;
+            sender = inventoryController.CharCycler.Current;
             ShowPrompt();
             actionController.HideInteractButtons();
             inventoryController.View.GetComponent<InventoryViewInterface>().OnItemButtonClick += PickAmount;
@@ -39,7 +55,6 @@ namespace RPG.Inventory
             HidePrompt();
             actionController.ShowInteractButtons();
             inventoryController.View.GetComponent<InventoryViewInterface>().OnItemButtonClick -= PickAmount;
-            if (boundWithAmountSelector) amountSelector.OnAmountConfirm -= MoveItem;
         }
        
         private DetailData PickAmount(int idx)
@@ -53,16 +68,15 @@ namespace RPG.Inventory
             }
 
             HidePrompt();
-            amountSelector.OnAmountConfirm += MoveItem;
-            boundWithAmountSelector = true;
-            amountSelector.Activate(inventoryController.View, inventoryController.ChosenItemHolder.Amount);
+            amountSelector.Activate(inventoryController.View, originalAmount);
 
             return dummyData;
         }
 
-        void MoveItem(int amount)
+        private void MoveItemThenCancel(int amount)
         {
-            inventoryController.MoveItem(idxToMove, amount, ItemPossessor.BAG);
+            inventoryController.MoveItem(idxToMove, sender, amount);
+            Cancel();
         }
 
         private void ShowPrompt()
