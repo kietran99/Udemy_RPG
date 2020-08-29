@@ -3,18 +3,29 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent (typeof(InteractDisabler))]
 public class AmountSelector : MonoBehaviour, IAmountSelector
 {
-    [SerializeField]
-    private GameObject inventoryController = null;
+    private int CurrentAmount
+    {
+        get { return currentAmount; }
+        set
+        {
+            currentAmount = value;
+            amountText.text = currentAmount.FormatNum();
+
+            OnValueChange?.Invoke(currentAmount);
+        }
+    }
 
     [SerializeField]
     private Text amountText = null;
 
-    private const string STARTING_VAL = "01";   
+    private int currentAmount;
+
     private int itemQuantity;
-    
-    private GameObject display;
+
+    private InteractDisablerInterface interactDisabler;
 
     [SerializeField]
     private float requiredHoldTime = 0f;
@@ -29,23 +40,17 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
     public Action OnDeactivate { get; set; }
     #endregion
 
-    void Start()
+    void Awake()
     {
-        amountText.text = STARTING_VAL;
-        inventoryController.GetComponent<InventoryControllerInterface>().OnHide += Cancel;
+        interactDisabler = GetComponent<InteractDisablerInterface>();
     }
-
+    
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape)) Cancel();
+    {        
+        if (Input.GetKeyDown(KeyboardControl.GlobalExit)) Cancel();
         else HoldKey();    
     }
-
-    void OnEnable()
-    {
-        amountText.text = STARTING_VAL;
-    }
-
+    
     private void HoldKey()
     {
         if (!gameObject.activeInHierarchy) return;
@@ -85,76 +90,32 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
     private void Reset()
     {
         startTime = 0f;
-    }
+    }    
 
-    public void Activate(GameObject view, int itemQuantity)
+    public void Activate(int itemQuantity)
     {
-        display = view;
         this.itemQuantity = itemQuantity;
-        OnActivate?.Invoke();
-        SetButtonsInteractability();
+        
         gameObject.SetActive(true);
-        OnValueChange?.Invoke(1);
+        interactDisabler.Activate();
+
+        OnActivate?.Invoke();
+        CurrentAmount = 1;
     }
-
-    private void SetButtonsInteractability(bool flag = false)
-    {
-        foreach (Button button in display.GetComponentsInChildren<Button>())
-        {
-            button.interactable = flag; 
-        }
-
-        foreach (Button button in gameObject.GetComponentsInChildren<Button>())
-        {
-            button.interactable = !flag;
-        }  
-    }
-
+    
     private void IncreaseAmount()
-    {       
-        amountText.text = GetIncrement();
+    {
+        CurrentAmount = CurrentAmount == itemQuantity ? 1 : CurrentAmount + 1;
     }
 
     private void DecreaseAmount()
     {
-        amountText.text = GetDecrement();
-    }
-
-    private int IntFastParse(string value)
-    {
-        int result = 0;
-        for (int i = 0; i < value.Length; i++)
-        {
-            char letter = value[i];
-            result = 10 * result + (letter - 48);
-        }
-        return result;
-    }
-   
-    private string GetIncrement()
-    {
-        int increaseVal = IntFastParse(amountText.text);
-        increaseVal = increaseVal == itemQuantity ? 1 : increaseVal + 1;
-        OnValueChange?.Invoke(increaseVal);
-        return FormatNumText(increaseVal);
-    }
-
-    private string GetDecrement()
-    {
-        int decreaseVal = IntFastParse(amountText.text);
-        decreaseVal = decreaseVal == 1 ? itemQuantity : decreaseVal - 1;
-        OnValueChange?.Invoke(decreaseVal);
-        return FormatNumText(decreaseVal);
-    }  
-
-    private string FormatNumText(int num)
-    {
-        return (num >= 10 ? "" : "0") + num;
-    }
-
+        CurrentAmount = CurrentAmount == 1 ? itemQuantity : CurrentAmount - 1;
+    }    
+          
     public void Confirm()
     {
-        ReturnValue(IntFastParse(amountText.text));
+        ReturnValue(CurrentAmount);
     }
 
     public void Cancel()
@@ -167,9 +128,8 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         if (OnAmountConfirm == null) return;
 
         OnAmountConfirm(val);
-        SetButtonsInteractability(true);
+        interactDisabler?.Deactivate();
         OnDeactivate?.Invoke();
         gameObject.SetActive(false);       
     }
-
 }

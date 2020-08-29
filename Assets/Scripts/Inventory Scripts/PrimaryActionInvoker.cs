@@ -12,7 +12,7 @@ public class PrimaryActionInvoker
 
     public void UseItem(GameObject itemInteractor, UserChooser userChooser)
     {
-        userChooser.Activate(itemsDisplay);
+        userChooser.Activate();
     }
 
     public void ToggleEquipAbility()

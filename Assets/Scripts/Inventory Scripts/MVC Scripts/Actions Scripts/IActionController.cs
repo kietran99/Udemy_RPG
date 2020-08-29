@@ -3,7 +3,7 @@
     public interface IActionController
     {
         IAmountSelector AmountSelector { get; }
-        IUserChooser UserChooser { get; }
+        IUserChooserController UserChooser { get; }
         InventoryControllerInterface InventoryController { get; }
 
         void ShowInteractButtons();

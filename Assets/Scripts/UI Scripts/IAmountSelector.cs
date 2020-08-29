@@ -1,10 +1,9 @@
 ﻿using System;
-using UnityEngine;
 
 public interface IAmountSelector
 {
     #region METHODS
-    void Activate(GameObject display, int itemQuantity);
+    void Activate(int itemQuantity);
     void Confirm();
     void Cancel();
     #endregion

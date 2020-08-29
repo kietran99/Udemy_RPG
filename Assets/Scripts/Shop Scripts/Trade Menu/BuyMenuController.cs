@@ -45,7 +45,7 @@ public class BuyMenuController : TradeMenuController
 
     public void Buy()
     {
-        amtSelector.Activate(merchDisplay.gameObject, MAX_BUYABLE);
+        amtSelector.Activate(MAX_BUYABLE);
     }
 
     public void Exit()

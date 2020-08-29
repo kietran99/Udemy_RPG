@@ -41,7 +41,7 @@ public class SellMenuController : TradeMenuController
 
     public void Sell()
     {
-        amtSelector.Activate(itemDisplay.gameObject, invController.CurrentInv[selectedPos].Amount);
+        amtSelector.Activate(invController.CurrentInv[selectedPos].Amount);
     }
 
     public override void OnAmountConfirm(int changeAmount)

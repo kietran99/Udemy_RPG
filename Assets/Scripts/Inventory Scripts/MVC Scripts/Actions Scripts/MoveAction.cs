@@ -15,7 +15,7 @@ namespace RPG.Inventory
         private ItemPossessor sender;
         private int originalAmount;
         private IAmountSelector amountSelector;
-
+      
         protected override void Start()
         {
             base.Start();
@@ -68,7 +68,7 @@ namespace RPG.Inventory
             }
 
             HidePrompt();
-            amountSelector.Activate(inventoryController.View, originalAmount);
+            amountSelector.Activate(originalAmount);
 
             return dummyData;
         }

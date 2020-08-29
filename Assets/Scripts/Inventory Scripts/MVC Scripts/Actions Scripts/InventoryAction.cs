@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPG.Inventory
 {
@@ -7,6 +8,11 @@ namespace RPG.Inventory
         [SerializeField] protected ActionController actionController = null;
 
         protected InventoryControllerInterface inventoryController;
+
+        protected void Awake()
+        {
+            GetComponent<Button>().onClick.AddListener(Invoke);
+        }
 
         protected virtual void Start()
         {

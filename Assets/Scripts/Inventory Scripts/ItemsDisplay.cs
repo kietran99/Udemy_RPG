@@ -16,21 +16,19 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     #region skip
     [SerializeField]
     private Text itemNameText = null, itemDescriptionText = null, possessorText = null;
-    #endregion
 
     [SerializeField]
     private Text primaryActionText = null;
 
-    #region skip
     [SerializeField]
     private GameObject inventoryOrganizer = null, templateButton = null;
-    #endregion
 
     [SerializeField]
     private GameObject itemInteractor = null, amountSelector = null, itemMovement = null, userChooser = null;
 
     [SerializeField]
     private Button primaryActionButton = null;
+    #endregion
 
     private PrimaryActionInvoker primInvoker;
 
@@ -200,7 +198,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
 
     public void EnableAmountSelector(int quantity)
     {
-        amountSelector.GetComponent<AmountSelector>().Activate(gameObject, quantity);
+        amountSelector.GetComponent<AmountSelector>().Activate(quantity);
     }
 
     public void OnAmountConfirm(int changeAmount)

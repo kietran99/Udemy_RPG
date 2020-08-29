@@ -4,15 +4,16 @@ using UnityEngine.UI;
 
 namespace RPG.Inventory
 {
+    [RequireComponent(typeof(InteractDisabler))]
     public class UserChooser : MonoBehaviour, IUserChooser
     {
         [SerializeField]
-        private GameObject firstButton = null, buttonsContainer = null;
+        private GameObject userButtonPrefab = null, buttonsContainer = null;
 
         [SerializeField]
         private Text remainingText = null;
 
-        private ItemsDisplay display;
+        private InteractDisablerInterface interactDisabler;
 
         private int numOfRemaining;
 
@@ -22,20 +23,28 @@ namespace RPG.Inventory
 
         private bool isHPMP;
 
+        #region DELEGATES
         public Action OnActivate { get; set; }
         public Action OnDeactivate { get; set; }
+        #endregion
 
-        public void Activate(ItemsDisplay display)
+        void Awake()
         {
-            this.display = display;
-            SetBtnsInteraction();
+            interactDisabler = GetComponent<InteractDisablerInterface>();
+        }
+
+        public void Activate()
+        {
             gameObject.SetActive(true);
+            interactDisabler.Activate();
+
             OnActivate?.Invoke();
         }
 
         void Update()
         {
             if (!gameObject.activeInHierarchy) return;
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 Cancel();
@@ -48,17 +57,16 @@ namespace RPG.Inventory
             for (int i = 0; i < userButtons.Length; i++)
             {
                 if (i != 0) Destroy(userButtons[i].gameObject);
-                else firstButton.SetActive(false);
+                else userButtonPrefab.SetActive(false);
             }
 
-            SetBtnsInteraction(true);
-            display.ToDefaultState();
+            interactDisabler.Deactivate();
             OnDeactivate?.Invoke();
         }
 
         private void OnEnable()
         {
-            InitButtonsGUI();
+            InitUserButtons();
             DisplayParty();
         }
 
@@ -66,36 +74,15 @@ namespace RPG.Inventory
         {
             Cancel();
         }
-
-        private void SetBtnsInteraction(bool flag = false)
-        {
-            // Disable button click for every button in the display including this gameObject's buttons
-            foreach (Button button in display.gameObject.GetComponentsInChildren<Button>())
-            {
-                button.interactable = flag;
-            }
-
-            // Enable button click for this gameObject's buttons
-            foreach (Button button in gameObject.GetComponentsInChildren<Button>())
-            {
-                button.interactable = !flag;
-            }
-        }
-
-        private void InitButtonsGUI()
+        
+        private void InitUserButtons()
         {
             int numOfActives = GameManager.Instance.GetNumActives();
             userButtons = new UserButton[numOfActives];
 
-            // Init first button
-            firstButton.SetActive(true);
-            userButtons[0] = firstButton.GetComponent<UserButton>();
-            userButtons[0].GetComponent<Button>().onClick.AddListener(() => OnUserSelected(0));
-
-            // Init the rest
-            for (int i = 1; i < numOfActives; i++)
+            for (int i = 0; i < numOfActives; i++)
             {
-                GameObject temp = Instantiate(firstButton);
+                GameObject temp = Instantiate(userButtonPrefab);
                 temp.transform.SetParent(buttonsContainer.transform);
                 userButtons[i] = temp.GetComponent<UserButton>();
                 int pos = i;
@@ -117,10 +104,10 @@ namespace RPG.Inventory
         {
             CharStats[] party = GameManager.Instance.GetActiveChars();
 
-            Item selectedItem = ItemManager.Instance.GetItemAt(display.SelectedPos, display.CurrentPossessor);
-
+            //Item selectedItem = ItemManager.Instance.GetItemAt(view.SelectedPos, view.CurrentPossessor);
+            Item selectedItem = ItemManager.Instance.GetItemAt(0, ItemPossessor.BAG);
             // Set number of items remaining
-            numOfRemaining = ItemManager.Instance.GetNumOfItemsAt(display.SelectedPos, display.CurrentPossessor);
+            //numOfRemaining = ItemManager.Instance.GetNumOfItemsAt(view.SelectedPos, view.CurrentPossessor);
             UpdateRemaining();
 
             // Set character's stat to be changed
@@ -180,13 +167,11 @@ namespace RPG.Inventory
         public void OnUserSelected(int pos)
         {
             CharStats selectedUser = GameManager.Instance.GetCharacterAt(pos);
-            ItemManager.Instance.UseItem(display.CurrentPossessor, display.SelectedPos, selectedUser);
-            display.DisplayAll();
+            //ItemManager.Instance.UseItem(view.CurrentPossessor, view.SelectedPos, selectedUser);
+            //view.DisplayAll();
 
-            // Decrease number of remaining items
             numOfRemaining--;
 
-            // If there aren't any remaining items
             if (numOfRemaining == 0)
             {
                 Cancel();
@@ -194,28 +179,21 @@ namespace RPG.Inventory
                 return;
             }
 
-            // Else
             UpdateRemaining();
 
             if (isHPMP)
             {
                 HPMP temp = GetHPMP(changingAttr, selectedUser);
                 userButtons[pos].DisplayStat(temp.current, temp.max);
+                return;
             }
-            else
-            {
-                userButtons[pos].DisplayStat(GetStat(changingAttr, selectedUser));
-            }
+            
+            userButtons[pos].DisplayStat(GetStat(changingAttr, selectedUser));
         }
 
         private void UpdateRemaining()
         {
-            remainingText.text = numOfRemaining.ToString();
-        }
-
-        public void Activate()
-        {
-            throw new NotImplementedException();
-        }
+            remainingText.text = numOfRemaining + " left";
+        }        
     }
 }

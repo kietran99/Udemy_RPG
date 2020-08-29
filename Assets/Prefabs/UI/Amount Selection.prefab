@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -218,6 +219,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -322,6 +324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7888012902423292378}
   - component: {fileID: 2347343561942084624}
+  - component: {fileID: 3072021231170269674}
   m_Layer: 5
   m_Name: Amount Selection
   m_TagString: Untagged
@@ -366,8 +369,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe6eff5fbdec0d47aa4c71cc6e95e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryController: {fileID: 0}
   amountText: {fileID: 5911016812691250032}
   requiredHoldTime: 0.1
+--- !u!114 &3072021231170269674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7876175762748271767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993169603597dd54fbca6e8bbc8ba6ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickers:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &2347343561241733303
 PrefabInstance:
   m_ObjectHideFlags: 0

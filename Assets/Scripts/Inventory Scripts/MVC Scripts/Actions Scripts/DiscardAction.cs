@@ -3,7 +3,7 @@
     public class DiscardAction : InventoryAction
     {
         private IAmountSelector amountSelector;
-
+        
         public override void Invoke()
         {
             if (inventoryController.HasChosenEmptySlot()) return;
@@ -11,7 +11,7 @@
             amountSelector = actionController.AmountSelector;
             amountSelector.OnActivate += BindDelegates;
             amountSelector.OnDeactivate += UnbindDelegates;
-            amountSelector.Activate(inventoryController.View, inventoryController.ChosenItemHolder.Amount);
+            amountSelector.Activate(inventoryController.ChosenItemHolder.Amount);
         }
 
         void BindDelegates()

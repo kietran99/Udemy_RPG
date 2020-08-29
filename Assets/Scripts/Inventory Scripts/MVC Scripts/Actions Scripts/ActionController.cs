@@ -4,12 +4,15 @@ namespace RPG.Inventory
 {
     public class ActionController : MonoBehaviour, IActionController
     {
+        #region PROPERTIES
         public InventoryControllerInterface InventoryController { get { return invController.GetComponent<InventoryControllerInterface>(); } }
 
         public IAmountSelector AmountSelector { get { return amountSelector.GetComponent<IAmountSelector>(); } }
 
-        public IUserChooser UserChooser { get { return userChooser.GetComponent<IUserChooser>(); } }
+        public IUserChooserController UserChooser { get { return userChooser.GetComponent<IUserChooserController>(); } }
+        #endregion
 
+        #region SERIALIZE FIELD
         [SerializeField]
         private GameObject interactButtons = null;
 
@@ -21,11 +24,12 @@ namespace RPG.Inventory
 
         [SerializeField]
         private GameObject userChooser = null;
+        #endregion
 
         void Start()
         {
             AmountSelector.OnActivate += HideInteractButtons;
-            AmountSelector.OnDeactivate += () => ShowInteractButtons();
+            AmountSelector.OnDeactivate += ShowInteractButtons;
 
             UserChooser.OnActivate += HideInteractButtons;
             UserChooser.OnDeactivate += ShowInteractButtons;
