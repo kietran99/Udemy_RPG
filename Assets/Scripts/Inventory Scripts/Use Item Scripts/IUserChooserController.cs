@@ -4,6 +4,7 @@ namespace RPG.Inventory
 {
     public interface IUserChooserController
     {
+        void Activate(InventoryControllerInterface inventoryController);
         void Deactivate();
 
         #region DELEGATES

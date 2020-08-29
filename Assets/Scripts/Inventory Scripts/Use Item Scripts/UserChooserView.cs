@@ -32,5 +32,22 @@ namespace RPG.Inventory
         {            
             HigherOrderFunc.Map((UserButton button) => Destroy(button.gameObject), userButtons);
         }
+
+        public void UpdateRemaining(int nRemaining)
+        {
+            remainingText.text = nRemaining + " left";
+        }
+
+        public void ShowUserStat(int idx, string userName, int userStat, EntityStats.Attributes attr)
+        {
+            userButtons[idx].InitDisplay(userName, userStat, attr);
+            userButtons[idx].gameObject.SetActive(true);
+        }
+
+        public void ShowUserStat(int idx, string userName, int curStat, int maxStat, EntityStats.Attributes attr)
+        {
+            userButtons[idx].InitDisplay(userName, curStat, maxStat, attr);
+            userButtons[idx].gameObject.SetActive(true);
+        }
     }
 }

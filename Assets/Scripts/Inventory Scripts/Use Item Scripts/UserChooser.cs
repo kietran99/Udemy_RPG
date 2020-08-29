@@ -106,11 +106,9 @@ namespace RPG.Inventory
 
             //Item selectedItem = ItemManager.Instance.GetItemAt(view.SelectedPos, view.CurrentPossessor);
             Item selectedItem = ItemManager.Instance.GetItemAt(0, ItemPossessor.BAG);
-            // Set number of items remaining
             //numOfRemaining = ItemManager.Instance.GetNumOfItemsAt(view.SelectedPos, view.CurrentPossessor);
             UpdateRemaining();
 
-            // Set character's stat to be changed
             changingAttr = selectedItem.Effects[0].Attribute;
 
             if (changingAttr == EntityStats.Attributes.HP ||

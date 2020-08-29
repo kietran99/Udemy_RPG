@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class UserButton : MonoBehaviour
@@ -9,19 +7,7 @@ public class UserButton : MonoBehaviour
     private Text userNameText = null, userStatText = null;
 
     private string changingAttr;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     private string TranslateAttr(EntityStats.Attributes attr)
     {
         switch(attr)
@@ -48,7 +34,6 @@ public class UserButton : MonoBehaviour
         DisplayStat(userStat);
     }
 
-    // For HP and MP
     public void InitDisplay(string userName, int userStat, int maxStat, EntityStats.Attributes attr)
     {
         userNameText.text = userName;
