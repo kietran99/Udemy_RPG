@@ -121,7 +121,7 @@ namespace RPG.Inventory
                 for (int i = 0; i < party.Length; i++)
                 {
                     HPMP temp = GetHPMP(changingAttr, party[i]);
-                    userButtons[i].InitDisplay(party[i].CharacterName, temp.current, temp.max, changingAttr);
+                    userButtons[i].InitDisplay(changingAttr, party[i].CharacterName, temp.current, temp.max);
                 }
             }
             else
@@ -130,7 +130,7 @@ namespace RPG.Inventory
 
                 for (int i = 0; i < party.Length; i++)
                 {
-                    userButtons[i].InitDisplay(party[i].CharacterName, GetStat(changingAttr, party[i]), changingAttr);
+                    userButtons[i].InitDisplay(changingAttr, party[i].CharacterName, GetStat(changingAttr, party[i]));
                 }
             }
         }
@@ -182,11 +182,11 @@ namespace RPG.Inventory
             if (isHPMP)
             {
                 HPMP temp = GetHPMP(changingAttr, selectedUser);
-                userButtons[pos].DisplayStat(temp.current, temp.max);
+                userButtons[pos].UpdateStat(temp.current, temp.max);
                 return;
             }
             
-            userButtons[pos].DisplayStat(GetStat(changingAttr, selectedUser));
+            userButtons[pos].UpdateStat(GetStat(changingAttr, selectedUser), -1);
         }
 
         private void UpdateRemaining()

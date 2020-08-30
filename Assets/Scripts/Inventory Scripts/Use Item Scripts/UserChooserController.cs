@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Functional;
 
 namespace RPG.Inventory
 {
@@ -12,6 +13,14 @@ namespace RPG.Inventory
             set
             {
                 nRemaining = value;
+
+                if (nRemaining == Constants.EMPTY)
+                {
+                    Deactivate();
+                    gameObject.SetActive(false);
+                    return;
+                }
+
                 view.UpdateRemaining(nRemaining);
             }
         }
@@ -51,6 +60,7 @@ namespace RPG.Inventory
             interactDisabler.Activate();
             DisplayParty();
 
+            view.OnItemUse += UseItem;
             OnActivate?.Invoke();
         }
 
@@ -65,10 +75,25 @@ namespace RPG.Inventory
             }
         }
 
+        void OnEnable()
+        {
+            //view.Init();
+            //interactDisabler.Activate();
+            //DisplayParty();
+            //view.OnItemUse += UseItem;
+            //OnActivate?.Invoke();
+        }
+
+        void OnDisable()
+        {
+            //Deactivate();
+        }
+
         public void Deactivate()
         {
             view.Destruct();
             interactDisabler.Deactivate();
+            view.OnItemUse -= UseItem;
             OnDeactivate?.Invoke();
         }
 
@@ -81,46 +106,19 @@ namespace RPG.Inventory
 
             changingAttrib = selectedItem.Effects[0].Attribute;
 
-            if (changingAttrib == EntityStats.Attributes.HP ||
+            isHPMP = changingAttrib == EntityStats.Attributes.HP ||
                 changingAttrib == EntityStats.Attributes.MAX_HP ||
                 changingAttrib == EntityStats.Attributes.MP ||
-                changingAttrib == EntityStats.Attributes.MAX_MP)
+                changingAttrib == EntityStats.Attributes.MAX_MP;
+            
+            HigherOrderFunc.Map((CharStats stats, int idx) =>
             {
-                isHPMP = true;
+                (int current, int max) = GetStat(changingAttrib, stats);
+                view.ShowUserStat(idx, changingAttrib, stats.CharacterName, current, max);
+            }, party);
+        }        
 
-                for (int i = 0; i < party.Length; i++)
-                {
-                    (int current, int max) temp = GetHPMP(changingAttrib, party[i]);
-                    view.ShowUserStat(i, party[i].CharacterName, temp.current, temp.max, changingAttrib);
-                }
-            }
-            else
-            {
-                isHPMP = false;
-
-                for (int i = 0; i < party.Length; i++)
-                {
-                    view.ShowUserStat(i, party[i].CharacterName, GetStat(changingAttrib, party[i]), changingAttrib);
-                }
-            }
-        }
-
-        private int GetStat(EntityStats.Attributes attr, CharStats stats)
-        {
-            switch (attr)
-            {
-                case EntityStats.Attributes.STR: return stats.Strength;
-                case EntityStats.Attributes.DEF: return stats.Defence;
-                case EntityStats.Attributes.INT: return stats.Intellect;
-                case EntityStats.Attributes.VIT: return stats.Vitality;
-                case EntityStats.Attributes.AGI: return stats.Agility;
-                case EntityStats.Attributes.LCK: return stats.Luck;
-                case EntityStats.Attributes.EXP: return stats.CurrentEXP;
-                default: return -1;
-            }
-        }
-
-        private (int cur, int max) GetHPMP(EntityStats.Attributes attr, CharStats stats)
+        private (int cur, int max) GetStat(EntityStats.Attributes attr, CharStats stats)
         {
             switch (attr)
             {
@@ -128,8 +126,26 @@ namespace RPG.Inventory
                 case EntityStats.Attributes.MAX_HP: return (stats.CurrentHP, stats.MaxHP);
                 case EntityStats.Attributes.MP:
                 case EntityStats.Attributes.MAX_MP: return (stats.CurrentMP, stats.MaxMP);
-                default: return (0, 0);
+                case EntityStats.Attributes.STR: return (stats.Strength, Constants.NONE_VALUE);
+                case EntityStats.Attributes.DEF: return (stats.Defence, Constants.NONE_VALUE);
+                case EntityStats.Attributes.INT: return (stats.Intellect, Constants.NONE_VALUE);
+                case EntityStats.Attributes.VIT: return (stats.Vitality, Constants.NONE_VALUE);
+                case EntityStats.Attributes.AGI: return (stats.Agility, Constants.NONE_VALUE);
+                case EntityStats.Attributes.LCK: return (stats.Luck, Constants.NONE_VALUE);
+                case EntityStats.Attributes.EXP: return (stats.CurrentEXP, Constants.NONE_VALUE);
+                default: return (0, Constants.NONE_VALUE);
             }
+        }
+    
+        private (int cur, int max) UseItem(int idx)
+        {
+            CharStats selectedUser = GameManager.Instance.GetCharacterAt(idx);
+            ItemManager.Instance.UseItem(inventoryController.CharCycler.Current, inventoryController.ChosenPosition, selectedUser);
+            inventoryController.ShowInventory();
+
+            NumRemaining--;
+
+            return GetStat(changingAttrib, selectedUser);
         }
     }
 }

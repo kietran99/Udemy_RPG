@@ -58,7 +58,7 @@ namespace Functional
             return currentVal;
         }
 
-        public static T reduce<T>(Func<T, T, T> function, IEnumerator iter)
+        public static T Reduce<T>(Func<T, T, T> function, IEnumerator iter)
         {
             if (!iter.MoveNext()) return default(T);
 
@@ -72,7 +72,7 @@ namespace Functional
             return currentVal;
         }
 
-        public static T reduce<T, U>(Func<T, U, T> function, IEnumerator iter, T startValue)
+        public static T Reduce<T, U>(Func<T, U, T> function, IEnumerator iter, T startValue)
         {
             T currentVal = startValue;
 
@@ -89,6 +89,14 @@ namespace Functional
             for (int i = 0; i < iter.Length; i++)
             {
                 function(iter[i]);
+            }
+        }
+
+        public static void Map<T>(Action<T, int> function, T[] iter)
+        {
+            for (int i = 0; i < iter.Length; i++)
+            {
+                function(iter[i], i);
             }
         }
 

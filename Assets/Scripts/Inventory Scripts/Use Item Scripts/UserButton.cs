@@ -26,28 +26,16 @@ public class UserButton : MonoBehaviour
             default:                            return "";
         }
     }
-
-    public void InitDisplay(string userName, int userStat, EntityStats.Attributes attr)
+   
+    public void InitDisplay(EntityStats.Attributes attr, string userName, int userStat, int maxStat = -1)
     {
         userNameText.text = userName;
         changingAttr = TranslateAttr(attr);
-        DisplayStat(userStat);
+        UpdateStat(userStat, maxStat);
     }
-
-    public void InitDisplay(string userName, int userStat, int maxStat, EntityStats.Attributes attr)
+    
+    public void UpdateStat(int newUserStat, int newMaxStat)
     {
-        userNameText.text = userName;
-        changingAttr = TranslateAttr(attr);
-        DisplayStat(userStat, maxStat);
-    }
-
-    public void DisplayStat(int newUserStat)
-    {
-        userStatText.text = changingAttr + ": " + newUserStat;
-    }
-
-    public void DisplayStat(int newUserStat, int newMaxStat)
-    {
-        userStatText.text = changingAttr + ": " + newUserStat + "/" + newMaxStat;
+        userStatText.text = changingAttr + ": " + newUserStat + (newMaxStat == Constants.NONE_VALUE ? "" : "/" + newMaxStat);
     }
 }

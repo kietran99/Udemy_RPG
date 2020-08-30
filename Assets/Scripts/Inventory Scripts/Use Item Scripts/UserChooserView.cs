@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Functional;
+using System;
 
 namespace RPG.Inventory
 {
@@ -14,6 +15,8 @@ namespace RPG.Inventory
 
         private UserButton[] userButtons;
 
+        public Func<int, (int, int)> OnItemUse { get; set; }
+
         public void Init()
         {
             int numOfActives = GameManager.Instance.GetNumActives();
@@ -24,7 +27,7 @@ namespace RPG.Inventory
                 GameObject instance = Instantiate(userButtonPrefab, buttonsContainer.transform);
                 userButtons[i] = instance.GetComponent<UserButton>();
                 int pos = i;
-                //userButtons[i].GetComponent<Button>().onClick.AddListener(() => OnUserSelected(pos));
+                userButtons[i].GetComponent<Button>().onClick.AddListener(() => UpdateStat(pos));
             }
         }
 
@@ -38,16 +41,16 @@ namespace RPG.Inventory
             remainingText.text = nRemaining + " left";
         }
 
-        public void ShowUserStat(int idx, string userName, int userStat, EntityStats.Attributes attr)
+        public void ShowUserStat(int idx, EntityStats.Attributes attr, string userName, int curStat, int maxStat = -1)
         {
-            userButtons[idx].InitDisplay(userName, userStat, attr);
+            userButtons[idx].InitDisplay(attr, userName, curStat, maxStat);
             userButtons[idx].gameObject.SetActive(true);
-        }
-
-        public void ShowUserStat(int idx, string userName, int curStat, int maxStat, EntityStats.Attributes attr)
+        }     
+        
+        private void UpdateStat(int idx)
         {
-            userButtons[idx].InitDisplay(userName, curStat, maxStat, attr);
-            userButtons[idx].gameObject.SetActive(true);
+            var stats = OnItemUse?.Invoke(idx);
+            userButtons[idx].UpdateStat(stats.Value.Item1, stats.Value.Item2);
         }
     }
 }
