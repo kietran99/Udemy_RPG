@@ -6,36 +6,17 @@ public class UserButton : MonoBehaviour
     [SerializeField]
     private Text userNameText = null, userStatText = null;
 
-    private string changingAttr;
-    
-    private string TranslateAttr(EntityStats.Attributes attr)
-    {
-        switch(attr)
-        {
-            case EntityStats.Attributes.STR:    return "STR";
-            case EntityStats.Attributes.DEF:    return "DEF";
-            case EntityStats.Attributes.INT:    return "INT";
-            case EntityStats.Attributes.VIT:    return "VIT";
-            case EntityStats.Attributes.AGI:    return "AGI";
-            case EntityStats.Attributes.LCK:    return "LCK";
-            case EntityStats.Attributes.HP:
-            case EntityStats.Attributes.MAX_HP: return "HP";
-            case EntityStats.Attributes.MP:
-            case EntityStats.Attributes.MAX_MP: return "MP";
-            case EntityStats.Attributes.EXP:    return "EXP";
-            default:                            return "";
-        }
-    }
-   
-    public void InitDisplay(EntityStats.Attributes attr, string userName, int userStat, int maxStat = -1)
+    private string changingAttribName;
+        
+    public void InitStat(EntityStats.Attributes attr, string userName, int userStat, int maxStat = -1)
     {
         userNameText.text = userName;
-        changingAttr = TranslateAttr(attr);
+        changingAttribName = new StatFetcher(attr).ExtractName();
         UpdateStat(userStat, maxStat);
     }
     
     public void UpdateStat(int newUserStat, int newMaxStat)
     {
-        userStatText.text = changingAttr + ": " + newUserStat + (newMaxStat == Constants.NONE_VALUE ? "" : "/" + newMaxStat);
+        userStatText.text = changingAttribName + ": " + newUserStat + (newMaxStat == Constants.NONE_VALUE ? "" : "/" + newMaxStat);
     }
 }

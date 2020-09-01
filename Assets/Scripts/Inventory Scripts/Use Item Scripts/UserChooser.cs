@@ -121,7 +121,7 @@ namespace RPG.Inventory
                 for (int i = 0; i < party.Length; i++)
                 {
                     HPMP temp = GetHPMP(changingAttr, party[i]);
-                    userButtons[i].InitDisplay(changingAttr, party[i].CharacterName, temp.current, temp.max);
+                    userButtons[i].InitStat(changingAttr, party[i].CharacterName, temp.current, temp.max);
                 }
             }
             else
@@ -130,7 +130,7 @@ namespace RPG.Inventory
 
                 for (int i = 0; i < party.Length; i++)
                 {
-                    userButtons[i].InitDisplay(changingAttr, party[i].CharacterName, GetStat(changingAttr, party[i]));
+                    userButtons[i].InitStat(changingAttr, party[i].CharacterName, GetStat(changingAttr, party[i]));
                 }
             }
         }

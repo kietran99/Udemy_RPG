@@ -43,7 +43,7 @@ namespace RPG.Inventory
 
         public void ShowUserStat(int idx, EntityStats.Attributes attr, string userName, int curStat, int maxStat = -1)
         {
-            userButtons[idx].InitDisplay(attr, userName, curStat, maxStat);
+            userButtons[idx].InitStat(attr, userName, curStat, maxStat);
             userButtons[idx].gameObject.SetActive(true);
         }     
         
