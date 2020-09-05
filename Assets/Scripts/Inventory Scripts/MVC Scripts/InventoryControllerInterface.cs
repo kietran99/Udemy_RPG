@@ -13,6 +13,7 @@ namespace RPG.Inventory
         ICycler<ItemPossessor> CharCycler { get; }
 
         Action OnHide { get; set; }
+        Action<bool> OnUsableItemClick { get; set; }
 
         void ShowInventory();
         bool HasChosenSameItemAt(int idx);

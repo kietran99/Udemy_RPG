@@ -5,6 +5,7 @@ public abstract class Equipment : Item
     #region
     public CharName[] EquippableChars { get { return equippableChars; } }
     public int StatChange { get { return statChange; } }
+    public override bool IsEquipment { get => true; }
     #endregion
 
     [SerializeField]

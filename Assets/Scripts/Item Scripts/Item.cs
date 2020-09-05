@@ -10,6 +10,7 @@ public abstract class Item : ScriptableObject
     public int SellValue { get { return sellValue; } }
     public int BuyValue { get { return buyValue; } }
     public Effect[] Effects { get { return bonusEffects; } }
+    public abstract bool IsEquipment { get; }
     #endregion
 
     public const string USE_ACTION = "USE";

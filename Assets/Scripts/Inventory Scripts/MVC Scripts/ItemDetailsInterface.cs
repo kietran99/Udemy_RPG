@@ -6,7 +6,7 @@
 
         public string name;
         public string description;      
-
+        
         public DetailData(string name, string description, bool shouldShow = true)
         {
             this.name = name;

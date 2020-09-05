@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5316738181358638747}
   - component: {fileID: 4662134726945745730}
   - component: {fileID: 1961072200202495426}
+  - component: {fileID: 1440500321116426632}
   - component: {fileID: 2222588199426161770}
   m_Layer: 5
   m_Name: Decrease Button
@@ -29,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 964615430035760767}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: -1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7888012902423292378}
   m_RootOrder: 3
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 25f742548483ce04280d22b9042c67ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1be1a26057bdd804ea0e2aee7c78aea1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -130,6 +131,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1440500321116426632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964615430035760767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8b7c9c2ccb3a243b0a0d186991e1e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unpressedSprite: {fileID: 21300000, guid: 1be1a26057bdd804ea0e2aee7c78aea1, type: 3}
+  pressedSprite: {fileID: 21300000, guid: ca6556bc9aa09d946bbe5b6538bf8ffc, type: 3}
 --- !u!114 &2222588199426161770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +184,7 @@ GameObject:
   - component: {fileID: 2347343561628113582}
   - component: {fileID: 2347343561628113583}
   - component: {fileID: 2347343561628113580}
+  - component: {fileID: 6681503831992998448}
   - component: {fileID: 2347343561628113569}
   m_Layer: 5
   m_Name: Increase Button
@@ -223,7 +239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 25f742548483ce04280d22b9042c67ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 407bbd93e33e84443950c75b7abec341, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -287,6 +303,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6681503831992998448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2347343561628113578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8b7c9c2ccb3a243b0a0d186991e1e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unpressedSprite: {fileID: 21300000, guid: 407bbd93e33e84443950c75b7abec341, type: 3}
+  pressedSprite: {fileID: 21300000, guid: edcc4e86ee457ca43ac14ff24ee6983b, type: 3}
 --- !u!114 &2347343561628113569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,7 +399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe6eff5fbdec0d47aa4c71cc6e95e2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryController: {fileID: 0}
   amountText: {fileID: 5911016812691250032}
   requiredHoldTime: 0.1
 --- !u!114 &3072021231170269674

@@ -24,6 +24,9 @@ namespace RPG.Inventory
 
         [SerializeField]
         private GameObject userChooser = null;
+
+        [SerializeField]
+        private GameObject useButton = null, equipButton = null;
         #endregion
 
         void Start()
@@ -33,6 +36,8 @@ namespace RPG.Inventory
 
             UserChooser.OnActivate += HideInteractButtons;
             UserChooser.OnDeactivate += ShowInteractButtons;
+
+            InventoryController.OnUsableItemClick += ToggleUseEquip;
         }
 
         public void ShowInteractButtons()
@@ -43,6 +48,12 @@ namespace RPG.Inventory
         public void HideInteractButtons()
         {
             interactButtons.SetActive(false);
+        }
+
+        public void ToggleUseEquip(bool usable)
+        {
+            useButton.SetActive(usable);
+            equipButton.SetActive(!usable);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace RPG.Inventory
 
         #region DELEGATES
         public Action OnHide { get; set; }
+        public Action<bool> OnUsableItemClick { get; set; }
         #endregion
 
         [SerializeField]
@@ -67,6 +68,7 @@ namespace RPG.Inventory
 
         private DetailData GetItemDetails(int idx)
         {
+            OnUsableItemClick?.Invoke(!CurrentInv[idx].TheItem.IsEquipment);
             ChosenPosition = idx;
 
             Item item = CurrentInv[idx].TheItem;

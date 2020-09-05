@@ -3231,6 +3231,8 @@ MonoBehaviour:
   invController: {fileID: 8353849531747746099}
   amountSelector: {fileID: 4569717095091179996}
   userChooser: {fileID: 6022648786049981570}
+  useButton: {fileID: 8087153962307123709}
+  equipButton: {fileID: 8694173216649798667}
 --- !u!1 &2333722267595487719
 GameObject:
   m_ObjectHideFlags: 0
