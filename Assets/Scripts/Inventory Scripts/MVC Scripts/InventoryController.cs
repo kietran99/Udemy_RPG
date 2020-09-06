@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Cycler;
 using System;
+using Functional;
 
 namespace RPG.Inventory
 {
@@ -67,12 +68,29 @@ namespace RPG.Inventory
         }
 
         private DetailData GetItemDetails(int idx)
-        {
-            OnUsableItemClick?.Invoke(!CurrentInv[idx].TheItem.IsEquipment);
+        {           
             ChosenPosition = idx;
+            bool isEquipment = CurrentInv[idx].TheItem.IsEquipment;
+            OnUsableItemClick?.Invoke(!isEquipment);
 
             Item item = CurrentInv[idx].TheItem;
-            return new DetailData(item.ItemName, item.Description);
+
+            Sprite[] equippableSprites = GetEquippableCharsSprites(item);
+
+            return new DetailData(item.ItemName, item.Description, equippableSprites);
+        }
+
+        private Sprite[] GetEquippableCharsSprites(Item item)
+        {
+            try
+            {
+                CharName[] equippableCharsNames = ((Equipment)item).EquippableChars;
+                return HigherOrderFunc.Map(charName => GameManager.Instance.GetCharacter(charName.CharacterName).CharImage, equippableCharsNames);
+            }
+            catch
+            {
+                return Array.Empty<Sprite>();
+            }
         }
 
         public void ShowInventory()

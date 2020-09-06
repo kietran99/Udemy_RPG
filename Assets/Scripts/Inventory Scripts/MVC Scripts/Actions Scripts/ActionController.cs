@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace RPG.Inventory
 {
@@ -31,27 +32,32 @@ namespace RPG.Inventory
 
         void Start()
         {
-            AmountSelector.OnActivate += HideInteractButtons;
-            AmountSelector.OnDeactivate += ShowInteractButtons;
+            AmountSelector.OnActivate += HideInteractors;
+            AmountSelector.OnDeactivate += ShowInteractors;
 
-            UserChooser.OnActivate += HideInteractButtons;
-            UserChooser.OnDeactivate += ShowInteractButtons;
+            UserChooser.OnActivate += HideInteractors;
+            UserChooser.OnDeactivate += ShowInteractors;
 
             InventoryController.OnUsableItemClick += ToggleUseEquip;
         }
 
-        public void ShowInteractButtons()
+        public void ShowInteractors()
         {
             interactButtons.SetActive(true);
         }
 
-        public void HideInteractButtons()
+        public void HideInteractors()
         {
             interactButtons.SetActive(false);
         }
 
         public void ToggleUseEquip(bool usable)
         {
+            bool hasChosenEmptySlot = InventoryController.HasChosenEmptySlot();
+            
+            useButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
+            equipButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
+
             useButton.SetActive(usable);
             equipButton.SetActive(!usable);
         }

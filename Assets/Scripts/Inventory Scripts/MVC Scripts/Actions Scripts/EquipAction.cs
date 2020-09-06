@@ -1,6 +1,4 @@
-﻿using UnityEngine.UI;
-
-namespace RPG.Inventory
+﻿namespace RPG.Inventory
 {
     public class EquipAction : InventoryAction
     {        

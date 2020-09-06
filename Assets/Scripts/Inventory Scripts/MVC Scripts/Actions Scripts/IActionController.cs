@@ -6,7 +6,7 @@
         IUserChooserController UserChooser { get; }
         InventoryControllerInterface InventoryController { get; }
 
-        void ShowInteractButtons();
-        void HideInteractButtons();
+        void ShowInteractors();
+        void HideInteractors();
     }
 }

@@ -48,7 +48,7 @@ namespace RPG.Inventory
 
             if (!data.shouldShow) return;
 
-            itemDetails.Show(data.name, data.description);
+            itemDetails.Show(data.name, data.description, data.equippablesSprites);
         }
     }
 }

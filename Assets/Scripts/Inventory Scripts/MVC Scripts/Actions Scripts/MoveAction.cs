@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace RPG.Inventory
@@ -46,20 +47,20 @@ namespace RPG.Inventory
             originalAmount = inventoryController.ChosenItemHolder.Amount;
             sender = inventoryController.CharCycler.Current;
             ShowPrompt();
-            actionController.HideInteractButtons();
+            actionController.HideInteractors();
             inventoryController.View.GetComponent<InventoryViewInterface>().OnItemButtonClick += PickAmount;
         }
 
         public void Cancel()
         {
             HidePrompt();
-            actionController.ShowInteractButtons();
+            actionController.ShowInteractors();
             inventoryController.View.GetComponent<InventoryViewInterface>().OnItemButtonClick -= PickAmount;
         }
        
         private DetailData PickAmount(int idx)
         {
-            var dummyData = new DetailData(string.Empty, string.Empty, false);
+            var dummyData = new DetailData(string.Empty, string.Empty, Array.Empty<Sprite>(), false);
             
             if (!inventoryController.IsEmptySlot(idx) && !inventoryController.HasChosenSameItemAt(idxToMove))
             {

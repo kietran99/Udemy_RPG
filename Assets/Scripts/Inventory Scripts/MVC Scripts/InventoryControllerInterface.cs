@@ -1,7 +1,6 @@
 ﻿using Cycler;
 using UnityEngine;
 using System;
-using UnityEngine.UI;
 
 namespace RPG.Inventory
 {

@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public bool fadingBetweenAreas, dialogActive, gameMenuActive, shopMenuActive;
 
-    // Start is called before the first frame update
     void Start()
     {
         if (Instance == null)
@@ -32,7 +31,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (fadingBetweenAreas || dialogActive || gameMenuActive || shopMenuActive) PlayerController.Instance.canMove = false;
@@ -52,5 +50,10 @@ public class GameManager : MonoBehaviour
     public CharStats GetCharacterAt(int pos)
     {
         return playerStats[pos];
+    }
+
+    public CharStats GetCharacter(string charName)
+    {
+        return Functional.HigherOrderFunc.Filter(x => x.CharacterName.Equals(charName), playerStats)[0];
     }
 }
