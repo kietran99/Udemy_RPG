@@ -39,12 +39,12 @@ public class GameManager : MonoBehaviour
 
     public int GetNumActives()
     {
-        return Functional.HigherOrderFunc.Filter(x => x.gameObject.activeInHierarchy, playerStats).Length;
+        return Functional.HOF.Filter(x => x.gameObject.activeInHierarchy, playerStats).Length;
     }
 
     public CharStats[] GetActiveChars()
     {
-        return Functional.HigherOrderFunc.Filter(x => x.gameObject.activeInHierarchy, playerStats);
+        return Functional.HOF.Filter(x => x.gameObject.activeInHierarchy, playerStats);
     }
 
     public CharStats GetCharacterAt(int pos)
@@ -54,6 +54,6 @@ public class GameManager : MonoBehaviour
 
     public CharStats GetCharacter(string charName)
     {
-        return Functional.HigherOrderFunc.Filter(x => x.CharacterName.Equals(charName), playerStats)[0];
+        return Functional.HOF.Filter(x => x.CharacterName.Equals(charName), playerStats)[0];
     }
 }

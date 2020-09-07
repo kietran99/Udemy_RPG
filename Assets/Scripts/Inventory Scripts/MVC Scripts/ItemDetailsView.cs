@@ -26,9 +26,9 @@ namespace RPG.Inventory
         {
             nameText.text = name;
             descriptionText.text = description;
-            HigherOrderFunc.Map(sprite => spritesPool.Push(sprite), sprites);
+            HOF.Map(sprite => spritesPool.Push(sprite), sprites);
             sprites = new GameObject[equippablesSprites.Length];
-            HigherOrderFunc.Map((sprite, idx) =>
+            HOF.Map((sprite, idx) =>
             {
                 GameObject obj = spritesPool.Pop();
                 sprites[idx] = obj;

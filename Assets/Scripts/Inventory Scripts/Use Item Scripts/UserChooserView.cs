@@ -33,7 +33,7 @@ namespace RPG.Inventory
 
         public void Destruct()
         {            
-            HigherOrderFunc.Map((UserButton button) => Destroy(button.gameObject), userButtons);
+            HOF.Map((UserButton button) => Destroy(button.gameObject), userButtons);
         }
 
         public void UpdateRemaining(int nRemaining)

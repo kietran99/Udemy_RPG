@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Functional
 {
-    public static class HigherOrderFunc
+    public static class HOF
     {
         public static T[] Filter<T> (Predicate<T> conditions, T[] iter)
         {

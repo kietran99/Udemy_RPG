@@ -85,7 +85,7 @@ namespace RPG.Inventory
             try
             {
                 CharName[] equippableCharsNames = ((Equipment)item).EquippableChars;
-                return HigherOrderFunc.Map(charName => GameManager.Instance.GetCharacter(charName.CharacterName).CharImage, equippableCharsNames);
+                return HOF.Map(charName => GameManager.Instance.GetCharacter(charName.CharacterName).CharImage, equippableCharsNames);
             }
             catch
             {

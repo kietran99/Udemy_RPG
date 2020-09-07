@@ -20,7 +20,7 @@ namespace RPG.Inventory
 
         void SetInteractability(bool interactable)
         {
-            HigherOrderFunc.Map((ButtonsPicker picker) => HigherOrderFunc.Map(
+            HOF.Map((ButtonsPicker picker) => HOF.Map(
                 (Button button) => button.interactable = interactable, picker.Buttons), 
             pickers);
         }

@@ -44,12 +44,12 @@ public abstract class Equipment : Item
 
     public bool CanEquip(string charName)
     {
-        return Functional.HigherOrderFunc.Filter(x => x.CharacterName.Equals(charName), equippableChars).Length > 0;
+        return Functional.HOF.Filter(x => x.CharacterName.Equals(charName), equippableChars).Length > 0;
     }
 
     public CharStats[] GetEquippableChars()
     {        
         CharStats[] activeChars = GameManager.Instance.GetActiveChars();     
-        return Functional.HigherOrderFunc.Filter(x => CanEquip(x.CharacterName), activeChars);
+        return Functional.HOF.Filter(x => CanEquip(x.CharacterName), activeChars);
     }
 }

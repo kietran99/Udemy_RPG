@@ -90,7 +90,7 @@ public class InventoryHolder : IInventoryHolder
 
     public ItemHolder[] GetEquippedItems()
     {
-        return Functional.HigherOrderFunc.Filter(x => x.IsEquipped, itemHolders);
+        return Functional.HOF.Filter(x => x.IsEquipped, itemHolders);
     }
 
     public int FindSameEquippedType(Equipment itemToCompare)

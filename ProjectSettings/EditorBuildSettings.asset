@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Countryside.unity
-    guid: fe919c4c34e898348aa632e3c9a9167f
-  - enabled: 1
     path: Assets/Scenes/Town.unity
     guid: f06303ec626cb784fb1f395f15205713
   - enabled: 1
     path: Assets/Scenes/Shop.unity
     guid: c7c50469a76751a449547912d3754056
+  - enabled: 1
+    path: Assets/Scenes/Countryside.unity
+    guid: fe919c4c34e898348aa632e3c9a9167f
   m_configObjects: {}

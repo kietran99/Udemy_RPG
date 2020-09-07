@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Functional;
+using KeyboardControl;
 
 namespace RPG.Inventory
 {
@@ -70,7 +71,7 @@ namespace RPG.Inventory
         {
             if (!gameObject.activeInHierarchy) return;
 
-            if (Input.GetKeyDown(KeyboardControl.GlobalExit))
+            if (Input.GetKeyDown(General.GlobalExit))
             {
                 Deactivate();
                 gameObject.SetActive(false);
@@ -95,7 +96,7 @@ namespace RPG.Inventory
             changingAttrib = selectedItem.Effects[0].Attribute;
             statFetcher = new StatFetcher(changingAttrib);
             
-            HigherOrderFunc.Map((CharStats stats, int idx) =>
+            HOF.Map((CharStats stats, int idx) =>
             {
                 (int current, int max) = statFetcher.ExtractValues(stats);
                 view.ShowUserStat(idx, changingAttrib, stats.CharacterName, current, max);

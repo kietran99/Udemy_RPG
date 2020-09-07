@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 
-public static class KeyboardControl
+namespace KeyboardControl
 {
-    public static KeyCode GlobalExit { get { return KeyCode.Escape; } }
+    public static class General
+    {
+        public static KeyCode GlobalExit { get { return KeyCode.Escape; } }
+    }
+
+    
 }

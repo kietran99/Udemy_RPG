@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using KeyboardControl;
 
 [RequireComponent (typeof(InteractDisabler))]
 public class AmountSelector : MonoBehaviour, IAmountSelector
@@ -47,7 +48,7 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
     
     void Update()
     {        
-        if (Input.GetKeyDown(KeyboardControl.GlobalExit)) Cancel();
+        if (Input.GetKeyDown(General.GlobalExit)) Cancel();
         else HoldKey();    
     }
     

@@ -39,7 +39,7 @@ public abstract class Item : ScriptableObject
 
     public void Use(CharStats charStats)
     {       
-        HigherOrderFunc.Map(x => x.Invoke(charStats), bonusEffects);
+        HOF.Map(x => x.Invoke(charStats), bonusEffects);
     }
 
     public bool Equals(Item other)

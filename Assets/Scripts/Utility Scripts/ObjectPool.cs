@@ -12,11 +12,12 @@ public class ObjectPool : MonoBehaviour, IObjectPool
     [SerializeField]
     private GameObject parent = null;
 
-    private Queue<GameObject> pooledObjects;
+    private Queue<GameObject> pooledObjects/*, freeObjects*/;
 
     void Start()
     {
         pooledObjects = new Queue<GameObject>(capacity);
+        //freeObjects = new Queue<GameObject>(capacity);
         InitObjects(capacity);
     }
 

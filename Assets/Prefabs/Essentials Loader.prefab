@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 3986985053424760601, guid: 48fbc41a94d80ef48bc43802d80dcc72, type: 3}
+  fadeScreen: {fileID: 2874253442827705472, guid: d3af5f40149c7264b85dcbd14d0892f8,
+    type: 3}
   gameMenuCanvas: {fileID: 9122516737017483206, guid: 01ab8f382b9656c46b6cb7453dbc5197,
     type: 3}
   dialogCanvas: {fileID: 7685276116186351971, guid: 31ce3f17f38ea81418ad8ebbce76e600,

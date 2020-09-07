@@ -3,22 +3,33 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIFade : MonoBehaviour
-{    
+{
+    #region SINGLETON
+    public static UIFade Instance { get; set; }
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        } 
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+    #endregion
+
     public Image fadeScreen;
 
     public float fadeSpeed;
 
-    private bool shouldFadeToBlack, shouldFadeFromBlack;
+    private bool shouldFadeToBlack = false, shouldFadeFromBlack = false;
 
-    public static Action OnFadeComplete;
+    public Action OnFadeComplete;
 
-    // Start is called before the first frame update
-    void Start()
-    {       
-        DontDestroyOnLoad(gameObject);
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (shouldFadeToBlack)
@@ -29,7 +40,7 @@ public class UIFade : MonoBehaviour
             if (fadeScreen.color.a == 1f)
             {
                 shouldFadeToBlack = false;
-                OnFadeComplete();
+                OnFadeComplete?.Invoke();
             }
 
             return;
@@ -43,7 +54,6 @@ public class UIFade : MonoBehaviour
             if (fadeScreen.color.a == 0f)
             {
                 shouldFadeFromBlack = false;
-                OnFadeComplete();
             }
         }
     }

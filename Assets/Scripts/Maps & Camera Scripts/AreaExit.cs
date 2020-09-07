@@ -9,20 +9,17 @@ public class AreaExit : MonoBehaviour
 
     public AreaEntrance areaEntrance;
 
-    [SerializeField]
-    private GameObject fadeScreen = null;
-
-    // Start is called before the first frame update
     void Start()
     {
-        areaEntrance.AreaTransitionName = areaTransitionName;
-        UIFade.OnFadeComplete += LoadSceneAfterFaded;
+        areaEntrance.AreaTransitionName = areaTransitionName;        
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
-        Instantiate(fadeScreen).GetComponent<UIFade>().FadeToBlack();
+        UIFade.Instance.FadeToBlack();
+        UIFade.Instance.OnFadeComplete += LoadSceneAfterFaded;
 
         GameManager.Instance.fadingBetweenAreas = true;
 
@@ -31,6 +28,8 @@ public class AreaExit : MonoBehaviour
 
     public void LoadSceneAfterFaded()
     {
-        SceneManager.LoadScene(areaToLoad);
+        SceneManager.LoadScene(areaToLoad);        
+        UIFade.Instance.FadeFromBlack();
+        UIFade.Instance.OnFadeComplete -= LoadSceneAfterFaded;
     }
 }
