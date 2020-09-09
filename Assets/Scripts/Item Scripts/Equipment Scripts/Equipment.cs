@@ -23,6 +23,7 @@ public abstract class Equipment : Item
 
     public abstract int GetCorresStat(CharStats stats);
     public abstract int GetPostChangeStat(CharStats stats);
+    public abstract AttributesData GetLaterChangeStat(CharStats stats);
 
     public override string GetPrimaryAction()
     {

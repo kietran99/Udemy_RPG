@@ -4,16 +4,16 @@ using Functional;
 
 namespace RPG.Inventory
 {
-    public class InteractDisabler : MonoBehaviour, InteractDisablerInterface
+    public class InteractDisabler : MonoBehaviour
     {
         [SerializeField] ButtonsPicker[] pickers = null;
 
-        public void Activate()
+        void OnEnable()
         {
             SetInteractability(false);
         }
 
-        public void Deactivate()
+        void OnDisable()
         {
             SetInteractability(true);
         }

@@ -2,22 +2,10 @@
 
 public class GameManager : MonoBehaviour
 {
-    #region
+    #region SINGLETON
     public static GameManager Instance { get { return instance; } set { instance = value; } }
-    public CharStats[] PlayerStats { get { return playerStats; } }  
-    #endregion
-
     private static GameManager instance;
-
-    public const int MAX_PARTY_MEMBERS = 5;
-
-    [SerializeField]
-    private CharStats[] playerStats = null;
-    
-    [HideInInspector]
-    public bool fadingBetweenAreas, dialogActive, gameMenuActive, shopMenuActive;
-
-    void Start()
+    void Awake()
     {
         if (Instance == null)
         {
@@ -30,6 +18,19 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+    #endregion
+
+    public const int MAX_PARTY_MEMBERS = 5;
+
+    #region PUBLIC
+    public CharStats[] PlayerStats { get { return playerStats; } }  
+    #endregion
+
+    [SerializeField]
+    private CharStats[] playerStats = null;
+    
+    [HideInInspector]
+    public bool fadingBetweenAreas, dialogActive, gameMenuActive, shopMenuActive;   
 
     void Update()
     {

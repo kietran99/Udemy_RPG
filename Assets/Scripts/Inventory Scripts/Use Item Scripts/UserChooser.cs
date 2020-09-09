@@ -13,8 +13,6 @@ namespace RPG.Inventory
         [SerializeField]
         private Text remainingText = null;
 
-        private InteractDisablerInterface interactDisabler;
-
         private int numOfRemaining;
 
         private UserButton[] userButtons;
@@ -27,16 +25,10 @@ namespace RPG.Inventory
         public Action OnActivate { get; set; }
         public Action OnDeactivate { get; set; }
         #endregion
-
-        void Awake()
-        {
-            interactDisabler = GetComponent<InteractDisablerInterface>();
-        }
-
+       
         public void Activate()
         {
             gameObject.SetActive(true);
-            interactDisabler.Activate();
 
             OnActivate?.Invoke();
         }
@@ -60,7 +52,6 @@ namespace RPG.Inventory
                 else userButtonPrefab.SetActive(false);
             }
 
-            interactDisabler.Deactivate();
             OnDeactivate?.Invoke();
         }
 
@@ -140,7 +131,7 @@ namespace RPG.Inventory
             switch (attr)
             {
                 case EntityStats.Attributes.STR: return stats.Strength;
-                case EntityStats.Attributes.DEF: return stats.Defence;
+                case EntityStats.Attributes.DEF: return stats.Defense;
                 case EntityStats.Attributes.INT: return stats.Intellect;
                 case EntityStats.Attributes.VIT: return stats.Vitality;
                 case EntityStats.Attributes.AGI: return stats.Agility;

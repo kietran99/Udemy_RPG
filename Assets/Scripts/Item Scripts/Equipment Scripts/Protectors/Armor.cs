@@ -12,12 +12,17 @@ public class Armor : Protector
 
     public override int GetPostChangeStat(CharStats stats)
     {
-        return stats.Defence + statChange - stats.EquippedArmor.StatChange;
+        return stats.Defense + statChange - stats.EquippedArmor.StatChange;
+    }
+
+    public override AttributesData GetLaterChangeStat(CharStats stats)
+    {
+        return new AttributesData(stats) { defense = stats.Defense + statChange - stats.EquippedArmor.StatChange };
     }
 
     public override void ToggleEquipAbility(CharStats stats)
     {
-        stats.Defence = GetPostChangeStat(stats);
+        stats.Defense = GetPostChangeStat(stats);
 
         if (stats.EquippedArmor.Equals(nullArmor) || !stats.EquippedArmor.Equals(this)) stats.EquippedArmor = this; 
         else stats.EquippedArmor = nullArmor;       

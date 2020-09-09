@@ -21,7 +21,7 @@ public class CharStats : MonoBehaviour
     public int MaxMP { get { return maxMP; } set { maxMP = value; } }
     public int[] MPLvlBonus { get { return mpLvlBonus; } set { mpLvlBonus = value; } }
     public int Strength { get { return strength; } set { strength = value; } }
-    public int Defence { get { return defence; } set { defence = value; } }
+    public int Defense { get { return defence; } set { defence = value; } }
     public int Intellect { get { return intellect; } set { intellect = value; } }
     public int Vitality { get { return vitality; } set { vitality = value; } }
     public int Agility { get { return agility; } set { agility = value; } }

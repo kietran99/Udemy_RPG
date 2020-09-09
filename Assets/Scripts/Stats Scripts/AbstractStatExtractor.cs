@@ -15,7 +15,7 @@ public class DefenceExtractor : AbstractStatExtractor
 {   
     public override string ExtractName() => "DEF";
 
-    public override (int cur, int max) ExtractValues(CharStats stats) => (stats.Defence, Constants.NONE_VALUE);
+    public override (int cur, int max) ExtractValues(CharStats stats) => (stats.Defense, Constants.NONE_VALUE);
 }
 
 public class IntellectExtractor : AbstractStatExtractor

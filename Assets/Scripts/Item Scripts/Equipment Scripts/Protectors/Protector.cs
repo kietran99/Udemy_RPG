@@ -7,7 +7,7 @@
 
     public override int GetCorresStat(CharStats stats)
     {
-        return stats.Defence;
+        return stats.Defense;
     }
 
 }

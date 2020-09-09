@@ -12,12 +12,17 @@ public class Headgear : Protector
 
     public override int GetPostChangeStat(CharStats stats)
     {
-        return stats.Defence + statChange - stats.EquippedHeadgear.StatChange;
+        return stats.Defense + statChange - stats.EquippedHeadgear.StatChange;
+    }
+
+    public override AttributesData GetLaterChangeStat(CharStats stats)
+    {
+        return new AttributesData(stats) { defense = stats.Defense + statChange - stats.EquippedHeadgear.StatChange };
     }
 
     public override void ToggleEquipAbility(CharStats stats)
     {
-        stats.Defence = GetPostChangeStat(stats);
+        stats.Defense = GetPostChangeStat(stats);
 
         if (stats.EquippedHeadgear.Equals(nullHeadgear) || !stats.EquippedHeadgear.Equals(this)) stats.EquippedHeadgear = this;
         else stats.EquippedHeadgear = nullHeadgear;       

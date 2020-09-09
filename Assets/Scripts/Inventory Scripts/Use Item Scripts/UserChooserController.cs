@@ -5,7 +5,6 @@ using KeyboardControl;
 
 namespace RPG.Inventory
 {
-    [RequireComponent(typeof(InteractDisabler))]
     public class UserChooserController : MonoBehaviour, IUserChooserController
     {
         private int NumRemaining
@@ -32,8 +31,6 @@ namespace RPG.Inventory
         #region PRIVATE
         private InventoryControllerInterface inventoryController;
 
-        private InteractDisablerInterface interactDisabler;
-
         private IUserChooserView view;
 
         private int nRemaining;
@@ -50,7 +47,6 @@ namespace RPG.Inventory
 
         void Awake()
         {
-            interactDisabler = GetComponent<InteractDisablerInterface>();
             view = viewObject.GetComponent<IUserChooserView>();
         }
 
@@ -60,7 +56,6 @@ namespace RPG.Inventory
             view.Init();
 
             this.inventoryController = inventoryController;
-            interactDisabler.Activate();
             DisplayParty();
 
             view.OnItemUse += UseItem;
@@ -71,7 +66,7 @@ namespace RPG.Inventory
         {
             if (!gameObject.activeInHierarchy) return;
 
-            if (Input.GetKeyDown(General.GlobalExit))
+            if (Input.GetKeyDown(General.Exit))
             {
                 Deactivate();
                 gameObject.SetActive(false);
@@ -81,7 +76,6 @@ namespace RPG.Inventory
         public void Deactivate()
         {
             view.Destruct();
-            interactDisabler.Deactivate();
             view.OnItemUse -= UseItem;
             OnDeactivate?.Invoke();
         }

@@ -55,7 +55,7 @@ public class StatsDisplay : UIDisplay
         lvText.text = "Lv: " + currentCharacter.PlayerLevel;
         //classText.text = currentCharacter.CharClass;
         strengthText.text = currentCharacter.Strength.ToString();
-        defenceText.text = currentCharacter.Defence.ToString();
+        defenceText.text = currentCharacter.Defense.ToString();
         intellectText.text = currentCharacter.Intellect.ToString();
         vitalityText.text = currentCharacter.Vitality.ToString();
         agilityText.text = currentCharacter.Agility.ToString();

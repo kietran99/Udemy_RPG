@@ -24,6 +24,11 @@ public class CircularLinkedList<T>
         current = head;
     }
 
+    public CircularLinkedList(T[] values) : this()
+    {
+        Append(values);
+    }
+
     public void Append(T value)
     {
         if (head == null)

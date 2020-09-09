@@ -31,8 +31,7 @@ public class DialogManager : MonoBehaviour
     private const float dialogDelay = 1f;
     private float secsToNextDialog;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {
@@ -46,7 +45,6 @@ public class DialogManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (secsToNextDialog >= 0f)
@@ -55,11 +53,11 @@ public class DialogManager : MonoBehaviour
             return;
         }
 
-        if (dialogBox.activeInHierarchy && Input.GetKeyDown(KeyCode.Space))
+        if (dialogBox.activeInHierarchy && Input.GetKeyDown(KeyboardControl.General.Interact))
         {
             if (isTyping)
             {
-                StopCoroutine("TypeSentence");
+                StopCoroutine(nameof(TypeSentence));
                 isTyping = false;
                 dialogText.text = dialogLines[currentLine];
                 return;

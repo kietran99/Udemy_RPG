@@ -9,7 +9,7 @@ namespace RPG.Inventory
 
         protected InventoryControllerInterface inventoryController;
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             GetComponent<Button>().onClick.AddListener(Invoke);
         }

@@ -27,6 +27,9 @@ namespace RPG.Inventory
         private GameObject userChooser = null;
 
         [SerializeField]
+        private StatChangesView statChangesView = null;
+
+        [SerializeField]
         private GameObject useButton = null, equipButton = null;
         #endregion
 
@@ -37,6 +40,9 @@ namespace RPG.Inventory
 
             UserChooser.OnActivate += HideInteractors;
             UserChooser.OnDeactivate += ShowInteractors;
+
+            statChangesView.OnActivate += HideInteractors;
+            statChangesView.OnDeactivate += ShowInteractors;
 
             InventoryController.OnUsableItemClick += ToggleUseEquip;
         }

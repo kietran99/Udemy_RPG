@@ -17,10 +17,11 @@ public class GameMenu : MonoBehaviour
 
     private CharStats[] playerStats;
 
-    // Update is called once per frame
     void Update()
     {
-        if (!Input.GetButtonDown("Fire2")) return;
+        if (GameManager.Instance.dialogActive) return;
+
+        if (!Input.GetKeyDown(KeyboardControl.General.Inventory)) return;
 
         if (theMenu.activeInHierarchy)
         {
@@ -79,5 +80,10 @@ public class GameMenu : MonoBehaviour
                 windows[i].SetActive(false);
             }
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

@@ -14,6 +14,14 @@ public abstract class Weapon : Equipment
         return stats.Strength + statChange - stats.EquippedWeapon.StatChange;
     }
 
+    public override AttributesData GetLaterChangeStat(CharStats stats)
+    {
+        return new AttributesData(stats)
+        {
+            strength = stats.Strength + statChange - stats.EquippedWeapon.StatChange
+        };
+    }
+
     public override string GetItemType()
     {
         return "Strength";

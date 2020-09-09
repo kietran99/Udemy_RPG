@@ -17,16 +17,18 @@ namespace RPG.Inventory
         public ItemHolder ChosenItemHolder { get { return CurrentInv[ChosenPosition]; } }
         #endregion
 
-        #region DELEGATES
-        public Action OnHide { get; set; }
-        public Action<bool> OnUsableItemClick { get; set; }
-        #endregion
-
+        #region SERIALIZE FIELD
         [SerializeField]
         private GameObject charCyclerObject = null;
 
         [SerializeField]
         private GameObject invViewObject = null;
+        #endregion
+
+        #region DELEGATES
+        public Action OnHide { get; set; }
+        public Action<bool> OnUsableItemClick { get; set; }
+        #endregion
 
         private InventoryViewInterface invView;
 

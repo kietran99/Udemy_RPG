@@ -6,13 +6,12 @@ namespace Cycler
 {
     public class PossessorCycler : MonoBehaviour, ICycler<ItemPossessor>
     {
-        #region
-        public ItemPossessor Current { get; set; }
-        public Action<ItemPossessor> OnCycle { get ; set; }
-        #endregion
+        public ItemPossessor Current { get { return charList.current.value; } }
 
         [SerializeField]
         private Text possessorText = null;
+
+        public Action<ItemPossessor> OnCycle { get; set; }
 
         private CircularLinkedList<ItemPossessor> charList;
 
@@ -20,42 +19,41 @@ namespace Cycler
         {
             charList = new CircularLinkedList<ItemPossessor>();
             PossessorSearcher.FillPossessorList(charList);
-            Current = charList.current.value;
+            possessorText.text = PossessorSearcher.GetPossessorName(Current);
         }
 
-        public void NextChar()
+        public void GoNext()
         {
             string possText = "";
 
             do
             {
                 charList.NextPos();
-                possText = PossessorSearcher.GetPossessorName(charList.current.value);
+                possText = PossessorSearcher.GetPossessorName(Current);
             }
             while (possText.Equals(""));
 
-            ProcessPostCycle(possText);
+            ProcessAfterCycle(possText);
         }
 
-        public void PrevChar()
+        public void GoPrev()
         {
             string possText = "";
 
             do
             {
                 charList.PrevPos();
-                possText = PossessorSearcher.GetPossessorName(charList.current.value);
+                possText = PossessorSearcher.GetPossessorName(Current);
             }
             while (possText.Equals(""));
 
-            ProcessPostCycle(possText);
+            ProcessAfterCycle(possText);
         }
 
-        private void ProcessPostCycle(string possText)
+        private void ProcessAfterCycle(string possText)
         {
-            Current = charList.current.value;
             possessorText.text = possText;
-            OnCycle?.Invoke(charList.current.value);
+            OnCycle?.Invoke(Current);
         }
     }
 }

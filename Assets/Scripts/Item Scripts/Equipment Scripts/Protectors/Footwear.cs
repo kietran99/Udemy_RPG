@@ -25,6 +25,11 @@ public class Footwear : Equipment
         return stats.Agility + statChange - stats.EquippedFootwear.StatChange;
     }
 
+    public override AttributesData GetLaterChangeStat(CharStats stats)
+    {
+        return new AttributesData(stats) { agility = stats.Agility + statChange - stats.EquippedFootwear.StatChange };
+    }
+
     public override void ToggleEquipAbility(CharStats stats)
     {
         stats.Agility = GetPostChangeStat(stats);

@@ -12,16 +12,9 @@ public class CharStatChange : MonoBehaviour
     [SerializeField]
     private Text characterName = null, currStatText = null, postStatText = null, alreadyEquippedText = null;
 
-    //[SerializeField]
     [ColorUsage(true)]
     public Color statIncColor, statDecColor, statUnchangeColor;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     public void DisplayChangeStat(string charName, int currStat, int postStat)
     {
         ToggleStatDisplay(true);

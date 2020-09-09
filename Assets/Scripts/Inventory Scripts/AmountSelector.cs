@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using KeyboardControl;
 
-[RequireComponent (typeof(InteractDisabler))]
 public class AmountSelector : MonoBehaviour, IAmountSelector
 {
     private int CurrentAmount
@@ -26,8 +25,6 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
 
     private int itemQuantity;
 
-    private InteractDisablerInterface interactDisabler;
-
     [SerializeField]
     private float requiredHoldTime = 0f;
 
@@ -41,14 +38,9 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
     public Action OnDeactivate { get; set; }
     #endregion
 
-    void Awake()
-    {
-        interactDisabler = GetComponent<InteractDisablerInterface>();
-    }
-    
     void Update()
     {        
-        if (Input.GetKeyDown(General.GlobalExit)) Cancel();
+        if (Input.GetKeyDown(General.Exit)) Cancel();
         else HoldKey();    
     }
     
@@ -98,7 +90,6 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         this.itemQuantity = itemQuantity;
         
         gameObject.SetActive(true);
-        interactDisabler.Activate();
 
         OnActivate?.Invoke();
         CurrentAmount = 1;
@@ -129,7 +120,6 @@ public class AmountSelector : MonoBehaviour, IAmountSelector
         if (OnAmountConfirm == null) return;
 
         OnAmountConfirm(val);
-        interactDisabler?.Deactivate();
         OnDeactivate?.Invoke();
         gameObject.SetActive(false);       
     }
