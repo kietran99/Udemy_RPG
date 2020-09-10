@@ -18,6 +18,7 @@ namespace RPG.Inventory
         #region DELEGATES
         public Action OnActivate { get; set; }
         public Action OnDeactivate { get; set; }
+        public Action OnConfirm { get; set; }
         #endregion             
 
         private void Update()
@@ -54,6 +55,7 @@ namespace RPG.Inventory
 
         public void Confirm()
         {
+            OnConfirm?.Invoke();
             Deactivate();
         }
 

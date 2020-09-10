@@ -96,7 +96,7 @@ namespace RPG.Inventory
             CharStats[] party = GameManager.Instance.GetActiveChars();
 
             //Item selectedItem = ItemManager.Instance.GetItemAt(view.SelectedPos, view.CurrentPossessor);
-            Item selectedItem = ItemManager.Instance.GetItemAt(0, ItemPossessor.BAG);
+            Item selectedItem = ItemManager.Instance.GetItemAt(0, ItemOwner.BAG);
             //numOfRemaining = ItemManager.Instance.GetNumOfItemsAt(view.SelectedPos, view.CurrentPossessor);
             UpdateRemaining();
 

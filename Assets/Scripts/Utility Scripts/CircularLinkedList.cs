@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-public class CircularLinkedList<T>
+﻿public class CircularLinkedList<T>
 {
     public class Node
     {
@@ -26,7 +23,7 @@ public class CircularLinkedList<T>
 
     public CircularLinkedList(T[] values) : this()
     {
-        Append(values);
+        if (values.Length > 0) Append(values);
     }
 
     public void Append(T value)

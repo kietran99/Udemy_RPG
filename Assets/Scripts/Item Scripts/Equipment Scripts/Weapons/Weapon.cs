@@ -9,34 +9,23 @@ public abstract class Weapon : Equipment
         nullWeapon = Resources.Load<Weapon>(NullEquipmentsRef.noWeapon);
     }
 
-    public override int GetPostChangeStat(CharStats stats)
-    {
-        return stats.Strength + statChange - stats.EquippedWeapon.StatChange;
-    }
+    public override int GetPostChangeStat(CharStats stats) => stats.Strength + statChange - stats.EquippedWeapon.StatChange;
 
-    public override AttributesData GetLaterChangeStat(CharStats stats)
-    {
-        return new AttributesData(stats)
+    public override AttributesData GetLaterChangeStat(CharStats stats) =>
+        new AttributesData(stats)
         {
             strength = stats.Strength + statChange - stats.EquippedWeapon.StatChange
         };
-    }
 
-    public override string GetItemType()
-    {
-        return "Strength";
-    }
+    public override string GetItemType() => "Strength";
 
-    public override int GetCorresStat(CharStats stats)
-    {
-        return stats.Strength;
-    }
+    public override int GetCorresStat(CharStats stats) => stats.Strength;
 
     public override void ToggleEquipAbility(CharStats stats)
     {
         stats.Strength = GetPostChangeStat(stats);
-
-        if (stats.EquippedWeapon.Equals(nullWeapon) || !stats.EquippedWeapon.Equals(this)) stats.EquippedWeapon = this;
+        
+        if (stats.EquippedWeapon.Equals(nullWeapon) || !ReferenceEquals(stats.EquippedWeapon, this)) stats.EquippedWeapon = this;
         else stats.EquippedWeapon = nullWeapon;        
     }  
 }

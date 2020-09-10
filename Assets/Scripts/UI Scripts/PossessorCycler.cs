@@ -4,20 +4,20 @@ using UnityEngine.UI;
 
 namespace Cycler
 {
-    public class PossessorCycler : MonoBehaviour, ICycler<ItemPossessor>
+    public class PossessorCycler : MonoBehaviour, ICycler<ItemOwner>
     {
-        public ItemPossessor Current { get { return charList.current.value; } }
+        public ItemOwner Current { get { return charList.current.value; } }
 
         [SerializeField]
         private Text possessorText = null;
 
-        public Action<ItemPossessor> OnCycle { get; set; }
+        public Action<ItemOwner> OnCycle { get; set; }
 
-        private CircularLinkedList<ItemPossessor> charList;
+        private CircularLinkedList<ItemOwner> charList;
 
         void Start()
         {
-            charList = new CircularLinkedList<ItemPossessor>();
+            charList = new CircularLinkedList<ItemOwner>();
             PossessorSearcher.FillPossessorList(charList);
             possessorText.text = PossessorSearcher.GetPossessorName(Current);
         }
@@ -56,7 +56,7 @@ namespace Cycler
             OnCycle?.Invoke(Current);
         }
 
-        public void LoadElements(ItemPossessor[] elements)
+        public void LoadElements(ItemOwner[] elements)
         { }
     }
 }

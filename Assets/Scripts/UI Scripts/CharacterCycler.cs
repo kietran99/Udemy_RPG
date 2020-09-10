@@ -13,14 +13,7 @@ public class CharacterCycler : MonoBehaviour, ICycler<CharStats>
     public Action<CharStats> OnCycle { get; set; }
 
     private CircularLinkedList<CharStats> characters;
-
-    void Start()
-    {
-        //characters = new CircularLinkedList<CharStats>(GameManager.Instance.GetActiveChars());
-        //charIcon.sprite = Current.CharImage;
-        //OnCycle?.Invoke(Current);
-    }
-
+   
     public void LoadElements(CharStats[] elements)
     {
         characters = new CircularLinkedList<CharStats>(elements);

@@ -12,7 +12,7 @@ namespace RPG.Inventory
         #region PUBLIC
         public GameObject View { get { return invViewObject; } }
         public ItemHolder[] CurrentInv { get; private set; }
-        public ICycler<ItemPossessor> CharCycler { get; private set; }
+        public ICycler<ItemOwner> CharCycler { get; private set; }
         public int ChosenPosition { get; private set; }
         public ItemHolder ChosenItemHolder { get { return CurrentInv[ChosenPosition]; } }
         #endregion
@@ -53,9 +53,9 @@ namespace RPG.Inventory
         private void Init()
         {
             ChosenPosition = NONE_CHOSEN;
-            CharCycler = charCyclerObject.GetComponent<ICycler<ItemPossessor>>();
+            CharCycler = charCyclerObject.GetComponent<ICycler<ItemOwner>>();
             CharCycler.OnCycle += ShowNextInventory;
-            CurrentInv = ItemManager.Instance.GetInventory(ItemPossessor.BAG);
+            CurrentInv = ItemManager.Instance.GetInventory(ItemOwner.BAG);
         }
 
         void OnDisable()
@@ -63,7 +63,7 @@ namespace RPG.Inventory
             OnHide?.Invoke();
         }
 
-        public void ShowNextInventory(ItemPossessor possessor)
+        public void ShowNextInventory(ItemOwner possessor)
         {
             CurrentInv = ItemManager.Instance.GetInventory(possessor);
             invView.Display(CurrentInv);
@@ -123,11 +123,22 @@ namespace RPG.Inventory
             return CurrentInv[idx].SameItem(CurrentInv[ChosenPosition]);
         }
     
-        public void MoveItem(int fromPos, ItemPossessor sender, int amount)
+        public void MoveItem(int fromPos, int toPos, ItemOwner sender, ItemOwner receiver, int amount)
         {
             var sendingInventory = ItemManager.Instance.GetInvHolder(sender);
-            if (sender.Equals(CharCycler.Current)) sendingInventory.MoveItem(fromPos, ChosenPosition, amount);
-            else sendingInventory.MoveItem(fromPos, ChosenPosition, amount, ItemManager.Instance.GetInvHolder(CharCycler.Current));
+            if (sender.Equals(CharCycler.Current)) sendingInventory.MoveItem(fromPos, toPos, amount);
+            else sendingInventory.MoveItem(fromPos, toPos, amount, ItemManager.Instance.GetInvHolder(receiver));
+            ShowInventory();
+        }
+
+        public void EquipItem(CharStats charToEquip)
+        {
+            var sendingInv = ItemManager.Instance.GetInvHolder(CharCycler.Current);
+            var receivingInv = ItemManager.Instance.GetInvHolder(PossessorSearcher.GetOwner(charToEquip.CharacterName));
+            int firstEmptySlot = receivingInv.FindFirstEmptySlot();
+            sendingInv.MoveItem(ChosenPosition, firstEmptySlot, 1, receivingInv);
+            receivingInv.ItemHolders[firstEmptySlot].IsEquipped = true;
+            (receivingInv.ItemHolders[firstEmptySlot].TheItem as Equipment).ToggleEquipAbility(charToEquip);
             ShowInventory();
         }
     }

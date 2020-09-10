@@ -1,6 +1,6 @@
 ﻿public interface IInventoryHolder
 {
-    ItemPossessor Possessor { get; set; }
+    ItemOwner Possessor { get; set; }
     int FindFirstEmptySlot();
     void RemoveAt(int posToRemove, int amount);
     int Add(ItemHolder itemHolderToAdd);

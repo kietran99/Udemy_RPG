@@ -22,16 +22,19 @@ namespace RPG.Inventory
             base.Awake();
             characterCycler = characterCyclerObject.GetComponent<ICycler<CharStats>>();
             statChangesView = statChangesViewObject.GetComponent<IStatChangesView>();
+            statChangesView.OnConfirm += Equip;
+            characterCycler.OnCycle += UpdateStats;
         }
 
         public override void Invoke()
         {
-            statChangesView.OnActivate += () => characterCycler.OnCycle += UpdateStats;
-            statChangesView.OnDeactivate += () => characterCycler.OnCycle -= UpdateStats;
+            var equippableChars = (inventoryController.ChosenItemHolder.TheItem as Equipment).GetEquippableChars();
+            if (equippableChars.Length <= Constants.EMPTY) return;
+            
             statChangesView.Activate();
-            characterCycler.LoadElements((inventoryController.ChosenItemHolder.TheItem as Equipment).GetEquippableChars());
+            characterCycler.LoadElements(equippableChars);
         }
-       
+               
         private (int cur, int after)[] GetStatChanges(CharStats stats)
         {
             var changes = new (int, int)[6];
@@ -51,6 +54,11 @@ namespace RPG.Inventory
         private void UpdateStats(CharStats stats)
         {
             statChangesView.Show(GetStatChanges(stats));
+        }
+
+        private void Equip()
+        {
+            inventoryController.EquipItem(characterCycler.Current);
         }
     }
 }

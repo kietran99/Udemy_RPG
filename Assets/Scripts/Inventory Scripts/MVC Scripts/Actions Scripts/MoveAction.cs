@@ -13,7 +13,7 @@ namespace RPG.Inventory
         private Text promptText = null;
 
         private int idxToMove;
-        private ItemPossessor sender;
+        private ItemOwner sender;
         private int originalAmount;
         private IAmountSelector amountSelector;
       
@@ -76,7 +76,7 @@ namespace RPG.Inventory
 
         private void MoveItemThenCancel(int amount)
         {
-            inventoryController.MoveItem(idxToMove, sender, amount);
+            inventoryController.MoveItem(idxToMove, inventoryController.ChosenPosition, sender, inventoryController.CharCycler.Current, amount);
             Cancel();
         }
 

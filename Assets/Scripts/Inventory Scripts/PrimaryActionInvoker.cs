@@ -19,7 +19,7 @@ public class PrimaryActionInvoker
     {
         InventoryHolder invHolder = ItemManager.Instance.GetInvHolder(itemsDisplay.CurrentPossessor);
         Equipment itemToToggle = (Equipment) ItemManager.Instance.GetItemAt(itemsDisplay.SelectedPos, itemsDisplay.CurrentPossessor);
-        itemToToggle.ToggleEquipAbility(PossessorSearcher.GetPossessor(itemsDisplay.CurrentPossessor));
+        itemToToggle.ToggleEquipAbility(PossessorSearcher.GetStats(itemsDisplay.CurrentPossessor));
 
         if (invHolder.ItemHolders[itemsDisplay.SelectedPos].IsEquipped)
         {

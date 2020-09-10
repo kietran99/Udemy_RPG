@@ -1,11 +1,14 @@
-﻿public enum ItemPossessor
+﻿using Functional;
+using System.Collections.Generic;
+
+public enum ItemOwner
 {
     BAG,
+    P0,
     P1,
     P2,
     P3,
     P4,
-    P5,
     NONE = 101
 }
 
@@ -15,28 +18,30 @@ public static class PossessorSearcher
     private const int NONE = -2;
     public const string bagPossessor = "Bag";
 
-    private static int GetCharPos(ItemPossessor possessor)
+    private static int GetCharPos(ItemOwner possessor)
     {
         switch (possessor)
         {
-            case ItemPossessor.BAG:
+            case ItemOwner.BAG:
                 return BAG;
-            case ItemPossessor.P1:
+            case ItemOwner.P0:
                 return 0;
-            case ItemPossessor.P2:
+            case ItemOwner.P1:
                 return 1;
-            case ItemPossessor.P3:
+            case ItemOwner.P2:
                 return 2;
-            case ItemPossessor.P4:
+            case ItemOwner.P3:
                 return 3;
-            case ItemPossessor.P5:
+            case ItemOwner.P4:
                 return 4;
+            case ItemOwner.NONE:
+                return NONE;
             default:
                 return NONE;
         }
     }
 
-    public static CharStats GetPossessor(ItemPossessor possessor)
+    public static CharStats GetStats(ItemOwner possessor)
     {
         int converted = GetCharPos(possessor);
 
@@ -47,7 +52,6 @@ public static class PossessorSearcher
             case 2:
             case 3:
             case 4:
-            case 5:
                 CharStats temp = GameManager.Instance.PlayerStats[converted];
                 if (temp.gameObject.activeInHierarchy) return temp;
                 else return null;
@@ -56,7 +60,7 @@ public static class PossessorSearcher
         }
     }
 
-    public static string GetPossessorName(ItemPossessor possessor)
+    public static string GetPossessorName(ItemOwner possessor)
     {
         int converted = GetCharPos(possessor);
 
@@ -69,7 +73,6 @@ public static class PossessorSearcher
             case 2:
             case 3:
             case 4:
-            case 5:
                 CharStats temp = GameManager.Instance.PlayerStats[converted];
                 if (temp.gameObject.activeInHierarchy) return temp.CharacterName;
                 else return "";
@@ -78,11 +81,34 @@ public static class PossessorSearcher
         }
     }
 
-    public static void FillPossessorList(CircularLinkedList<ItemPossessor> list)
-    {    
-        foreach(ItemPossessor possessor in (ItemPossessor[])System.Enum.GetValues(typeof(ItemPossessor)))
+    public static ItemOwner GetOwner(string ownerName)
+    {
+        var charStats = GameManager.Instance.PlayerStats;
+        var ownerIdx = HOF.Filter(idx => charStats[idx].gameObject.activeInHierarchy && charStats[idx].CharacterName.Equals(ownerName), 
+            new int[5] { 0, 1, 2, 3, 4 })[0];
+
+        switch (ownerIdx)
         {
-            if (possessor == ItemPossessor.NONE) continue;
+            case 0:
+                return ItemOwner.P0;
+            case 1:
+                return ItemOwner.P1;
+            case 2:
+                return ItemOwner.P2;
+            case 3:
+                return ItemOwner.P3;
+            case 4:
+                return ItemOwner.P4;
+            default:
+                return ItemOwner.NONE;
+        }
+    }
+
+    public static void FillPossessorList(CircularLinkedList<ItemOwner> list)
+    {    
+        foreach(ItemOwner possessor in (ItemOwner[])System.Enum.GetValues(typeof(ItemOwner)))
+        {
+            if (possessor == ItemOwner.NONE) continue;
             list.Append(possessor);
         }   
     }

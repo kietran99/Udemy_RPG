@@ -6,6 +6,7 @@ namespace RPG.Inventory
     {
         Action OnActivate { get; set; }
         Action OnDeactivate { get; set; }
+        Action OnConfirm { get; set; }
 
         void Activate();
         void Show((int cur, int after)[] changes);

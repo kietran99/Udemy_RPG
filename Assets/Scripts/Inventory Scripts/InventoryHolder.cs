@@ -5,19 +5,19 @@ using UnityEngine;
 public class InventoryHolder : IInventoryHolder
 {
     #region
-    public ItemPossessor Possessor { get { return possessor; } set { possessor = value; } }
+    public ItemOwner Possessor { get { return possessor; } set { possessor = value; } }
     public ItemHolder[] ItemHolders { get { return itemHolders; } set { itemHolders = value; } }
     #endregion
 
     public const int POSITION_INVALID = -1;
 
-    private ItemPossessor possessor;
+    private ItemOwner possessor;
 
     private ItemHolder[] itemHolders;
 
     private ItemHolder nullHolder;
 
-    public InventoryHolder(ItemPossessor possessor, int size, ItemHolder nullHolder)
+    public InventoryHolder(ItemOwner possessor, int size, ItemHolder nullHolder)
     {
         this.possessor = possessor;
         itemHolders = new ItemHolder[size];
@@ -107,7 +107,7 @@ public class InventoryHolder : IInventoryHolder
 
     public void MoveItem(int fromPos, int toPos, int amount, IInventoryHolder toHolder = null)
     {
-        if (amount <= 0 || itemHolders[fromPos].IsEmpty()) return;
+        if (amount <= 0 || itemHolders[fromPos].IsEmpty() || itemHolders[fromPos].IsEquipped) return;
 
         int amountToMove = amount, destAmount = itemHolders[toPos].Amount;
 

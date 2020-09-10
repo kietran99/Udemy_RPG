@@ -1,4 +1,4 @@
 ﻿public interface InventoryModelInterface
 {
-    ItemHolder[] GetInventory(ItemPossessor possessor);
+    ItemHolder[] GetInventory(ItemOwner possessor);
 }

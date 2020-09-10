@@ -8,7 +8,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     public Text ItemNameText { get { return itemNameText; } }
     public Text ItemDescriptionText { get { return itemDescriptionText; } }
     public Text PrimaryActionText { get { return primaryActionText; } }
-    public ItemPossessor CurrentPossessor { get { return currentPossessor; } }
+    public ItemOwner CurrentPossessor { get { return currentPossessor; } }
     public ItemHolder[] CurrentInv { get { return currentInv; } }
     public int SelectedPos { get { return selectedPos; } set { selectedPos = value; } }
     #endregion
@@ -33,7 +33,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     private PrimaryActionInvoker primInvoker;
 
     #region skip
-    private ItemPossessor currentPossessor;
+    private ItemOwner currentPossessor;
 
     private ItemHolder[] currentInv;
 
@@ -41,7 +41,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
 
     private int selectedPos;
 
-    private CircularLinkedList<ItemPossessor> invList;
+    private CircularLinkedList<ItemOwner> invList;
 
     private InventoryState defaultState, itemMoveState, discardState, itemUseState;
     private InventoryState currentState;
@@ -59,7 +59,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     {
         DisableInteractors();
         EnableButtons();
-        currentPossessor = ItemPossessor.BAG;
+        currentPossessor = ItemOwner.BAG;
         currentState = defaultState;
         if (invList != null) invList.RevertToDefault();
         if (itemButtons != null) DisplayAll();
@@ -81,9 +81,9 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     private void InitEssentials()
     {
         selectedPos = -1;
-        currentPossessor = ItemPossessor.BAG;
+        currentPossessor = ItemOwner.BAG;
         possessorText.text = PossessorSearcher.bagPossessor;
-        invList = new CircularLinkedList<ItemPossessor>();
+        invList = new CircularLinkedList<ItemOwner>();
         PossessorSearcher.FillPossessorList(invList);
         primInvoker = new PrimaryActionInvoker(this);
     }
@@ -234,7 +234,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     
     private void ToggleEquipAbility()
     {
-        if (currentPossessor == ItemPossessor.BAG) return;
+        if (currentPossessor == ItemOwner.BAG) return;
 
         primInvoker.ToggleEquipAbility(); 
     }
@@ -243,7 +243,7 @@ public class ItemsDisplay : UIDisplay, IClickObserve
     {
         if (currentInv[selectedPos].IsEmpty()) return false;
 
-        if (currentPossessor == ItemPossessor.BAG)
+        if (currentPossessor == ItemOwner.BAG)
         {
             if (!primaryActionText.text.Equals(Item.USE_ACTION))
             {

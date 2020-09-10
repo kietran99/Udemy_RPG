@@ -7,7 +7,7 @@ public class ItemMoveState : InventoryState
 
     private GameObject itemInteractor, promptText;
     private int fromPos, toPos;
-    private ItemPossessor fromPossessor, toPossessor;
+    private ItemOwner fromPossessor, toPossessor;
     private int itemQuantity;
 
     public ItemMoveState(ItemsDisplay itemsDisplay)
@@ -35,7 +35,7 @@ public class ItemMoveState : InventoryState
         else promptText.GetComponent<Text>().text = "PLEASE CHOOSE A VALID SLOT!";
     }
 
-    public void Activate(GameObject itemInteractor, GameObject promptText, ItemPossessor fromPossessor, int fromPos, int itemQuantity)
+    public void Activate(GameObject itemInteractor, GameObject promptText, ItemOwner fromPossessor, int fromPos, int itemQuantity)
     {
         this.fromPossessor = fromPossessor;
         this.fromPos = fromPos;
