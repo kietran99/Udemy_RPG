@@ -12954,7 +12954,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionController: {fileID: 2621658521753957084}
   characterCyclerObject: {fileID: 7478917715586416105}
-  statChangesViewObject: {fileID: 1783038283081267364}
+  statChangesViewObject: {fileID: 172175910976091810}
 --- !u!1 &8711245851435491886
 GameObject:
   m_ObjectHideFlags: 0

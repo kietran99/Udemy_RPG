@@ -10,7 +10,7 @@ namespace RPG.Inventory
         private GameObject characterCyclerObject = null;
 
         [SerializeField]
-        private StatChangesView statChangesViewObject = null;
+        private GameObject statChangesViewObject = null;
         #endregion
 
         private ICycler<CharStats> characterCycler;
@@ -29,6 +29,7 @@ namespace RPG.Inventory
             statChangesView.OnActivate += () => characterCycler.OnCycle += UpdateStats;
             statChangesView.OnDeactivate += () => characterCycler.OnCycle -= UpdateStats;
             statChangesView.Activate();
+            characterCycler.LoadElements((inventoryController.ChosenItemHolder.TheItem as Equipment).GetEquippableChars());
         }
        
         private (int cur, int after)[] GetStatChanges(CharStats stats)

@@ -55,5 +55,8 @@ namespace Cycler
             possessorText.text = possText;
             OnCycle?.Invoke(Current);
         }
+
+        public void LoadElements(ItemPossessor[] elements)
+        { }
     }
 }
