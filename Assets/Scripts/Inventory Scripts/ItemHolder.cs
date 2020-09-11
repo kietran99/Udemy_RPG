@@ -1,20 +1,22 @@
 ﻿[System.Serializable]
 public class ItemHolder
 {
-    #region
+    public const int ITEM_CAPACITY = 99;
+
+    #region PROPERTIES
     public Item TheItem { get { return theItem; } set { theItem = value; } }
     public int Amount { get { return amount; } set { amount = value; } }
     public bool IsEquipped { get { return isEquipped; } set { isEquipped = value; } }
     #endregion
 
-    public const int ITEM_CAPACITY = 99;
-
+    #region FIELDS
     private Item theItem;
 
     private int amount;
 
     private bool isEquipped;
-        
+    #endregion
+
     public ItemHolder(Item theItem, int amount, bool isEquipped = false)
     {
         this.theItem = theItem;
@@ -29,23 +31,11 @@ public class ItemHolder
         isEquipped = itemHolder.isEquipped;
     }
 
-    public bool SameItem(ItemHolder other)
-    {
-        return theItem.Equals(other.TheItem);
-    }
+    public bool CompareItem(ItemHolder other) => theItem.Equals(other.TheItem);
 
-    public bool IsEmpty()
-    {
-        return amount <= 0;
-    }
+    public bool IsEmpty() => amount <= 0;
     
-    public bool IsFull()
-    {
-        return amount == ITEM_CAPACITY;
-    }
+    public bool IsFull() => amount == ITEM_CAPACITY;
 
-    public void Use(CharStats stats)
-    {
-        theItem.Use(stats);
-    }
+    public void Use(CharStats stats) => theItem.Use(stats);
 }

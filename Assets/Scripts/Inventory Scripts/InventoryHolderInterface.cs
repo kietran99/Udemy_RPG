@@ -1,13 +1,13 @@
-﻿public interface IInventoryHolder
+﻿public interface InventoryHolderInterface
 {
     ItemOwner Possessor { get; set; }
+
     int FindFirstEmptySlot();
     void RemoveAt(int posToRemove, int amount);
     int Add(ItemHolder itemHolderToAdd);
     void AddAt(ItemHolder itemHolderToAdd, int posToAdd);
-    ItemHolder[] GetEquippedItems();
-    int FindSameEquippedType(Equipment itemToCompare);
-    void MoveItem(int fromPos, int toPos, int amount, IInventoryHolder toHolder = null);
+    int FindSameEquipmentTypePos(Equipment itemToCompare);
+    void MoveItem(int fromPos, int toPos, int amount, InventoryHolderInterface toHolder = null);
     void UseItem(int pos, CharStats charToUse);
     void Organize();
 }

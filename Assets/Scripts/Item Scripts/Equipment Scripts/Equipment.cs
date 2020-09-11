@@ -5,6 +5,7 @@ public abstract class Equipment : Item
     #region
     public CharName[] EquippableChars { get { return equippableChars; } }
     public int StatChange { get { return statChange; } }
+    protected Equipment NullEquipment { get; set; }
     public override bool IsEquipment { get => true; }
     #endregion
 
@@ -22,35 +23,28 @@ public abstract class Equipment : Item
     }
 
     public abstract int GetCorresStat(CharStats stats);
-    public abstract int GetPostChangeStat(CharStats stats);
+    public abstract int GetLaterStat(CharStats stats);
     public abstract AttributesData GetLaterChangeStat(CharStats stats);
 
-    public override string GetPrimaryAction()
-    {
-        return currentAction;
-    }
+    public override string GetPrimaryAction() => currentAction;
 
-    public override void SetPrimaryAction(bool isEquipped)
-    {
-        if (isEquipped) currentAction = UNEQUIP_ACTION;
-        else currentAction = EQUIP_ACTION;
-    }
-
-    public override void InvokePrimaryAction(CharStats stats)
-    {
-        ToggleEquipAbility(stats);
-    }
+    public override void SetPrimaryAction(bool isEquipped) => currentAction = isEquipped ? UNEQUIP_ACTION : EQUIP_ACTION;
 
     public abstract void ToggleEquipAbility(CharStats stats);   
 
-    public bool CanEquip(string charName)
-    {
-        return Functional.HOF.Filter(x => x.CharacterName.Equals(charName), equippableChars).Length > 0;
-    }
+    public bool CanEquip(string charName) => Functional.HOF.Filter(x => x.CharacterName.Equals(charName), equippableChars).Length > 0;
 
     public CharStats[] GetEquippableChars()
     {        
         CharStats[] activeChars = GameManager.Instance.GetActiveChars();     
         return Functional.HOF.Filter(x => CanEquip(x.CharacterName), activeChars);
     }
+
+    protected Equipment ToggleCharEquipment(Equipment currentEquipment, out bool shouldEquip)
+    {
+        shouldEquip = currentEquipment.Equals(NullEquipment) || !ReferenceEquals(currentEquipment, this);
+        return shouldEquip ? this : NullEquipment;
+    }
+
+    protected int UpdateStat(int laterStat, bool shouldEquip) => laterStat - (shouldEquip ? 0 : statChange);
 }

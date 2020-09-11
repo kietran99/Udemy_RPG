@@ -27,9 +27,9 @@ public class PrimaryActionInvoker
         }
         else
         {
-            int equippedItemPos = invHolder.FindSameEquippedType(itemToToggle); 
+            int equippedItemPos = invHolder.FindSameEquipmentTypePos(itemToToggle); 
 
-            if (equippedItemPos != InventoryHolder.POSITION_INVALID)
+            if (equippedItemPos != Constants.INVALID)
             {                
                 OrganizeAfterToggle(invHolder, equippedItemPos, false);
             }

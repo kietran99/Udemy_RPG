@@ -2,15 +2,13 @@
 
 [CreateAssetMenu(fileName = "Shield", menuName = "RPG Generator/Items/Equipments/Shield")]
 public class Shield : Protector
-{
-    private Shield nullShield;
-
+{    
     private void Awake()
     {
-        nullShield = Resources.Load<Shield>(NullEquipmentsRef.noShield);
+        NullEquipment = Resources.Load<Shield>(NullEquipmentsRef.noShield);
     }
 
-    public override int GetPostChangeStat(CharStats stats)
+    public override int GetLaterStat(CharStats stats)
     {
         return stats.Defense + statChange - stats.EquippedSecondary.StatChange;
     }
@@ -25,9 +23,8 @@ public class Shield : Protector
 
     public override void ToggleEquipAbility(CharStats stats)
     {
-        stats.Defense = GetPostChangeStat(stats);
-
-        if (stats.EquippedSecondary.Equals(nullShield) || !stats.EquippedSecondary.Equals(this)) stats.EquippedSecondary = this;
-        else stats.EquippedSecondary = nullShield;        
+        int laterStat = GetLaterStat(stats);
+        stats.EquippedSecondary = (Weapon)ToggleCharEquipment(stats.EquippedSecondary, out bool shouldEquip);
+        stats.Defense = UpdateStat(laterStat, shouldEquip);
     }
 }

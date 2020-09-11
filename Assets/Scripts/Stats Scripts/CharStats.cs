@@ -94,7 +94,6 @@ public class CharStats : MonoBehaviour
     private Weapon equippedWeapon;
     private Equipment equippedArmor, equippedHeadgear, equippedSecondary, equippedFootwear, equippedAccessory;
 
-    // Start is called before the first frame update
     void Awake()
     {
         mpLvlBonus = new int[maxLevel];
@@ -102,7 +101,6 @@ public class CharStats : MonoBehaviour
         InitEquipments();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.K))

@@ -8,5 +8,6 @@
 
         void ShowInteractors();
         void HideInteractors();
+        void EnableEquip();
     }
 }

@@ -2,30 +2,23 @@
 
 public abstract class Weapon : Equipment
 {
-    protected Weapon nullWeapon;
-
     private void Awake()
     {
-        nullWeapon = Resources.Load<Weapon>(NullEquipmentsRef.noWeapon);
+        NullEquipment = Resources.Load<Weapon>(NullEquipmentsRef.noWeapon);
     }
 
-    public override int GetPostChangeStat(CharStats stats) => stats.Strength + statChange - stats.EquippedWeapon.StatChange;
+    public override int GetLaterStat(CharStats stats) => stats.Strength + statChange - stats.EquippedWeapon.StatChange;
 
-    public override AttributesData GetLaterChangeStat(CharStats stats) =>
-        new AttributesData(stats)
-        {
-            strength = stats.Strength + statChange - stats.EquippedWeapon.StatChange
-        };
+    public override AttributesData GetLaterChangeStat(CharStats stats) => new AttributesData(stats) { strength = GetLaterStat(stats)};
 
     public override string GetItemType() => "Strength";
 
     public override int GetCorresStat(CharStats stats) => stats.Strength;
 
     public override void ToggleEquipAbility(CharStats stats)
-    {
-        stats.Strength = GetPostChangeStat(stats);
-        
-        if (stats.EquippedWeapon.Equals(nullWeapon) || !ReferenceEquals(stats.EquippedWeapon, this)) stats.EquippedWeapon = this;
-        else stats.EquippedWeapon = nullWeapon;        
-    }  
+    {        
+        int laterStat = GetLaterStat(stats);
+        stats.EquippedWeapon = (Weapon)ToggleCharEquipment(stats.EquippedWeapon, out bool shouldEquip);
+        stats.Strength = UpdateStat(laterStat, shouldEquip);
+    }
 }

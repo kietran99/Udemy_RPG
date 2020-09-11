@@ -7561,10 +7561,30 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 2771637423708753394, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 187.00005
+      objectReference: {fileID: 0}
+    - target: {fileID: 2771637423708753394, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -109
+      objectReference: {fileID: 0}
     - target: {fileID: 3072021231170269674, guid: 1631478bcdc9e264780998eab6866eca,
         type: 3}
       propertyPath: pickers.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106029509863517375, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 341
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106029509863517375, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -109
       objectReference: {fileID: 0}
     - target: {fileID: 4783644776448709578, guid: 1631478bcdc9e264780998eab6866eca,
         type: 3}

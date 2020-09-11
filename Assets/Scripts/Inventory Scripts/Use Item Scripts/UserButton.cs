@@ -17,6 +17,6 @@ public class UserButton : MonoBehaviour
     
     public void UpdateStat(int newUserStat, int newMaxStat)
     {
-        userStatText.text = changingAttribName + ": " + newUserStat + (newMaxStat == Constants.NONE_VALUE ? "" : "/" + newMaxStat);
+        userStatText.text = changingAttribName + ": " + newUserStat + (newMaxStat == Constants.INVALID ? "" : "/" + newMaxStat);
     }
 }

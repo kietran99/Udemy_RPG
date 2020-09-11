@@ -27,7 +27,7 @@ namespace RPG.Inventory
 
         #region DELEGATES
         public Action OnHide { get; set; }
-        public Action<bool> OnUsableItemClick { get; set; }
+        public Action<bool, bool> OnUsableItemClick { get; set; }
         #endregion
 
         private InventoryViewInterface invView;
@@ -58,6 +58,11 @@ namespace RPG.Inventory
             CurrentInv = ItemManager.Instance.GetInventory(ItemOwner.BAG);
         }
 
+        void OnEnable()
+        {
+            if (CurrentInv != null) ShowInventory();
+        }
+
         void OnDisable()
         {
             OnHide?.Invoke();
@@ -73,7 +78,7 @@ namespace RPG.Inventory
         {           
             ChosenPosition = idx;
             bool isEquipment = CurrentInv[idx].TheItem.IsEquipment;
-            OnUsableItemClick?.Invoke(!isEquipment);
+            OnUsableItemClick?.Invoke(!isEquipment, CurrentInv[idx].IsEquipped);
 
             Item item = CurrentInv[idx].TheItem;
 
@@ -120,7 +125,7 @@ namespace RPG.Inventory
 
         public bool HasChosenSameItemAt(int idx)
         {
-            return CurrentInv[idx].SameItem(CurrentInv[ChosenPosition]);
+            return CurrentInv[idx].CompareItem(CurrentInv[ChosenPosition]);
         }
     
         public void MoveItem(int fromPos, int toPos, ItemOwner sender, ItemOwner receiver, int amount)
@@ -139,6 +144,13 @@ namespace RPG.Inventory
             sendingInv.MoveItem(ChosenPosition, firstEmptySlot, 1, receivingInv);
             receivingInv.ItemHolders[firstEmptySlot].IsEquipped = true;
             (receivingInv.ItemHolders[firstEmptySlot].TheItem as Equipment).ToggleEquipAbility(charToEquip);
+            ShowInventory();
+        }
+
+        public void UnequipItem()
+        {
+            CurrentInv[ChosenPosition].IsEquipped = false;
+            (CurrentInv[ChosenPosition].TheItem as Equipment).ToggleEquipAbility(PossessorSearcher.GetStats(CharCycler.Current));
             ShowInventory();
         }
     }

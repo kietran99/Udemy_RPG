@@ -1,5 +1,4 @@
-﻿using Functional;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Item : ScriptableObject
 {
@@ -35,15 +34,6 @@ public abstract class Item : ScriptableObject
 
     public abstract void SetPrimaryAction(bool isEquipped);
 
-    public abstract void InvokePrimaryAction(CharStats charStats);
-
-    public void Use(CharStats charStats)
-    {       
-        HOF.Map(x => x.Invoke(charStats), bonusEffects);
-    }
-
-    public bool Equals(Item other)
-    {
-        return itemName == other.ItemName;
-    }
+    public void Use(CharStats stats) => bonusEffects.Map(_ => _.Invoke(stats));
+    public bool Equals(Item other) => itemName.Equals(other.ItemName);
 }

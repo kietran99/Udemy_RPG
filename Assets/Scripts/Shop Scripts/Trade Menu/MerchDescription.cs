@@ -81,7 +81,7 @@ public class MerchDescription : MonoBehaviour
             }
             else
             {
-                statChanges[i].DisplayChangeStat(currStats.CharacterName, merch.GetCorresStat(currStats), merch.GetPostChangeStat(currStats));
+                statChanges[i].DisplayChangeStat(currStats.CharacterName, merch.GetCorresStat(currStats), merch.GetLaterStat(currStats));
             }
         }
     }

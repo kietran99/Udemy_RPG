@@ -30,7 +30,7 @@ namespace RPG.Inventory
         private StatChangesView statChangesView = null;
 
         [SerializeField]
-        private GameObject useButton = null, equipButton = null;
+        private GameObject useButton = null, equipButton = null, unequipButton = null;
         #endregion
 
         void Start()
@@ -57,15 +57,23 @@ namespace RPG.Inventory
             interactButtons.SetActive(false);
         }
 
-        public void ToggleUseEquip(bool usable)
+        public void ToggleUseEquip(bool usable, bool isEquipped)
         {
             bool hasChosenEmptySlot = InventoryController.HasChosenEmptySlot();
             
             useButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
             equipButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
-
+            unequipButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
+            
             useButton.SetActive(usable);
-            equipButton.SetActive(!usable);
+            equipButton.SetActive(!usable && !isEquipped);
+            unequipButton.SetActive(!usable && isEquipped);
+        }
+
+        public void EnableEquip()
+        {
+            equipButton.SetActive(true);
+            unequipButton.SetActive(false);
         }
     }
 }

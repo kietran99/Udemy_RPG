@@ -27,7 +27,7 @@ public class ItemMoveState : InventoryState
         toPossessor = itemsDisplay.CurrentPossessor;
         ItemHolder[] currentInv = ItemManager.Instance.GetInventory(toPossessor);
 
-        if (currentInv[toPos].IsEmpty() || currentInv[toPos].SameItem(currentInv[fromPos]))
+        if (currentInv[toPos].IsEmpty() || currentInv[toPos].CompareItem(currentInv[fromPos]))
         {
             itemsDisplay.EnableAmountSelector(itemQuantity);
             promptText.SetActive(false);
