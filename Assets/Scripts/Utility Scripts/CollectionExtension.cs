@@ -16,6 +16,19 @@ public static class CollectionExtension
         return (default(T), Constants.INVALID);
     }
 
+    public static (T item, int idx) LookUp<T>(this T[] arr, Func<T, int, bool> conditions)
+    {
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (conditions(arr[i], i))
+            {
+                return (arr[i], i);
+            }
+        }
+
+        return (default(T), Constants.INVALID);
+    }
+
     public static T[] Filter<T>(this T[] iter, Predicate<T> conditions)
     {
         var result = new List<T>();

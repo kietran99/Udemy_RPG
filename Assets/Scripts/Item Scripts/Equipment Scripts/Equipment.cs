@@ -2,7 +2,7 @@
 
 public abstract class Equipment : Item
 {
-    #region
+    #region PROPERTIES
     public CharName[] EquippableChars { get { return equippableChars; } }
     public int StatChange { get { return statChange; } }
     protected Equipment NullEquipment { get; set; }
@@ -15,21 +15,10 @@ public abstract class Equipment : Item
     [SerializeField]
     protected CharName[] equippableChars;
 
-    private string currentAction;
-
-    private void Awake()
-    {
-        currentAction = EQUIP_ACTION;
-    }
-
     public abstract int GetCorresStat(CharStats stats);
     public abstract int GetLaterStat(CharStats stats);
     public abstract AttributesData GetLaterChangeStat(CharStats stats);
-
-    public override string GetPrimaryAction() => currentAction;
-
-    public override void SetPrimaryAction(bool isEquipped) => currentAction = isEquipped ? UNEQUIP_ACTION : EQUIP_ACTION;
-
+   
     public abstract void ToggleEquipAbility(CharStats stats);   
 
     public bool CanEquip(string charName) => Functional.HOF.Filter(x => x.CharacterName.Equals(charName), equippableChars).Length > 0;

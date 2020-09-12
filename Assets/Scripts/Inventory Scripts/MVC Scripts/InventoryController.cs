@@ -10,7 +10,7 @@ namespace RPG.Inventory
         private const int NONE_CHOSEN = -1;
 
         #region PUBLIC
-        public GameObject View { get { return invViewObject; } }
+        public InventoryViewInterface View { get { return view; } }
         public ItemHolder[] CurrentInv { get; private set; }
         public ICycler<ItemOwner> CharCycler { get; private set; }
         public int ChosenPosition { get; private set; }
@@ -28,22 +28,23 @@ namespace RPG.Inventory
         #region DELEGATES
         public Action OnHide { get; set; }
         public Action<bool, bool> OnUsableItemClick { get; set; }
+        public Action<DetailData> OnItemMove { get; set; }
         #endregion
 
-        private InventoryViewInterface invView;
+        private InventoryViewInterface view;
 
         public void BindController(InventoryViewInterface invView)
         {
-            this.invView = invView;
+            this.view = invView;
             Init();
         }
 
         void Start()
         {
-            if (invView == null)
+            if (view == null)
             {
-                invView = invViewObject.GetComponent<InventoryViewInterface>();
-                invView.OnItemButtonClick += GetItemDetails;
+                view = invViewObject.GetComponent<InventoryViewInterface>();
+                view.OnItemButtonClick += GetItemDetails;
             }
 
             Init();
@@ -71,7 +72,7 @@ namespace RPG.Inventory
         public void ShowNextInventory(ItemOwner possessor)
         {
             CurrentInv = ItemManager.Instance.GetInventory(possessor);
-            invView.Display(CurrentInv);
+            view.Display(CurrentInv);
         }
 
         private DetailData GetItemDetails(int idx)
@@ -102,7 +103,7 @@ namespace RPG.Inventory
 
         public void ShowInventory()
         {
-            invView.Display(CurrentInv);
+            view.Display(CurrentInv);
         }
 
         public bool HasChosenEmptySlot()
@@ -133,18 +134,30 @@ namespace RPG.Inventory
             var sendingInventory = ItemManager.Instance.GetInvHolder(sender);
             if (sender.Equals(CharCycler.Current)) sendingInventory.MoveItem(fromPos, toPos, amount);
             else sendingInventory.MoveItem(fromPos, toPos, amount, ItemManager.Instance.GetInvHolder(receiver));
+            OnItemMove?.Invoke(GetItemDetails(ChosenPosition));
             ShowInventory();
         }
 
-        public void EquipItem(CharStats charToEquip)
+        public void EquipItem(ItemOwner charToEquip)
         {
             var sendingInv = ItemManager.Instance.GetInvHolder(CharCycler.Current);
-            var receivingInv = ItemManager.Instance.GetInvHolder(PossessorSearcher.GetOwner(charToEquip.CharacterName));
+            var receivingInv = ItemManager.Instance.GetInvHolder(charToEquip);
             int firstEmptySlot = receivingInv.FindFirstEmptySlot();
+
             sendingInv.MoveItem(ChosenPosition, firstEmptySlot, 1, receivingInv);
+            OnItemMove?.Invoke(GetItemDetails(ChosenPosition));
             receivingInv.ItemHolders[firstEmptySlot].IsEquipped = true;
-            (receivingInv.ItemHolders[firstEmptySlot].TheItem as Equipment).ToggleEquipAbility(charToEquip);
+            (receivingInv.ItemHolders[firstEmptySlot].TheItem as Equipment).ToggleEquipAbility(PossessorSearcher.GetStats(charToEquip));
+
+            UnequipSameType(receivingInv, firstEmptySlot);
+
             ShowInventory();
+        }
+          
+        private void UnequipSameType(InventoryHolder receivingInv, int posToCompare)
+        {
+            var sameEquippedPos = receivingInv.FindSameEquippedTypePos(posToCompare);
+            if (!sameEquippedPos.Equals(Constants.INVALID)) receivingInv.ItemHolders[sameEquippedPos].IsEquipped = false;
         }
 
         public void UnequipItem()

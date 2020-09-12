@@ -18,11 +18,13 @@ public class PixelatedButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!myButton.interactable) return;
         myButton.image.sprite = pressedSprite;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (!myButton.interactable) return;
         myButton.image.sprite = unpressedSprite;
     }
 }

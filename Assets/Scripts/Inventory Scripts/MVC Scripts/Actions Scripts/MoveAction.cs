@@ -48,14 +48,14 @@ namespace RPG.Inventory
             sender = inventoryController.CharCycler.Current;
             ShowPrompt();
             actionController.HideInteractors();
-            inventoryController.View.GetComponent<InventoryViewInterface>().OnItemButtonClick += PickAmount;
+            inventoryController.View.OnItemButtonClick += PickAmount;
         }
 
         public void Cancel()
         {
             HidePrompt();
             actionController.ShowInteractors();
-            inventoryController.View.GetComponent<InventoryViewInterface>().OnItemButtonClick -= PickAmount;
+            inventoryController.View.OnItemButtonClick -= PickAmount;
         }
        
         private DetailData PickAmount(int idx)

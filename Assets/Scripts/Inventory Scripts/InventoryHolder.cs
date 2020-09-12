@@ -6,6 +6,7 @@ public class InventoryHolder : InventoryHolderInterface
     #region PROPERTIES
     public ItemOwner Possessor { get { return possessor; } set { possessor = value; } }
     public ItemHolder[] ItemHolders { get { return itemHolders; } set { itemHolders = value; } }
+    public ItemHolder this[int i] => itemHolders[i];       
     #endregion
 
     #region FIELDS
@@ -72,10 +73,10 @@ public class InventoryHolder : InventoryHolderInterface
         itemHolders[posToAdd].Amount = ItemHolder.ITEM_CAPACITY;
     }
 
-    public int FindSameEquipmentTypePos(Equipment itemToCompare)
+    public int FindSameEquippedTypePos(int posToCompare)
     {
-        ItemHolder[] equippedItems = itemHolders.Filter(_ => _.IsEquipped);        
-        return equippedItems.LookUp(_ => _.TheItem.GetType().Equals(itemToCompare.GetType())).idx;
+        return itemHolders.LookUp((holder, idx) => 
+        holder.IsEquipped && holder.CompareType(this[posToCompare]) && !idx.Equals(posToCompare)).idx;
     }
 
     public void MoveItem(int fromPos, int toPos, int amount, InventoryHolderInterface toHolder = null)

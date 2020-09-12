@@ -33,6 +33,8 @@ public class ItemHolder
 
     public bool CompareItem(ItemHolder other) => theItem.Equals(other.TheItem);
 
+    public bool CompareType(ItemHolder other) => theItem.CompareType(other.theItem);
+
     public bool IsEmpty() => amount <= 0;
     
     public bool IsFull() => amount == ITEM_CAPACITY;

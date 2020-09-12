@@ -5,7 +5,7 @@
         public override void Invoke()
         {
             inventoryController.UnequipItem();
-            actionController.EnableEquip();
+            actionController.EnableButtonsAfterUnequip();
         }
     }
 }

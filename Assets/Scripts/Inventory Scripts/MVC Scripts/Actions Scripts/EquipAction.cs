@@ -58,7 +58,7 @@ namespace RPG.Inventory
 
         private void Equip()
         {
-            inventoryController.EquipItem(characterCycler.Current);
+            inventoryController.EquipItem(PossessorSearcher.GetOwner(characterCycler.Current.CharacterName));
         }
     }
 }

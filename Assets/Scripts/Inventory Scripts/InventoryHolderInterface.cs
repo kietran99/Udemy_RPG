@@ -6,7 +6,7 @@
     void RemoveAt(int posToRemove, int amount);
     int Add(ItemHolder itemHolderToAdd);
     void AddAt(ItemHolder itemHolderToAdd, int posToAdd);
-    int FindSameEquipmentTypePos(Equipment itemToCompare);
+    int FindSameEquippedTypePos(int posToCompare);
     void MoveItem(int fromPos, int toPos, int amount, InventoryHolderInterface toHolder = null);
     void UseItem(int pos, CharStats charToUse);
     void Organize();

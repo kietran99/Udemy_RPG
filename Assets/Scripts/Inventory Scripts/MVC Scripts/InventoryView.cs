@@ -7,6 +7,9 @@ namespace RPG.Inventory
     {
         #region SERIALIZE FIELD
         [SerializeField]
+        private GameObject controllerObject = null;
+
+        [SerializeField]
         private ItemDetailsView itemDetails = null;
 
         [SerializeField]
@@ -17,7 +20,15 @@ namespace RPG.Inventory
         public Func<int, DetailData> OnItemButtonClick { get; set; }
         #endregion
 
+        private InventoryControllerInterface controller;
+
         private ItemButton[] itemButtons;
+
+        void Awake()
+        {
+            controller = controllerObject.GetComponent<InventoryControllerInterface>();
+            controller.OnItemMove += _ => itemDetails.Show(_.name, _.description, _.equippablesSprites);
+        }
 
         void Start()
         {

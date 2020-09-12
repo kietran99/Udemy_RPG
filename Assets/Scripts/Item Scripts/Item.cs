@@ -2,7 +2,7 @@
 
 public abstract class Item : ScriptableObject
 {
-    #region
+    #region PROPERTIES
     public string ItemName { get { return itemName; } }
     public string Description { get { return description; } }
     public Sprite Image { get { return image; } }
@@ -12,10 +12,7 @@ public abstract class Item : ScriptableObject
     public abstract bool IsEquipment { get; }
     #endregion
 
-    public const string USE_ACTION = "USE";
-    public const string EQUIP_ACTION = "EQUIP";
-    public const string UNEQUIP_ACTION = "UNEQUIP";
-
+    #region SERIALIZE FIELDS
     [SerializeField]
     protected string itemName = "", description = "";
 
@@ -27,13 +24,13 @@ public abstract class Item : ScriptableObject
 
     [SerializeField]
     protected Effect[] bonusEffects;
+    #endregion
 
     public abstract string GetItemType();
 
-    public abstract string GetPrimaryAction();
-
-    public abstract void SetPrimaryAction(bool isEquipped);
-
     public void Use(CharStats stats) => bonusEffects.Map(_ => _.Invoke(stats));
+
     public bool Equals(Item other) => itemName.Equals(other.ItemName);
+
+    public bool CompareType(Item other) => GetType().Equals(other.GetType());
 }

@@ -30,7 +30,7 @@ namespace RPG.Inventory
         private StatChangesView statChangesView = null;
 
         [SerializeField]
-        private GameObject useButton = null, equipButton = null, unequipButton = null;
+        private GameObject useButton = null, equipButton = null, unequipButton = null, moveButton = null, discardButton = null;
         #endregion
 
         void Start()
@@ -61,19 +61,28 @@ namespace RPG.Inventory
         {
             bool hasChosenEmptySlot = InventoryController.HasChosenEmptySlot();
             
-            useButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
-            equipButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
-            unequipButton.GetComponent<Button>().interactable = !hasChosenEmptySlot;
-            
+            ToggleInteractability(useButton, !hasChosenEmptySlot);
+            ToggleInteractability(equipButton, !hasChosenEmptySlot);
+            ToggleInteractability(unequipButton, !hasChosenEmptySlot);
+            ToggleInteractability(moveButton, !hasChosenEmptySlot && !isEquipped);
+            ToggleInteractability(discardButton, !hasChosenEmptySlot && !isEquipped);
+
             useButton.SetActive(usable);
             equipButton.SetActive(!usable && !isEquipped);
             unequipButton.SetActive(!usable && isEquipped);
         }
 
-        public void EnableEquip()
+        private void ToggleInteractability(GameObject button, bool interactable)
+        {
+            button.GetComponent<Button>().interactable = interactable;
+        }
+        
+        public void EnableButtonsAfterUnequip()
         {
             equipButton.SetActive(true);
             unequipButton.SetActive(false);
+            ToggleInteractability(moveButton, true);
+            ToggleInteractability(discardButton, true);
         }
     }
 }
