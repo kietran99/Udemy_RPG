@@ -21,7 +21,7 @@ public class Armor : Protector
     public override void ToggleEquipAbility(CharStats stats)
     {
         int laterStat = GetLaterStat(stats);
-        stats.EquippedArmor = (Weapon)ToggleCharEquipment(stats.EquippedArmor, out bool shouldEquip);
+        stats.EquippedArmor = (Armor)ToggleCharEquipment(stats.EquippedArmor, out bool shouldEquip);
         stats.Defense = UpdateStat(laterStat, shouldEquip);
     }
 }

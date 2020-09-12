@@ -18,7 +18,7 @@ public class Headgear : Protector
     public override void ToggleEquipAbility(CharStats stats)
     {
         int laterStat = GetLaterStat(stats);
-        stats.EquippedHeadgear = (Weapon)ToggleCharEquipment(stats.EquippedHeadgear, out bool shouldEquip);
+        stats.EquippedHeadgear = (Headgear)ToggleCharEquipment(stats.EquippedHeadgear, out bool shouldEquip);
         stats.Defense = UpdateStat(laterStat, shouldEquip);
     }
 }

@@ -19,7 +19,7 @@ public class Footwear : Equipment
     public override void ToggleEquipAbility(CharStats stats)
     {        
         int laterStat = GetLaterStat(stats);
-        stats.EquippedFootwear = (Weapon)ToggleCharEquipment(stats.EquippedFootwear, out bool shouldEquip);
+        stats.EquippedFootwear = (Footwear)ToggleCharEquipment(stats.EquippedFootwear, out bool shouldEquip);
         stats.Agility = UpdateStat(laterStat, shouldEquip);
     }   
 }

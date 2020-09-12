@@ -24,7 +24,7 @@ public class Shield : Protector
     public override void ToggleEquipAbility(CharStats stats)
     {
         int laterStat = GetLaterStat(stats);
-        stats.EquippedSecondary = (Weapon)ToggleCharEquipment(stats.EquippedSecondary, out bool shouldEquip);
+        stats.EquippedSecondary = (Shield)ToggleCharEquipment(stats.EquippedSecondary, out bool shouldEquip);
         stats.Defense = UpdateStat(laterStat, shouldEquip);
     }
 }
