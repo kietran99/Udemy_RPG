@@ -10,13 +10,7 @@ public class ShopActionDisplay : MonoBehaviour
     private Button[] actionButtons = null;
 
     private ShopDialog dialog;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
+    
     public void ToggleActionCanvas(bool flag, ShopDialog dialog)
     {
         actionCanvas.SetActive(flag);
@@ -39,7 +33,6 @@ public class ShopActionDisplay : MonoBehaviour
 
     private void ToggleActionButtons(bool flag)
     {
-        foreach (Button btn in actionButtons) btn.interactable = flag;
+        actionButtons.Map(_ => _.interactable = flag);
     }
-
 }

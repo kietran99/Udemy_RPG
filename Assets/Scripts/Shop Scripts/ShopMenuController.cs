@@ -13,19 +13,7 @@ public class ShopMenuController : MonoBehaviour
 
     [SerializeField]
     private ShopDialog dialog = null;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     private void OnEnable()
     {
         actionDisplay.ToggleActionCanvas(true, dialog);

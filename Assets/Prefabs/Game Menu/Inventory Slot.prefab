@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 2730796564339181655}
   - component: {fileID: 2730796564339181654}
   - component: {fileID: 2730796564339181657}
+  - component: {fileID: 4914233629902375020}
   m_Layer: 5
   m_Name: Inventory Slot
   m_TagString: Untagged
@@ -54,7 +55,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 701.9872, y: 954.2107}
-  m_SizeDelta: {x: 120, y: 120}
+  m_SizeDelta: {x: 0, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2730796564339181652
 CanvasRenderer:
@@ -150,6 +151,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 2730796564503624300}
   amountText: {fileID: 6304735948094748312}
+--- !u!114 &4914233629902375020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730796564339181656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 2
+  m_AspectRatio: 1
 --- !u!1 &2730796564503624303
 GameObject:
   m_ObjectHideFlags: 0
