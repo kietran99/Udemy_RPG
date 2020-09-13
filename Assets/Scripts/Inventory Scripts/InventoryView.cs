@@ -14,6 +14,9 @@ namespace RPG.Inventory
 
         [SerializeField]
         private GameObject inventoryOrganizer = null, templateButton = null;
+
+        [SerializeField]
+        private GameObject itemFrame = null;
         #endregion
 
         #region DELEGATES
@@ -25,19 +28,19 @@ namespace RPG.Inventory
         private ItemButton[] itemButtons;
 
         void Awake()
-        {
+        {           
             controller = controllerObject.GetComponent<InventoryControllerInterface>();
             controller.OnItemMove += _ => itemDetails.Show(_.name, _.description, _.equippablesSprites);
         }
 
         void Start()
         {
+            //itemFrame = Instantiate(itemFrameObject);
             itemButtons = new ItemButton[ItemManager.MAX_INVENTORY_SIZE];
 
             for (int i = 0; i < itemButtons.Length; i++)
             {
-                GameObject itemBtn = Instantiate(templateButton);
-                itemBtn.transform.SetParent(inventoryOrganizer.transform);
+                GameObject itemBtn = Instantiate(templateButton, inventoryOrganizer.transform);
                 itemButtons[i] = itemBtn.GetComponent<ItemButton>();
                 itemButtons[i].Init(this, i);
             }
@@ -54,6 +57,8 @@ namespace RPG.Inventory
         public void OnButtonClick(int idx)
         {
             if (OnItemButtonClick == null) return;
+
+            itemFrame.transform.position = itemButtons[idx].transform.position;
 
             DetailData data = OnItemButtonClick(idx);
 
