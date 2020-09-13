@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
+using RPG.Inventory;
+ 
 public class ItemManager : MonoBehaviour
 {
     #region
@@ -32,7 +31,6 @@ public class ItemManager : MonoBehaviour
         TestItemData();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         if (instance == null)
@@ -44,14 +42,7 @@ public class ItemManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    }    
     private void InitInventoryHolders()
     {
         nullHolder = new ItemHolderFactory().CreateNullHolder(nullItem);

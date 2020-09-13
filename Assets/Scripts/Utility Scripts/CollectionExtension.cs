@@ -86,9 +86,9 @@ public static class CollectionExtension
         }
     }
 
-    public static U[] Map<T, U>(T[] iter, Func<T, U> function)
+    public static T2[] Map<T1, T2>(this T1[] iter, Func<T1, T2> function)
     {
-        var result = new List<U>();
+        var result = new List<T2>();
 
         for (int i = 0; i < iter.Length; i++)
         {

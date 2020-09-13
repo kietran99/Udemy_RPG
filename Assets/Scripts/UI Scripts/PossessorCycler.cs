@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Cycler;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Cycler
+namespace RPG.Inventory
 {
     public class PossessorCycler : MonoBehaviour, ICycler<ItemOwner>
     {

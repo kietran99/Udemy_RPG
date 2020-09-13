@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using RPG.Inventory;
 
 public class ItemPickUp : MonoBehaviour
 {
@@ -6,14 +7,7 @@ public class ItemPickUp : MonoBehaviour
     private Item itemToPickUp = null;
 
     private bool canPickUp;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+   
     void Update()
     {
         if (canPickUp && Input.GetButtonDown("Fire1") && PlayerController.Instance.canMove)

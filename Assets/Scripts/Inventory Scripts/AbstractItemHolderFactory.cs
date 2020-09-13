@@ -1,10 +1,13 @@
-﻿public abstract class AbstractItemHolderFactory
+﻿namespace RPG.Inventory
 {
-    public abstract ItemHolder CreateRegularHolder(Item item, int amount);
-    public abstract ItemHolder CreateEquipmentHolder(Item item);
-    public abstract ItemHolder CreateItemToObtainHolder(Item item);
-    public ItemHolder CreateNullHolder(Item nullItem)
+    public abstract class AbstractItemHolderFactory
     {
-        return new ItemHolder(nullItem, 0);
+        public abstract ItemHolder CreateRegularHolder(Item item, int amount);
+        public abstract ItemHolder CreateEquipmentHolder(Item item);
+        public abstract ItemHolder CreateItemToObtainHolder(Item item);
+        public ItemHolder CreateNullHolder(Item nullItem)
+        {
+            return new ItemHolder(nullItem, 0);
+        }
     }
 }

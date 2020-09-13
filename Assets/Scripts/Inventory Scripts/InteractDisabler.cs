@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using Functional;
 
 namespace RPG.Inventory
 {
@@ -20,9 +18,7 @@ namespace RPG.Inventory
 
         void SetInteractability(bool interactable)
         {
-            HOF.Map((ButtonsPicker picker) => HOF.Map(
-                (Button button) => button.interactable = interactable, picker.Buttons), 
-            pickers);
+            pickers.Map(picker => picker.Buttons.Map(_ => _.interactable = interactable));
         }
     }
 }

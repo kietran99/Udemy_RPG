@@ -1,13 +1,16 @@
-﻿public interface InventoryHolderInterface
+﻿namespace RPG.Inventory
 {
-    ItemOwner Possessor { get; set; }
+    public interface InventoryHolderInterface
+    {
+        ItemOwner Possessor { get; set; }
 
-    int FindFirstEmptySlot();
-    void RemoveAt(int posToRemove, int amount);
-    int Add(ItemHolder itemHolderToAdd);
-    void AddAt(ItemHolder itemHolderToAdd, int posToAdd);
-    int FindSameEquippedTypePos(int posToCompare);
-    void MoveItem(int fromPos, int toPos, int amount, InventoryHolderInterface toHolder = null);
-    void UseItem(int pos, CharStats charToUse);
-    void Organize();
+        int FindFirstEmptySlot();
+        void RemoveAt(int posToRemove, int amount);
+        int Add(ItemHolder itemHolderToAdd);
+        void AddAt(ItemHolder itemHolderToAdd, int posToAdd);
+        int FindSameEquippedTypePos(int posToCompare);
+        void MoveItem(int fromPos, int toPos, int amount, InventoryHolderInterface toHolder = null);
+        void UseItem(int pos, CharStats charToUse);
+        void Organize();
+    }
 }

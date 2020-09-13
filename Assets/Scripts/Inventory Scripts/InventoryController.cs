@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 using Cycler;
 using System;
-using Functional;
 
 namespace RPG.Inventory
 {
     public class InventoryController : MonoBehaviour, InventoryControllerInterface
     {
-        private const int NONE_CHOSEN = -1;
-
         #region PUBLIC
         public InventoryViewInterface View { get { return view; } }
         public ItemHolder[] CurrentInv { get; private set; }
@@ -35,7 +32,7 @@ namespace RPG.Inventory
 
         public void BindController(InventoryViewInterface invView)
         {
-            this.view = invView;
+            view = invView;
             Init();
         }
 
@@ -53,7 +50,7 @@ namespace RPG.Inventory
 
         private void Init()
         {
-            ChosenPosition = NONE_CHOSEN;
+            ChosenPosition = Constants.INVALID;
             CharCycler = charCyclerObject.GetComponent<ICycler<ItemOwner>>();
             CharCycler.OnCycle += ShowNextInventory;
             CurrentInv = ItemManager.Instance.GetInventory(ItemOwner.BAG);
@@ -93,7 +90,7 @@ namespace RPG.Inventory
             try
             {
                 CharName[] equippableCharsNames = ((Equipment)item).EquippableChars;
-                return HOF.Map(charName => GameManager.Instance.GetCharacter(charName.CharacterName).CharImage, equippableCharsNames);
+                return equippableCharsNames.Map(_ => GameManager.Instance.GetCharacter(_.CharacterName).CharImage);
             }
             catch
             {
@@ -113,9 +110,7 @@ namespace RPG.Inventory
 
         public bool IsEmptySlot(int idx)
         {
-            if (idx == NONE_CHOSEN) return true;
-
-            return CurrentInv[idx].IsEmpty();
+            return idx == Constants.INVALID || CurrentInv[idx].IsEmpty();           
         }
 
         public void DiscardItem(int amount)

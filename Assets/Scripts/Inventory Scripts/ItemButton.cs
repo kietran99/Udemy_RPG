@@ -1,60 +1,55 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemButton : MonoBehaviour
+namespace RPG.Inventory
 {
-    #region
-    public Image ItemImage { get { return itemImage; } set { itemImage = value; } }
-    public Text AmountText { get { return amountText; } set { amountText = value; } }
-    public int ButtonPos { get { return buttonPos; } set { buttonPos = value; } }
-    #endregion
-
-    private IClickObserve invoker;
-
-    [SerializeField]
-    private Image itemImage = null;
-    
-    [SerializeField]
-    private Text amountText = null;
-
-    private int buttonPos;
-
-    void Start()
+    public class ItemButton : MonoBehaviour
     {
-        GetComponent<Button>().onClick.AddListener(() => GetPos());
-    }
+        #region PROPERTIES
+        public Image ItemImage { get { return itemImage; } set { itemImage = value; } }
+        public Text AmountText { get { return amountText; } set { amountText = value; } }
+        public int ButtonPos { get { return buttonPos; } set { buttonPos = value; } }
+        #endregion
+        
+        [SerializeField]
+        private Image itemImage = null;
 
-    public void Init(IClickObserve invoker, int buttonPos)
-    {
-        this.invoker = invoker;
-        this.buttonPos = buttonPos;
-    }
+        [SerializeField]
+        private Text amountText = null;
 
-    public void DisplayItem(ItemHolder holder)
-    {
-        if (holder.TheItem.Image == null)
+        private int buttonPos;
+
+        private IClickObserve invoker;
+
+        void Start()
         {
-            itemImage.enabled = false;
-            amountText.enabled = false;
+            GetComponent<Button>().onClick.AddListener(() => GetPos());
         }
-        else
+
+        public void Init(IClickObserve invoker, int buttonPos)
         {
+            this.invoker = invoker;
+            this.buttonPos = buttonPos;
+        }
+
+        public void DisplayItem(ItemHolder holder)
+        {
+            if (holder.TheItem.Image == null)
+            {
+                itemImage.enabled = false;
+                amountText.enabled = false;
+                return;
+            }
+            
             itemImage.enabled = true;
             amountText.enabled = true;
             itemImage.sprite = holder.TheItem.Image;
-            if (holder.IsEquipped)
-            {
-                amountText.text = "E";
-            }
-            else
-            {
-                amountText.text = holder.Amount.ToString();
-            }
+            amountText.text = holder.IsEquipped ? "E" : holder.Amount.ToString();            
         }
-    }
 
-    private void GetPos()
-    {
-        invoker.OnButtonClick(buttonPos);
+        private void GetPos()
+        {
+            invoker.OnButtonClick(buttonPos);
+        }
     }
 }
