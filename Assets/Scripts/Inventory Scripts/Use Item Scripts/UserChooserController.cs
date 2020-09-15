@@ -77,6 +77,7 @@ namespace RPG.Inventory
         {
             view.Destruct();
             view.OnItemUse -= UseItem;
+            gameObject.SetActive(false);
             OnDeactivate?.Invoke();
         }
 

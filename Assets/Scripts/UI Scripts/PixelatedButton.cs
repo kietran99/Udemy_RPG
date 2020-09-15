@@ -1,15 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent (typeof(Button))]
 public class PixelatedButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] Sprite unpressedSprite = null;
+    [SerializeField] Sprite unpressedSprite = null, pressedSprite = null;
 
-    [SerializeField] Sprite pressedSprite = null;
+    public Action OnPress { get; set; }
+    public Action OnRelease { get; set; }
 
-    Button myButton;
+    private Button myButton;
 
     void Awake()
     {
@@ -19,12 +21,16 @@ public class PixelatedButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnPointerDown(PointerEventData eventData)
     {
         if (!myButton.interactable) return;
+
         myButton.image.sprite = pressedSprite;
+        OnPress?.Invoke();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         if (!myButton.interactable) return;
+
         myButton.image.sprite = unpressedSprite;
+        OnRelease?.Invoke();
     }
 }

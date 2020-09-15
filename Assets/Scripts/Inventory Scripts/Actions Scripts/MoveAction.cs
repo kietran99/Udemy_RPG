@@ -58,9 +58,9 @@ namespace RPG.Inventory
             inventoryController.View.OnItemButtonClick -= PickAmount;
         }
        
-        private DetailData PickAmount(int idx)
+        private DetailsData PickAmount(int idx)
         {
-            var dummyData = new DetailData(string.Empty, string.Empty, Array.Empty<Sprite>(), false);
+            var dummyData = new DetailsData(string.Empty, string.Empty, Array.Empty<Sprite>(), GetType(), false);
             
             if (!inventoryController.IsEmptySlot(idx) && !inventoryController.HasChosenSameItemAt(idxToMove))
             {

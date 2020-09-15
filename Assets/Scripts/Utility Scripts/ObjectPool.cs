@@ -12,12 +12,12 @@ public class ObjectPool : MonoBehaviour, IObjectPool
     [SerializeField]
     private GameObject parent = null;
 
-    private Queue<GameObject> pooledObjects/*, freeObjects*/;
+    private Queue<GameObject> pooledObjects, freeObjects;
 
     void Start()
     {
         pooledObjects = new Queue<GameObject>(capacity);
-        //freeObjects = new Queue<GameObject>(capacity);
+        freeObjects = new Queue<GameObject>(capacity);
         InitObjects(capacity);
     }
 
@@ -35,6 +35,7 @@ public class ObjectPool : MonoBehaviour, IObjectPool
         if (pooledObjects.Count == 0) return null;
 
         GameObject obj = pooledObjects.Dequeue();
+        freeObjects.Enqueue(obj);
         obj.SetActive(true);
         return obj;
     }
@@ -43,5 +44,15 @@ public class ObjectPool : MonoBehaviour, IObjectPool
     {
         gameObj.SetActive(false);
         pooledObjects.Enqueue(gameObj);
+    }
+
+    public void Reset()
+    {
+        if (freeObjects.Count == 0) return;
+
+        var obj = freeObjects.Dequeue();
+        obj.SetActive(false);
+        pooledObjects.Enqueue(obj);
+        Reset();
     }
 }

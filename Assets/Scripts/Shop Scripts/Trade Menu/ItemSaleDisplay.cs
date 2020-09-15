@@ -9,7 +9,7 @@ public class ItemSaleDisplay : MonoBehaviour, InventoryViewInterface
 
     private ItemButton[] itemButtons;
 
-    public Func<int, DetailData> OnItemButtonClick { get; set; }
+    public Func<int, DetailsData> OnItemButtonClick { get; set; }
 
     public void Init(SellMenuController controller, ItemHolder[] itemsToDisplay)
     {
@@ -40,4 +40,10 @@ public class ItemSaleDisplay : MonoBehaviour, InventoryViewInterface
     {
         itemButtons[slot].DisplayItem(holder);
     }
+
+    public void ShowItemDetails(DetailsData data)
+    { }
+
+    public void Reset()
+    { }
 }

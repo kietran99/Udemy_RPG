@@ -6,7 +6,7 @@ namespace RPG.Inventory
 {
     public class InventoryController : MonoBehaviour, InventoryControllerInterface
     {
-        #region PUBLIC
+        #region PROPERTIES
         public InventoryViewInterface View { get { return view; } }
         public ItemHolder[] CurrentInv { get; private set; }
         public ICycler<ItemOwner> CharCycler { get; private set; }
@@ -25,7 +25,7 @@ namespace RPG.Inventory
         #region DELEGATES
         public Action OnHide { get; set; }
         public Action<bool, bool> OnUsableItemClick { get; set; }
-        public Action<DetailData> OnItemMove { get; set; }
+        public Action<DetailsData> OnItemMove { get; set; }
         #endregion
 
         private InventoryViewInterface view;
@@ -69,20 +69,26 @@ namespace RPG.Inventory
         public void ShowNextInventory(ItemOwner possessor)
         {
             CurrentInv = ItemManager.Instance.GetInventory(possessor);
+            view.Reset();
             view.Display(CurrentInv);
+            if (!ChosenPosition.Equals(Constants.INVALID)) view.ShowItemDetails(GenerateDetailsData());
         }
 
-        private DetailData GetItemDetails(int idx)
+        private DetailsData GetItemDetails(int idx)
         {           
             ChosenPosition = idx;
             bool isEquipment = CurrentInv[idx].TheItem.IsEquipment;
             OnUsableItemClick?.Invoke(!isEquipment, CurrentInv[idx].IsEquipped);
 
-            Item item = CurrentInv[idx].TheItem;
+            return GenerateDetailsData();
+        }
 
+        private DetailsData GenerateDetailsData()
+        {
+            Item item = CurrentInv[ChosenPosition].TheItem;
             Sprite[] equippableSprites = GetEquippableCharsSprites(item);
-
-            return new DetailData(item.ItemName, item.Description, equippableSprites);
+            Type itemType = item.ItemName.Equals(string.Empty) ? GetType() : item.GetType();
+            return new DetailsData(item.ItemName, item.Description, equippableSprites, itemType);
         }
 
         private Sprite[] GetEquippableCharsSprites(Item item)

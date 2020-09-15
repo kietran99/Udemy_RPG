@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using Functional;
-using System.Collections.Generic;
-using System;
 
 namespace RPG.Inventory
 {
@@ -12,28 +9,31 @@ namespace RPG.Inventory
         [SerializeField]
         private Text nameText = null, descriptionText = null;
 
-        private IObjectPool spritesPool;
+        [SerializeField]
+        private ItemTypeIconFetcher itemTypeIcon = null;
 
-        private GameObject[] sprites;
+        private IObjectPool spritesPool;
 
         void Awake()
         {
             spritesPool = GetComponent<IObjectPool>();
-            sprites = Array.Empty<GameObject>();
         }
 
-        public void Show(string name, string description, Sprite[] equippablesSprites)
+        public void Show(string name, string description, Sprite[] equippablesSprites, System.Type itemType)
         {
             nameText.text = name;
             descriptionText.text = description;
-            HOF.Map(sprite => spritesPool.Push(sprite), sprites);
-            sprites = new GameObject[equippablesSprites.Length];
-            HOF.Map((sprite, idx) =>
-            {
-                GameObject obj = spritesPool.Pop();
-                sprites[idx] = obj;
-                obj.GetComponent<Image>().sprite = sprite;
-            }, equippablesSprites);
+            spritesPool.Reset(); 
+            equippablesSprites.Map(sprite => spritesPool.Pop().GetComponent<Image>().sprite = sprite);
+            itemTypeIcon.Show(itemType);
+        }
+
+        public void Reset()
+        {
+            nameText.text = string.Empty;
+            descriptionText.text = string.Empty;
+            spritesPool.Reset();
+            itemTypeIcon.Hide();
         }
     }
 }

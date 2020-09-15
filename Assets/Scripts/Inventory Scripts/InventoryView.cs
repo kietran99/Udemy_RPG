@@ -5,7 +5,7 @@ namespace RPG.Inventory
 {
     public class InventoryView : MonoBehaviour, InventoryViewInterface, IClickObserve
     {
-        #region SERIALIZE FIELD
+        #region SERIALIZE FIELDS
         [SerializeField]
         private GameObject controllerObject = null;
 
@@ -20,7 +20,7 @@ namespace RPG.Inventory
         #endregion
 
         #region DELEGATES
-        public Func<int, DetailData> OnItemButtonClick { get; set; }
+        public Func<int, DetailsData> OnItemButtonClick { get; set; }
         #endregion
 
         private InventoryControllerInterface controller;
@@ -30,12 +30,11 @@ namespace RPG.Inventory
         void Awake()
         {           
             controller = controllerObject.GetComponent<InventoryControllerInterface>();
-            controller.OnItemMove += _ => itemDetails.Show(_.name, _.description, _.equippablesSprites);
+            controller.OnItemMove += _ => itemDetails.Show(_.name, _.description, _.equippableSprites, _.itemType);
         }
 
         void Start()
         {
-            //itemFrame = Instantiate(itemFrameObject);
             itemButtons = new ItemButton[ItemManager.MAX_INVENTORY_SIZE];
 
             for (int i = 0; i < itemButtons.Length; i++)
@@ -60,11 +59,21 @@ namespace RPG.Inventory
 
             itemFrame.transform.position = itemButtons[idx].transform.position;
 
-            DetailData data = OnItemButtonClick(idx);
+            DetailsData data = OnItemButtonClick(idx);
 
             if (!data.shouldShow) return;
 
-            itemDetails.Show(data.name, data.description, data.equippablesSprites);
+            ShowItemDetails(data);
+        }
+
+        public void ShowItemDetails(DetailsData data)
+        {
+            itemDetails.Show(data.name, data.description, data.equippableSprites, data.itemType);
+        }
+
+        public void Reset()
+        {
+            itemDetails.Reset();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace RPG.Inventory
         #region DELEGATES
         Action OnHide { get; set; }
         Action<bool, bool> OnUsableItemClick { get; set; }
-        Action<DetailData> OnItemMove { get; set; }
+        Action<DetailsData> OnItemMove { get; set; }
         #endregion
 
         #region METHODS

@@ -2,25 +2,28 @@
 
 namespace RPG.Inventory
 {
-    public struct DetailData
+    public struct DetailsData
     {
         public bool shouldShow;
 
         public string name;
         public string description;
-        public Sprite[] equippablesSprites;
+        public System.Type itemType;
+        public Sprite[] equippableSprites;
         
-        public DetailData(string name, string description, Sprite[] equippableCharactersSprites, bool shouldShow = true)
+        public DetailsData(string name, string description, Sprite[] equippableSprites, System.Type itemType, bool shouldShow = true)
         {
             this.name = name;
             this.description = description;
-            this.equippablesSprites = equippableCharactersSprites;
+            this.equippableSprites = equippableSprites;
+            this.itemType = itemType;
             this.shouldShow = shouldShow;
         }
     }
 
     public interface ItemDetailsInterface
     {
-        void Show(string name, string description, Sprite[] equippablesSprites);
+        void Show(string name, string description, Sprite[] equippablesSprites, System.Type itemType);
+        void Reset();
     }
 }

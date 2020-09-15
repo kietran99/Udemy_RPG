@@ -4,8 +4,10 @@ namespace RPG.Inventory
 {
     public interface InventoryViewInterface
     {
-        Func<int, DetailData> OnItemButtonClick { get; set; }
+        Func<int, DetailsData> OnItemButtonClick { get; set; }
 
         void Display(ItemHolder[] holders);
+        void ShowItemDetails(DetailsData data);
+        void Reset();
     }
 }
