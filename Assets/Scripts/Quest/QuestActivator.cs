@@ -39,7 +39,13 @@ namespace RPG.Quest
         private void OnQuestAccept()
         {
             hasAccepted = true;
+            
             questActivateUI.OnAccept -= OnQuestAccept;
+
+            if (ServiceLocator.Resolve<IQuestManager>(out IQuestManager questManager))
+            {
+                questManager.AddTracker(data.QuestGoal.GenerateTracker());
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)

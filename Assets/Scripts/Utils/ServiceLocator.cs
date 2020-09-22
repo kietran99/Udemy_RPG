@@ -5,19 +5,21 @@ public static class ServiceLocator
 {
     private static readonly Dictionary<Type, object> services = new Dictionary<Type, object>();
 
-    public static void Register<T>(object serviceInstance)
+    public static void Register<T>(T serviceInstance)
     {
         services[typeof(T)] = serviceInstance;
     }
 
-    public static T Resolve<T>()
+    public static bool Resolve<T>(out T registeredService)
     {
         if (!services.TryGetValue(typeof(T), out object service))
         {
-            return default;
+            registeredService = default;
+            return false;
         }
 
-        return (T)services[typeof(T)];
+        registeredService = (T) service;
+        return true;
     }
 
     public static void Reset()

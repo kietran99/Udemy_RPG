@@ -2,7 +2,7 @@
 
 namespace RPG.Quest
 {
-    [CreateAssetMenu(fileName = "Quest Data", menuName = "RPG Generator/Quests/Quest Data")]
+    [CreateAssetMenu(fileName = "Quest Data", menuName = "RPG Generator/Quest/Quest Data")]
     public class QuestData : ScriptableObject
     {
         #region PROPERTIES
@@ -10,6 +10,7 @@ namespace RPG.Quest
         public string QuestDescription { get => questDescription; }
         public Sprite ItemReward { get => itemReward; }
         public int GoldReward { get => goldReward; }
+        public AbstractQuestGoal QuestGoal { get => questGoal; }
         #endregion
 
         [SerializeField]
@@ -20,5 +21,8 @@ namespace RPG.Quest
 
         [SerializeField]
         private int goldReward = 0;
+
+        [SerializeField]
+        private AbstractQuestGoal questGoal = null;
     }
 }

@@ -24,13 +24,7 @@ public class ShopMerchandise : MonoBehaviour
         consumables = new List<ConsumableItem>();
         FilterMerch();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     private void FilterMerch()
     {
         if (merchandise.Length == 0) return;

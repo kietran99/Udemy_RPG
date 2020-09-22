@@ -2,11 +2,7 @@
 
 namespace EventSystems
 {
-    public interface IBaseEvent
-    { 
-    }
-
-    public class GameEvent<T> : IBaseEvent
+    public class GameEvent<T> : IBaseEvent where T : IEventData
     {
         private event Action<T> Listeners;
 

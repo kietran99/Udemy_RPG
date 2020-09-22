@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,18 +28,6 @@ public class ShopDialog : MonoBehaviour
     [SerializeField]
     private string[] tradeSuccessfulDialog = null;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Greetings()
     {
         DisplayDialog(RandomizeSpeech(greetings));
@@ -55,19 +42,19 @@ public class ShopDialog : MonoBehaviour
     public void InsufficientFund()
     {
         dialogCanvas.SetActive(true);
-        StartCoroutine("DisplayDelayDialog", insufficientFundDialog);
+        StartCoroutine(nameof(DisplayDelayDialog), insufficientFundDialog);
     }
 
     public void UnavailSlot()
     {
         dialogCanvas.SetActive(true);
-        StartCoroutine("DisplayDelayDialog", unavailSlotDialog);
+        StartCoroutine(nameof(DisplayDelayDialog), unavailSlotDialog);
     }
 
     public void TradeSuccessful()
     {
         dialogCanvas.SetActive(true);
-        StartCoroutine("DisplayDelayDialog", RandomizeSpeech(tradeSuccessfulDialog));
+        StartCoroutine(nameof(DisplayDelayDialog), RandomizeSpeech(tradeSuccessfulDialog));
     }
     //-------------------------------------------------------------------
 

@@ -14,7 +14,7 @@ public class EssentialsLoader : MonoBehaviour
     {
         if (PlayerController.Instance == null) PlayerController.Instance = Instantiate(player).GetComponent<PlayerController>();
 
-        UIFade.Instance = UIFade.Instance ?? Instantiate(fadeScreen).GetComponent<UIFade>();
+        if (UIFade.Instance == null) UIFade.Instance = Instantiate(fadeScreen).GetComponent<UIFade>();
 
         Instantiate(gameMenuCanvas);
 
@@ -23,5 +23,7 @@ public class EssentialsLoader : MonoBehaviour
         if (GameManager.Instance == null) GameManager.Instance = Instantiate(gameManager).GetComponent<GameManager>();
 
         if (ItemManager.Instance == null) ItemManager.Instance = Instantiate(itemManager).GetComponent<ItemManager>();
+
+        ServiceLocator.Register<RPG.Quest.IQuestManager>(new RPG.Quest.QuestManager());
     }    
 }

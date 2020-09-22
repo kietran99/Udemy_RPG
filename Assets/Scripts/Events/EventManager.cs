@@ -24,10 +24,9 @@ namespace EventSystems
         private EventManager() { }
         #endregion
 
-        public delegate void EventListener(IEventData eventData);
         private Dictionary<System.Type, IBaseEvent> eventDictionary;
 
-        public void StartListening<T>(Action<T> listener)
+        public void StartListening<T>(Action<T> listener) where T : IEventData
         {
             if (instance.eventDictionary.TryGetValue(typeof(T), out IBaseEvent publisher))
             {
@@ -40,7 +39,7 @@ namespace EventSystems
             (publisher as GameEvent<T>).Add(listener);
         }
 
-        public void StopListening<T>(Action<T> listener)
+        public void StopListening<T>(Action<T> listener) where T : IEventData
         {
             if (instance.eventDictionary.TryGetValue(typeof(T), out IBaseEvent publisher))
             {
@@ -48,7 +47,7 @@ namespace EventSystems
             }
         }
 
-        public void TriggerEvent<T>(T eventData)
+        public void TriggerEvent<T>(T eventData) where T : IEventData
         {
             if (instance.eventDictionary.TryGetValue(typeof(T), out IBaseEvent publisher))
             {

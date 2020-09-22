@@ -73,7 +73,7 @@ public class DialogManager : MonoBehaviour
             }
             else
             {
-                StartCoroutine("TypeSentence");
+                StartCoroutine(nameof(TypeSentence));
             }
         }
     }

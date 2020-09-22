@@ -1,6 +1,6 @@
 ﻿namespace EventSystems
 {
-    public interface IEventData
+    public interface IBaseEvent
     {
 
     }
