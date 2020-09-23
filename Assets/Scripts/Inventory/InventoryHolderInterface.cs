@@ -3,6 +3,7 @@
     public interface InventoryHolderInterface
     {
         ItemOwner Possessor { get; set; }
+        ItemHolder[] ItemHolders { get; set; }
 
         int FindFirstEmptySlot();
         void RemoveAt(int posToRemove, int amount);

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ad2ca8a043e5d40971c45a1c19855e, type: 3}
   m_Name: Sample Quest
   m_EditorClassIdentifier: 
-  questName: Sample Name
-  questDescription: Sample Description
+  questName: Item Quest 1
+  questDescription: Please get me 7 Sturdy wooden swords. I will reward a weaker
+    Wooden sword in return.
   itemReward: {fileID: 21300000, guid: 394ffc60c66e6cc4592621c0b55718f3, type: 3}
   goldReward: 10
   questGoal: {fileID: 11400000, guid: e5cbb6f42ded69e44a5e63638dd427c2, type: 2}

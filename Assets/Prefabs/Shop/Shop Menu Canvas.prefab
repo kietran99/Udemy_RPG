@@ -1384,7 +1384,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5307636290346633093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2680,7 +2680,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5307636290827991753}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.38778788
+  m_Size: 0.38778785
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3572,6 +3572,16 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 55
       objectReference: {fileID: 0}
+    - target: {fileID: 2605977282885913443, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -102
+      objectReference: {fileID: 0}
+    - target: {fileID: 2605977282885913443, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 340.99997
+      objectReference: {fileID: 0}
     - target: {fileID: 2771637423708753394, guid: 1631478bcdc9e264780998eab6866eca,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -3661,6 +3671,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186707047957120697, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -102
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186707047957120697, guid: 1631478bcdc9e264780998eab6866eca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 199
       objectReference: {fileID: 0}
     - target: {fileID: 6357084024264077468, guid: 1631478bcdc9e264780998eab6866eca,
         type: 3}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventSystems;
+using System;
 using System.Collections.Generic;
 
 namespace RPG.Inventory
@@ -17,7 +18,7 @@ namespace RPG.Inventory
         private ItemHolder[] itemHolders;
 
         private ItemHolder nullHolder;
-        #endregion
+        #endregion        
 
         public InventoryHolder(ItemOwner possessor, int size, ItemHolder nullHolder)
         {
@@ -26,7 +27,9 @@ namespace RPG.Inventory
             this.nullHolder = nullHolder;
         }
 
-        private int CheckExists(ItemHolder itemToCheck)
+        private void OnInventoryChange() => EventManager.Instance.TriggerEvent(new InventoryStats(this));
+
+        private int FindIndex(ItemHolder itemToCheck)
         {
             return itemHolders.LookUp(_ => !ReferenceEquals(_, itemToCheck) && itemToCheck.CompareItem(_)).idx;
         }
@@ -36,20 +39,24 @@ namespace RPG.Inventory
         public void RemoveAt(int posToRemove, int amount)
         {
             itemHolders[posToRemove].Amount -= amount;
-            if (itemHolders[posToRemove].Amount <= 0) itemHolders[posToRemove] = nullHolder;
+            if (itemHolders[posToRemove].Amount <= Constants.EMPTY) itemHolders[posToRemove] = nullHolder;
+
+            OnInventoryChange();
         }
 
         public int Add(ItemHolder itemHolderToAdd)
         {
-            int posToCheck = CheckExists(itemHolderToAdd);
+            int posToCheck = FindIndex(itemHolderToAdd);
 
-            if (posToCheck > -1) AddToExisting(itemHolderToAdd, posToCheck);
+            if (posToCheck >= 0) AddToExisting(itemHolderToAdd, posToCheck);
             else
             {
                 int emptySlot = FindFirstEmptySlot();
                 if (emptySlot == Constants.INVALID) return Constants.INVALID;
                 itemHolders[emptySlot] = itemHolderToAdd;
             }
+
+            OnInventoryChange();
 
             return 0;
         }
@@ -63,6 +70,8 @@ namespace RPG.Inventory
             }
 
             AddToExisting(itemHolderToAdd, posToAdd);
+
+            OnInventoryChange();
         }
 
         private void AddToExisting(ItemHolder itemHolderToAdd, int posToAdd)

@@ -23,7 +23,8 @@ namespace RPG.Inventory
         bool HasChosenSameItemAt(int idx);
         bool HasChosenEmptySlot();
         bool IsEmptySlot(int idx);
-        void DiscardItem(int amount);
+        void Organize();
+        void Discard(int amount);
         void MoveItem(int fromPos, int toPos, ItemOwner sender, ItemOwner receiver, int amount);
         void EquipItem(ItemOwner charToEquip);
         void UnequipItem();

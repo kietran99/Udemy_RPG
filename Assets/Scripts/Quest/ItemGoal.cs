@@ -9,6 +9,8 @@ namespace RPG.Quest
         public int Quantity { get => quantity; }
 
         public Item Item { get => item; }
+
+        public System.Type ItemType { get => item.GetType(); }
         #endregion
 
         [SerializeField]
@@ -17,9 +19,9 @@ namespace RPG.Quest
         [SerializeField]
         private Item item = null;
 
-        public override IQuestTracker GenerateTracker()
+        public override IQuestTracker GenerateTracker(string questName)
         {
-            return new ItemTracker("Quest Name", this);
+            return new ItemTracker(questName, this);
         }
     }
 }

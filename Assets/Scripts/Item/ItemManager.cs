@@ -36,7 +36,8 @@ public class ItemManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-        } else if (instance != this)
+        } 
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
@@ -48,7 +49,7 @@ public class ItemManager : MonoBehaviour
         nullHolder = new ItemHolderFactory().CreateNullHolder(nullItem);
 
         int pos = 0;
-        invHolders = new InventoryHolder[GameManager.MAX_PARTY_MEMBERS + 1]; // +1 for the bag inventory
+        invHolders = new InventoryHolder[GameManager.MAX_PARTY_MEMBERS + 1];
 
         foreach (ItemOwner possessor in (ItemOwner[]) System.Enum.GetValues(typeof(ItemOwner)))
         {
@@ -87,26 +88,6 @@ public class ItemManager : MonoBehaviour
         invHolder.ItemHolders[13] = new ItemHolder(itemLibrary[10], 1);
     }   
 
-    public void Organize(ItemOwner possessor)
-    {
-        ItemHolder[] holders = GetInventory(possessor);
-
-        for (int i = 0; i < holders.Length; i++)
-        {
-            if (holders[i].IsEmpty())
-            {
-                for (int j = i + 1; j < holders.Length; j++)
-                {
-                    if (holders[j].IsEmpty()) continue;
-
-                    holders[i] = holders[j];
-                    holders[j] = nullHolder;
-                    break;
-                }
-            }
-        }
-    }
-
     public InventoryHolder GetInvHolder(ItemOwner possessor)
     {
         foreach (InventoryHolder invHolder in invHolders)
@@ -125,10 +106,8 @@ public class ItemManager : MonoBehaviour
     public Item GetItemAt(int pos, ItemOwner possessor)
     {
         ItemHolder[] inv = GetInventory(possessor);
-
-        if (inv == null) return nullItem;
-
-        return inv[pos].TheItem;
+        
+        return inv == null ? nullItem : inv[pos].TheItem;
     }
 
     public int GetNumOfItemsAt(int pos, ItemOwner possessor)

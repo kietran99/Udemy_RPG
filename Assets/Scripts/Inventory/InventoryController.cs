@@ -119,7 +119,13 @@ namespace RPG.Inventory
             return idx == Constants.INVALID || CurrentInv[idx].IsEmpty();           
         }
 
-        public void DiscardItem(int amount)
+        public void Organize()
+        {
+            ItemManager.Instance.GetInvHolder(CharCycler.Current).Organize();
+            ShowInventory();
+        }
+
+        public void Discard(int amount)
         {
             ItemManager.Instance.RemoveItemAt(CharCycler.Current, ChosenPosition, amount);
             ShowInventory();

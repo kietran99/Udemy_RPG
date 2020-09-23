@@ -44,7 +44,7 @@ namespace RPG.Quest
 
             if (ServiceLocator.Resolve<IQuestManager>(out IQuestManager questManager))
             {
-                questManager.AddTracker(data.QuestGoal.GenerateTracker());
+                questManager.AddTracker(data.QuestGoal.GenerateTracker(data.QuestName));
             }
         }
 

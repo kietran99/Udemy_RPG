@@ -1,10 +1,7 @@
-﻿using System;
-
-namespace RPG.Quest
+﻿namespace RPG.Quest
 {
     public interface IQuestTracker
     {
-        string QuestName { get; set; }
-        //Action<string> OnComplete { get; set; }
+        string QuestName { get; }
     }
 }

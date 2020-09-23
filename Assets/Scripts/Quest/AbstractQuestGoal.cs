@@ -4,6 +4,6 @@ namespace RPG.Quest
 {
     public abstract class AbstractQuestGoal : ScriptableObject
     {
-        public abstract IQuestTracker GenerateTracker();
+        public abstract IQuestTracker GenerateTracker(string questName);
     }
 }

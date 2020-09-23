@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acffd752e0201854cac4705d18d2c2dd, type: 3}
   m_Name: Test Goal
   m_EditorClassIdentifier: 
-  quantity: 1
+  quantity: 7
+  item: {fileID: 11400000, guid: 2bc1ccd496c135443969d3c5d51e5905, type: 2}

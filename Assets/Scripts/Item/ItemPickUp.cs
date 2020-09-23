@@ -14,18 +14,18 @@ public class ItemPickUp : MonoBehaviour
         {
             AbstractItemHolderFactory itemHolderFactory = new ItemHolderFactory();
             int invAvail = ItemManager.Instance.AddItem(ItemOwner.BAG, itemHolderFactory.CreateItemToObtainHolder(itemToPickUp));
-            if (invAvail == -1) Debug.LogError("INVENTORY FULL!");
+            if (invAvail == Constants.INVALID) Debug.LogError("INVENTORY FULL!");
             else Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) canPickUp = true;
+        if (other.CompareTag(Constants.PLAYER_TAG)) canPickUp = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) canPickUp = false;
+        if (other.CompareTag(Constants.PLAYER_TAG)) canPickUp = false;
     }
 }

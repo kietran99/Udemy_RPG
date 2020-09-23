@@ -28,7 +28,7 @@
 
         void DiscardItem(int amount)
         {
-            actionController.InventoryController.DiscardItem(amount);
+            actionController.InventoryController.Discard(amount);
         }
     }
 }

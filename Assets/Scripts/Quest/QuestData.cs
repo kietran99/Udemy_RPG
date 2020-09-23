@@ -14,7 +14,11 @@ namespace RPG.Quest
         #endregion
 
         [SerializeField]
-        private string questName = "", questDescription = "";
+        private string questName = "";
+        
+        [SerializeField]
+        [TextArea]
+        private string questDescription = "";
 
         [SerializeField]
         private Sprite itemReward = null;
