@@ -9,7 +9,7 @@ namespace RPG.Inventory
         #region PROPERTIES
         public InventoryViewInterface View { get { return view; } }
         public ItemHolder[] CurrentInv { get; private set; }
-        public ICycler<ItemOwner> CharCycler { get; private set; }
+        public ICycler<InventoryOwner> CharCycler { get; private set; }
         public int ChosenPosition { get; private set; }
         public ItemHolder ChosenItemHolder { get { return CurrentInv[ChosenPosition]; } }
         #endregion
@@ -51,9 +51,9 @@ namespace RPG.Inventory
         private void Init()
         {
             ChosenPosition = Constants.INVALID;
-            CharCycler = charCyclerObject.GetComponent<ICycler<ItemOwner>>();
+            CharCycler = charCyclerObject.GetComponent<ICycler<InventoryOwner>>();
             CharCycler.OnCycle += ShowNextInventory;
-            CurrentInv = ItemManager.Instance.GetInventory(ItemOwner.BAG);
+            CurrentInv = ItemManager.Instance.GetInventory(InventoryOwner.BAG);
         }
 
         void OnEnable()
@@ -66,7 +66,7 @@ namespace RPG.Inventory
             OnHide?.Invoke();
         }
 
-        public void ShowNextInventory(ItemOwner possessor)
+        public void ShowNextInventory(InventoryOwner possessor)
         {
             CurrentInv = ItemManager.Instance.GetInventory(possessor);
             view.Reset();
@@ -136,7 +136,7 @@ namespace RPG.Inventory
             return CurrentInv[idx].CompareItem(CurrentInv[ChosenPosition]);
         }
     
-        public void MoveItem(int fromPos, int toPos, ItemOwner sender, ItemOwner receiver, int amount)
+        public void MoveItem(int fromPos, int toPos, InventoryOwner sender, InventoryOwner receiver, int amount)
         {
             var sendingInventory = ItemManager.Instance.GetInvHolder(sender);
             if (sender.Equals(CharCycler.Current)) sendingInventory.MoveItem(fromPos, toPos, amount);
@@ -145,7 +145,7 @@ namespace RPG.Inventory
             ShowInventory();
         }
 
-        public void EquipItem(ItemOwner charToEquip)
+        public void EquipItem(InventoryOwner charToEquip)
         {
             var sendingInv = ItemManager.Instance.GetInvHolder(CharCycler.Current);
             var receivingInv = ItemManager.Instance.GetInvHolder(charToEquip);

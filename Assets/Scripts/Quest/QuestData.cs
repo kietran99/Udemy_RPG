@@ -8,7 +8,7 @@ namespace RPG.Quest
         #region PROPERTIES
         public string QuestName { get => questName; }
         public string QuestDescription { get => questDescription; }
-        public Sprite ItemReward { get => itemReward; }
+        public Item ItemReward { get => itemReward; }
         public int GoldReward { get => goldReward; }
         public AbstractQuestGoal QuestGoal { get => questGoal; }
         #endregion
@@ -21,7 +21,7 @@ namespace RPG.Quest
         private string questDescription = "";
 
         [SerializeField]
-        private Sprite itemReward = null;
+        private Item itemReward = null;
 
         [SerializeField]
         private int goldReward = 0;

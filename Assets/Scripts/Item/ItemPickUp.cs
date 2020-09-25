@@ -10,13 +10,17 @@ public class ItemPickUp : MonoBehaviour
    
     void Update()
     {
-        if (canPickUp && Input.GetButtonDown("Fire1") && PlayerController.Instance.canMove)
-        {
-            AbstractItemHolderFactory itemHolderFactory = new ItemHolderFactory();
-            int invAvail = ItemManager.Instance.AddItem(ItemOwner.BAG, itemHolderFactory.CreateItemToObtainHolder(itemToPickUp));
-            if (invAvail == Constants.INVALID) Debug.LogError("INVENTORY FULL!");
-            else Destroy(gameObject);
-        }
+        if (!canPickUp || !Input.GetKeyDown(KeyCode.Space) || !PlayerController.Instance.canMove) return;
+
+        AttemptToObtain();
+    }
+
+    private void AttemptToObtain()
+    {
+        AbstractItemHolderFactory itemHolderFactory = new ItemHolderFactory();
+        int invAvail = ItemManager.Instance.AddItem(InventoryOwner.BAG, itemHolderFactory.CreateItemToObtainHolder(itemToPickUp));
+        if (invAvail == Constants.INVALID) Debug.LogError("INVENTORY FULL!");
+        else Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

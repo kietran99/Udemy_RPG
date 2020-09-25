@@ -4,31 +4,33 @@ namespace RPG.Inventory
 {
     public class InventoryStats : EventSystems.IEventData
     {
-        private Dictionary<System.Type, int> stats;
+        private readonly Dictionary<string, int> stats;
 
         public InventoryStats(InventoryHolderInterface holder)
         {
-            stats = new Dictionary<System.Type, int>();
+            stats = new Dictionary<string, int>();
             holder.ItemHolders.Map(AddOrUpdateStats);
         }
 
         private void AddOrUpdateStats(ItemHolder holder)
         {
-            var itemType = holder.TheItem.GetType();
+            if (holder.TheItem.ItemName.Equals(string.Empty)) return;
+
+            var itemName = holder.TheItem.ItemName;
 
             try
             {
-                stats.Add(itemType, holder.Amount);
+                stats.Add(itemName, holder.Amount);
             }
             catch
             {
-                stats[itemType] = stats[itemType] + holder.Amount;
+                stats[itemName] = stats[itemName] + holder.Amount;
             }
         } 
         
-        public int LookUp(System.Type itemType)
+        public int LookUp(string itemName)
         {
-            if (stats.TryGetValue(itemType, out int amount))
+            if (stats.TryGetValue(itemName, out int amount))
             {
                 return amount;
             }

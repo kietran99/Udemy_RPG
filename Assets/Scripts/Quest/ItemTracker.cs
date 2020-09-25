@@ -22,16 +22,23 @@ namespace RPG.Quest
 
         private void UpdateProgress(RPG.Inventory.InventoryStats invStats)
         {
-            AccumulatedAmount = invStats.LookUp(goal.ItemType);
-            ProcessCompletion();
+            AccumulatedAmount = invStats.LookUp(goal.Item.ItemName);
+
+            if (AccumulatedAmount < goal.Quantity)
+            {
+                Debug.Log("Status: Ongoing");
+                EventManager.Instance.TriggerEvent(new QuestStatusChangeData(QuestStatus.ONGOING));
+                return;
+            }
+
+            Debug.Log("Status: Completed");
+            EventManager.Instance.TriggerEvent(new QuestStatusChangeData(QuestStatus.COMPLETED));
         }
+        
+        public override bool IsComplete() => AccumulatedAmount >= goal.Quantity;
 
-        private void ProcessCompletion()
+        protected override void UntrackEvents()
         {
-            if (AccumulatedAmount < goal.Quantity) return;
-
-            Debug.Log("Completed: " + QuestName);
-            EventSystems.EventManager.Instance.TriggerEvent(new QuestCompleteData(QuestName));
             EventManager.Instance.StopListening<RPG.Inventory.InventoryStats>(UpdateProgress);
         }
     }

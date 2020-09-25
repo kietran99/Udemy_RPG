@@ -7,27 +7,30 @@ namespace RPG.Inventory
     public class InventoryHolder : InventoryHolderInterface
     {
         #region PROPERTIES
-        public ItemOwner Possessor { get { return possessor; } set { possessor = value; } }
+        public InventoryOwner Owner { get { return owner; } set { owner = value; } }
         public ItemHolder[] ItemHolders { get { return itemHolders; } set { itemHolders = value; } }
         public ItemHolder this[int i] => itemHolders[i];
         #endregion
 
         #region FIELDS
-        private ItemOwner possessor;
+        private InventoryOwner owner;
 
         private ItemHolder[] itemHolders;
 
         private ItemHolder nullHolder;
         #endregion        
 
-        public InventoryHolder(ItemOwner possessor, int size, ItemHolder nullHolder)
+        public InventoryHolder(InventoryOwner possessor, int size, ItemHolder nullHolder)
         {
-            this.possessor = possessor;
+            this.owner = possessor;
             itemHolders = new ItemHolder[size];
             this.nullHolder = nullHolder;
         }
 
-        private void OnInventoryChange() => EventManager.Instance.TriggerEvent(new InventoryStats(this));
+        private void OnInventoryChange()
+        {
+            if (owner.Equals(InventoryOwner.BAG)) EventManager.Instance.TriggerEvent(new InventoryStats(this));
+        }
 
         private int FindIndex(ItemHolder itemToCheck)
         {

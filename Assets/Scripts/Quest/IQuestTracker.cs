@@ -3,5 +3,6 @@
     public interface IQuestTracker
     {
         string QuestName { get; }
+        bool IsComplete();
     }
 }

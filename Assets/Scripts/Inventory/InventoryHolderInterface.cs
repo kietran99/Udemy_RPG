@@ -2,7 +2,7 @@
 {
     public interface InventoryHolderInterface
     {
-        ItemOwner Possessor { get; set; }
+        InventoryOwner Owner { get; set; }
         ItemHolder[] ItemHolders { get; set; }
 
         int FindFirstEmptySlot();

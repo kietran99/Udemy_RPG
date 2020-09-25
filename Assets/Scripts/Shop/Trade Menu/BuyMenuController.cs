@@ -73,7 +73,7 @@ public class BuyMenuController : TradeMenuController
 
         ItemManager.Instance.CurrentGold -= totalCost;
 
-        int invAvail = ItemManager.Instance.AddItem(ItemOwner.BAG, new ItemHolder(selectedMerch, changeAmount));
+        int invAvail = ItemManager.Instance.AddItem(InventoryOwner.BAG, new ItemHolder(selectedMerch, changeAmount));
         if (invAvail == -1)
         {
             dialog.UnavailSlot();

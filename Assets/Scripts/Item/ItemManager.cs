@@ -51,9 +51,9 @@ public class ItemManager : MonoBehaviour
         int pos = 0;
         invHolders = new InventoryHolder[GameManager.MAX_PARTY_MEMBERS + 1];
 
-        foreach (ItemOwner possessor in (ItemOwner[]) System.Enum.GetValues(typeof(ItemOwner)))
+        foreach (InventoryOwner possessor in (InventoryOwner[]) System.Enum.GetValues(typeof(InventoryOwner)))
         {
-            if (possessor == ItemOwner.NONE) continue;
+            if (possessor == InventoryOwner.NONE) continue;
             invHolders[pos] = new InventoryHolder(possessor, MAX_INVENTORY_SIZE, nullHolder);
             pos++;
         }
@@ -88,29 +88,29 @@ public class ItemManager : MonoBehaviour
         invHolder.ItemHolders[13] = new ItemHolder(itemLibrary[10], 1);
     }   
 
-    public InventoryHolder GetInvHolder(ItemOwner possessor)
+    public InventoryHolder GetInvHolder(InventoryOwner possessor)
     {
         foreach (InventoryHolder invHolder in invHolders)
         {
-            if (invHolder.Possessor == possessor) return invHolder;
+            if (invHolder.Owner == possessor) return invHolder;
         }
 
         return null;
     }
 
-    public ItemHolder[] GetInventory(ItemOwner possessor)
+    public ItemHolder[] GetInventory(InventoryOwner possessor)
     {
         return GetInvHolder(possessor).ItemHolders;
     }
 
-    public Item GetItemAt(int pos, ItemOwner possessor)
+    public Item GetItemAt(int pos, InventoryOwner possessor)
     {
         ItemHolder[] inv = GetInventory(possessor);
         
         return inv == null ? nullItem : inv[pos].TheItem;
     }
 
-    public int GetNumOfItemsAt(int pos, ItemOwner possessor)
+    public int GetNumOfItemsAt(int pos, InventoryOwner possessor)
     {
         ItemHolder[] inv = GetInventory(possessor);
 
@@ -119,22 +119,22 @@ public class ItemManager : MonoBehaviour
         return inv[pos].Amount;
     }   
 
-    public int AddItem(ItemOwner possessor, ItemHolder itemToAdd)
+    public int AddItem(InventoryOwner possessor, ItemHolder itemToAdd)
     {
         return GetInvHolder(possessor).Add(itemToAdd);
     }
 
-    public void AddItemAt(ItemOwner possessor, ItemHolder itemToAdd, int posToAdd)
+    public void AddItemAt(InventoryOwner possessor, ItemHolder itemToAdd, int posToAdd)
     {
         GetInvHolder(possessor).AddAt(itemToAdd, posToAdd);
     }
 
-    public void RemoveItemAt(ItemOwner possessor, int posToRemove, int amount)
+    public void RemoveItemAt(InventoryOwner possessor, int posToRemove, int amount)
     {
         GetInvHolder(possessor).RemoveAt(posToRemove, amount);         
     }
 
-    public void UseItem(ItemOwner possessor, int pos, CharStats charToUse)
+    public void UseItem(InventoryOwner possessor, int pos, CharStats charToUse)
     {
         GetInvHolder(possessor).UseItem(pos, charToUse);       
     }   

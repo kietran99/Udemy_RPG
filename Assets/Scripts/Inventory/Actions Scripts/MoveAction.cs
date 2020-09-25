@@ -13,7 +13,7 @@ namespace RPG.Inventory
         private Text promptText = null;
 
         private int idxToMove;
-        private ItemOwner sender;
+        private InventoryOwner sender;
         private int originalAmount;
         private IAmountSelector amountSelector;
       

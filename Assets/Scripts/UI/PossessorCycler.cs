@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 namespace RPG.Inventory
 {
-    public class PossessorCycler : MonoBehaviour, ICycler<ItemOwner>
+    public class PossessorCycler : MonoBehaviour, ICycler<InventoryOwner>
     {
-        public ItemOwner Current { get { return charList.current.value; } }
+        public InventoryOwner Current { get { return charList.current.value; } }
 
         [SerializeField]
         private Text possessorText = null;
 
-        public Action<ItemOwner> OnCycle { get; set; }
+        public Action<InventoryOwner> OnCycle { get; set; }
 
-        private CircularLinkedList<ItemOwner> charList;
+        private CircularLinkedList<InventoryOwner> charList;
 
         void Start()
         {
-            charList = new CircularLinkedList<ItemOwner>();
+            charList = new CircularLinkedList<InventoryOwner>();
             PossessorSearcher.FillPossessorList(charList);
             possessorText.text = PossessorSearcher.GetPossessorName(Current);
         }
@@ -57,7 +57,7 @@ namespace RPG.Inventory
             OnCycle?.Invoke(Current);
         }
 
-        public void LoadElements(ItemOwner[] elements)
+        public void LoadElements(InventoryOwner[] elements)
         { }
     }
 }

@@ -9,7 +9,7 @@ namespace RPG.Inventory
         InventoryViewInterface View { get; }
         int ChosenPosition { get; }
         ItemHolder ChosenItemHolder { get; }
-        ICycler<ItemOwner> CharCycler { get; }
+        ICycler<InventoryOwner> CharCycler { get; }
         #endregion
 
         #region DELEGATES
@@ -25,8 +25,8 @@ namespace RPG.Inventory
         bool IsEmptySlot(int idx);
         void Organize();
         void Discard(int amount);
-        void MoveItem(int fromPos, int toPos, ItemOwner sender, ItemOwner receiver, int amount);
-        void EquipItem(ItemOwner charToEquip);
+        void MoveItem(int fromPos, int toPos, InventoryOwner sender, InventoryOwner receiver, int amount);
+        void EquipItem(InventoryOwner charToEquip);
         void UnequipItem();
         #endregion
     }

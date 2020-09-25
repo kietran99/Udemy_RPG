@@ -9,8 +9,6 @@ namespace RPG.Quest
         public int Quantity { get => quantity; }
 
         public Item Item { get => item; }
-
-        public System.Type ItemType { get => item.GetType(); }
         #endregion
 
         [SerializeField]

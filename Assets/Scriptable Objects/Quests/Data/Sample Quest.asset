@@ -15,6 +15,6 @@ MonoBehaviour:
   questName: Item Quest 1
   questDescription: Please get me 7 Sturdy wooden swords. I will reward a weaker
     Wooden sword in return.
-  itemReward: {fileID: 21300000, guid: 394ffc60c66e6cc4592621c0b55718f3, type: 3}
+  itemReward: {fileID: 11400000, guid: 04338f5adf4fe2b4eb94d1038f342625, type: 2}
   goldReward: 10
   questGoal: {fileID: 11400000, guid: e5cbb6f42ded69e44a5e63638dd427c2, type: 2}

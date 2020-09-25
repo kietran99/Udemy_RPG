@@ -1,4 +1,6 @@
-﻿namespace RPG.Quest
+﻿using System;
+
+namespace RPG.Quest
 {
     public abstract class AbstractQuestTracker : IQuestTracker
     {
@@ -11,5 +13,7 @@
         }
 
         protected abstract void TrackEvents();
+        protected abstract void UntrackEvents();
+        public abstract bool IsComplete();
     }
 }

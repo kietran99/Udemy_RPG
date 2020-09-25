@@ -1,6 +1,6 @@
 ﻿namespace RPG.Inventory
 {
-    public enum ItemOwner
+    public enum InventoryOwner
     {
         BAG,
         P0,
@@ -17,30 +17,30 @@
         private const int NONE = -2;
         public const string BAG_OWNER = "Bag";
 
-        private static int GetCharPos(ItemOwner possessor)
+        private static int GetCharPos(InventoryOwner possessor)
         {
             switch (possessor)
             {
-                case ItemOwner.BAG:
+                case InventoryOwner.BAG:
                     return BAG;
-                case ItemOwner.P0:
+                case InventoryOwner.P0:
                     return 0;
-                case ItemOwner.P1:
+                case InventoryOwner.P1:
                     return 1;
-                case ItemOwner.P2:
+                case InventoryOwner.P2:
                     return 2;
-                case ItemOwner.P3:
+                case InventoryOwner.P3:
                     return 3;
-                case ItemOwner.P4:
+                case InventoryOwner.P4:
                     return 4;
-                case ItemOwner.NONE:
+                case InventoryOwner.NONE:
                     return NONE;
                 default:
                     return NONE;
             }
         }
 
-        public static CharStats GetStats(ItemOwner possessor)
+        public static CharStats GetStats(InventoryOwner possessor)
         {
             int converted = GetCharPos(possessor);
 
@@ -59,7 +59,7 @@
             }
         }
 
-        public static string GetPossessorName(ItemOwner possessor)
+        public static string GetPossessorName(InventoryOwner possessor)
         {
             int converted = GetCharPos(possessor);
 
@@ -80,7 +80,7 @@
             }
         }
 
-        public static ItemOwner GetOwner(string ownerName)
+        public static InventoryOwner GetOwner(string ownerName)
         {            
             int ownerIdx = GameManager.Instance.PlayerStats.LookUp(_ =>
             _.gameObject.activeInHierarchy && _.CharacterName.Equals(ownerName)).idx;
@@ -88,25 +88,25 @@
             switch (ownerIdx)
             {
                 case 0:
-                    return ItemOwner.P0;
+                    return InventoryOwner.P0;
                 case 1:
-                    return ItemOwner.P1;
+                    return InventoryOwner.P1;
                 case 2:
-                    return ItemOwner.P2;
+                    return InventoryOwner.P2;
                 case 3:
-                    return ItemOwner.P3;
+                    return InventoryOwner.P3;
                 case 4:
-                    return ItemOwner.P4;
+                    return InventoryOwner.P4;
                 default:
-                    return ItemOwner.NONE;
+                    return InventoryOwner.NONE;
             }
         }
 
-        public static void FillPossessorList(CircularLinkedList<ItemOwner> list)
+        public static void FillPossessorList(CircularLinkedList<InventoryOwner> list)
         {
-            foreach (ItemOwner possessor in (ItemOwner[])System.Enum.GetValues(typeof(ItemOwner)))
+            foreach (InventoryOwner possessor in (InventoryOwner[])System.Enum.GetValues(typeof(InventoryOwner)))
             {
-                if (possessor == ItemOwner.NONE) continue;
+                if (possessor == InventoryOwner.NONE) continue;
                 list.Append(possessor);
             }
         }
