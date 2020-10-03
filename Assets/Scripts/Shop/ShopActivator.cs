@@ -13,7 +13,7 @@ public class ShopActivator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && canActivate)
         {
-            GameManager.Instance.shopMenuActive = true;
+            GameManager.Instance.ShopMenuActive = true;
             shopMenu.SetActive(true);
         }
     }

@@ -11,11 +11,13 @@ namespace RPG.Quest
         public Item Item { get => item; }
         #endregion
 
+        #region FIELDS
         [SerializeField]
         private int quantity = 1;
 
         [SerializeField]
         private Item item = null;
+        #endregion
 
         public override IQuestTracker GenerateTracker(string questName)
         {

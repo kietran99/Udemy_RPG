@@ -4,7 +4,7 @@ using UnityEngine;
 public class DevQuest : MonoBehaviour
 {
     public Item item;
-    public QuestStatusColor statusColor;
+    public QuestStatusBubbleChat statusColor;
 
     void Update()
     {

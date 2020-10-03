@@ -19,7 +19,7 @@ public class GameMenu : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.dialogActive) return;
+        if (GameManager.Instance.DialogActive) return;
 
         if (!Input.GetKeyDown(KeyboardControl.General.Inventory)) return;
 
@@ -37,15 +37,15 @@ public class GameMenu : MonoBehaviour
     {
         theMenu.SetActive(true);
         UpdateMainStats();
-        currentGoldText.text = ItemManager.Instance.CurrentGold.ToString();
-        GameManager.Instance.gameMenuActive = true;
+        currentGoldText.text = GameManager.Instance.CurrentGold.ToString();
+        GameManager.Instance.GameMenuActive = true;
     }
 
     public void CloseMenu()
     {
         foreach (GameObject window in windows) window.SetActive(false);
         theMenu.SetActive(false);
-        GameManager.Instance.gameMenuActive = false;
+        GameManager.Instance.GameMenuActive = false;
     }
 
     public void UpdateMainStats()

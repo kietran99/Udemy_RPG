@@ -65,16 +65,16 @@ public class BuyMenuController : TradeMenuController
     {
         int totalCost = changeAmount * selectedMerch.BuyValue;
 
-        if (ItemManager.Instance.CurrentGold < totalCost)
+        if (GameManager.Instance.CurrentGold < totalCost)
         {
             dialog.InsufficientFund();
             return;
         }
 
-        ItemManager.Instance.CurrentGold -= totalCost;
+        GameManager.Instance.DecreaseGold(totalCost);
 
         int invAvail = ItemManager.Instance.AddItem(InventoryOwner.BAG, new ItemHolder(selectedMerch, changeAmount));
-        if (invAvail == -1)
+        if (invAvail == Constants.INVALID)
         {
             dialog.UnavailSlot();
             return;

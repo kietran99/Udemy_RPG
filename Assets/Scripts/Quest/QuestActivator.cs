@@ -4,6 +4,7 @@ namespace RPG.Quest
 {
     public class QuestActivator : MonoBehaviour
     {
+        #region SERIALIZE FIELDS
         [SerializeField]
         private QuestData data = null;
 
@@ -11,13 +12,16 @@ namespace RPG.Quest
         private GameObject questActivateUIObject = null;
 
         [SerializeField]
-        private QuestStatusColor statusColor = null;
+        private QuestStatusBubbleChat statusBubbleChat = null;
+        #endregion
 
+        #region FIELDS
         private QuestActivateUI questActivateUI;
 
         private IQuestTracker tracker;
 
         private bool canActivate, hasAccepted;
+        #endregion
 
         private void Update()
         {
@@ -41,7 +45,7 @@ namespace RPG.Quest
             if (!tracker.IsComplete()) return;
 
             GiveRewards();
-            statusColor.gameObject.SetActive(false);
+            statusBubbleChat.gameObject.SetActive(false);
         }
 
         private void InitUI()
@@ -56,7 +60,7 @@ namespace RPG.Quest
         private void GiveRewards()
         {
             Debug.Log("Give rewards");
-            ItemManager.Instance.CurrentGold += data.GoldReward;
+            GameManager.Instance.IncreaseGold(data.GoldReward);
             AttemptToObtain();
             tracker = null;
         }
@@ -71,7 +75,7 @@ namespace RPG.Quest
         private void OnQuestAccept()
         {
             hasAccepted = true;
-            statusColor.UpdateSpriteColor(QuestStatus.ONGOING);
+            statusBubbleChat.UpdateSpriteColor(QuestStatus.ONGOING);
 
             questActivateUI.OnAccept -= OnQuestAccept;
 

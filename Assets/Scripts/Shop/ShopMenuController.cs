@@ -37,7 +37,7 @@ public class ShopMenuController : MonoBehaviour
     {
         gameObject.SetActive(false);
         dialog.Disable();
-        GameManager.Instance.shopMenuActive = false;
+        GameManager.Instance.ShopMenuActive = false;
     }
 
     public void BuyWeapons()

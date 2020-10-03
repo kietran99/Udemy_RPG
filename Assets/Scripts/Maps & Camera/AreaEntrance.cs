@@ -11,6 +11,6 @@ public class AreaEntrance : MonoBehaviour
             PlayerController.Instance.transform.position = GetComponent<BoxCollider2D>().bounds.center;
         }
         
-        GameManager.Instance.fadingBetweenAreas = false;
+        GameManager.Instance.FadingBetweenAreas = false;
     }    
 }

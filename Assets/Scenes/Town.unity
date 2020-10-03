@@ -20555,6 +20555,8 @@ MonoBehaviour:
   speaker: 
   dialogLines:
   - A bao m test inventory chu deo phai test NPC.
+  - hello
+  - world
   isPerson: 0
 --- !u!61 &1629768532
 BoxCollider2D:
@@ -21012,8 +21014,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speaker: 
-  dialogLines: []
-  isPerson: 1
+  dialogLines:
+  - Sup dude
+  isPerson: 0
 --- !u!114 &2027803618
 MonoBehaviour:
   m_ObjectHideFlags: 0

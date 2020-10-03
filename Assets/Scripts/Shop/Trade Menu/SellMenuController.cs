@@ -22,7 +22,6 @@ public class SellMenuController : TradeMenuController
         gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && gameObject.activeInHierarchy) gameObject.SetActive(false);
@@ -50,7 +49,7 @@ public class SellMenuController : TradeMenuController
 
         int totalSellValue = invController.CurrentInv[selectedPos].TheItem.SellValue;
         ItemManager.Instance.RemoveItemAt(invController.CharCycler.Current, selectedPos, changeAmount);
-        ItemManager.Instance.CurrentGold += totalSellValue * changeAmount;
+        GameManager.Instance.IncreaseGold(totalSellValue * changeAmount);
         itemDisplay.UpdateSlot(selectedPos, invController.CurrentInv[selectedPos]);
         dialog.TradeSuccessful();
     }

@@ -21,7 +21,7 @@ public class AreaExit : MonoBehaviour
         UIFade.Instance.FadeToBlack();
         UIFade.Instance.OnFadeComplete += LoadSceneAfterFaded;
 
-        GameManager.Instance.fadingBetweenAreas = true;
+        GameManager.Instance.FadingBetweenAreas = true;
 
         PlayerController.Instance.AreaTransitionName = areaTransitionName;
     }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RPG.Quest
+﻿namespace RPG.Quest
 {
     public abstract class AbstractQuestTracker : IQuestTracker
     {

@@ -23,18 +23,11 @@ namespace RPG.Quest
         private void UpdateProgress(RPG.Inventory.InventoryStats invStats)
         {
             AccumulatedAmount = invStats.LookUp(goal.Item.ItemName);
-
-            if (AccumulatedAmount < goal.Quantity)
-            {
-                Debug.Log("Status: Ongoing");
-                EventManager.Instance.TriggerEvent(new QuestStatusChangeData(QuestStatus.ONGOING));
-                return;
-            }
-
-            Debug.Log("Status: Completed");
-            EventManager.Instance.TriggerEvent(new QuestStatusChangeData(QuestStatus.COMPLETED));
+            
+            EventManager.Instance.TriggerEvent(new QuestStatusChangeData(
+                AccumulatedAmount < goal.Quantity ? QuestStatus.ONGOING : QuestStatus.COMPLETED));
         }
-        
+
         public override bool IsComplete() => AccumulatedAmount >= goal.Quantity;
 
         protected override void UntrackEvents()

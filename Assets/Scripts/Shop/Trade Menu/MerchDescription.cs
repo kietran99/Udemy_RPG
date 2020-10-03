@@ -63,7 +63,7 @@ public class MerchDescription : MonoBehaviour
         Reset();
         this.tradeValue = tradeValue;
         changeStatText.text = merch.GetItemType();
-        currentGoldText.text = ItemManager.Instance.CurrentGold + " G";
+        currentGoldText.text = GameManager.Instance.CurrentGold + " G";
         itemDescText.text = merch.Description;       
         totalCostText.text = tradeValue.ToString();
     }

@@ -23,13 +23,13 @@ public class DialogManager : MonoBehaviour
 
     // Make each line be typed more fluidly
     [SerializeField]
-    private float charWaitTime = 0.02f;
+    private WaitForSeconds charWaitTime = new WaitForSeconds(0.02f);
     private bool isTyping = false;
 
     // Seconds to next dialog display since closing current dialog
     [SerializeField]
     private const float dialogDelay = 1f;
-    private float secsToNextDialog;
+    private float secsToNextSentence;
 
     void Awake()
     {
@@ -47,41 +47,41 @@ public class DialogManager : MonoBehaviour
 
     void Update()
     {
-        if (secsToNextDialog >= 0f)
+        if (secsToNextSentence >= 0f)
         {
-            secsToNextDialog -= Time.deltaTime;
+            secsToNextSentence -= Time.deltaTime;
             return;
         }
 
-        if (dialogBox.activeInHierarchy && Input.GetKeyDown(KeyboardControl.General.Interact))
+        if (!dialogBox.activeInHierarchy) return;
+
+        if (!Input.GetKeyDown(KeyboardControl.General.Interact)) return;
+
+        if (isTyping)
         {
-            if (isTyping)
-            {
-                StopCoroutine(nameof(TypeSentence));
-                isTyping = false;
-                dialogText.text = dialogLines[currentLine];
-                return;
-            }
-
-            currentLine++;
-
-            if (currentLine >= dialogLines.Length)
-            {
-                dialogBox.SetActive(false);
-                GameManager.Instance.dialogActive = false;
-                secsToNextDialog = dialogDelay;
-            }
-            else
-            {
-                StartCoroutine(nameof(TypeSentence));
-            }
+            isTyping = false;
+            PrintWholeSentence();
+            return;
         }
+
+        if (++currentLine < dialogLines.Length)
+        {
+            StartCoroutine(TypeSentence());
+            return;
+        }
+
+        dialogBox.SetActive(false);
+        GameManager.Instance.DialogActive = false;
+        secsToNextSentence = dialogDelay;
     }
 
-    public bool CanLoadNextSentence()
+    private void PrintWholeSentence()
     {
-        return secsToNextDialog <= 0f;
+        StopCoroutine(TypeSentence());
+        dialogText.text = dialogLines[currentLine];
     }
+
+    public bool CanLoadNextSentence() => secsToNextSentence <= 0f;
 
     private IEnumerator TypeSentence()
     {
@@ -91,7 +91,7 @@ public class DialogManager : MonoBehaviour
         foreach (char letter in dialogLines[currentLine].ToCharArray())
         {
             dialogText.text += letter;
-            yield return new WaitForSeconds(charWaitTime);
+            yield return charWaitTime;
         }
 
         isTyping = false;
@@ -99,7 +99,7 @@ public class DialogManager : MonoBehaviour
 
     public void InitDialog(string speaker, string[] dialogLines, bool isPerson)
     {
-        GameManager.Instance.dialogActive = true;
+        GameManager.Instance.DialogActive = true;
 
         this.dialogLines = dialogLines;
 
