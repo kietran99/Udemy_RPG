@@ -4,12 +4,12 @@ namespace EventSystems
 {
     public class GameEvent<T> : IBaseEvent where T : IEventData
     {
-        private event Action<T> Listeners;
+        private event Action<T> listeners;
 
-        public void Add(Action<T> listener) => Listeners += listener;
+        public void Add(Action<T> listener) => listeners += listener;
 
-        public void Remove(Action<T> listener) => Listeners -= listener;
+        public void Remove(Action<T> listener) => listeners -= listener;
 
-        public void Invoke(T eventData) => Listeners?.Invoke(eventData);
+        public void Invoke(T eventData) => listeners?.Invoke(eventData);
     }
 }

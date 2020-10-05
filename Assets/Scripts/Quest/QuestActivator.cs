@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using EventSystems;
+using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace RPG.Quest
 {
@@ -16,27 +19,38 @@ namespace RPG.Quest
         #endregion
 
         #region FIELDS
+        private IQuestManager questManager;
+
         private QuestActivateUI questActivateUI;
 
         private IQuestTracker tracker;
 
         private bool canActivate, hasAccepted;
         #endregion
+        
+        private void Start()
+        {
+            Debug.Log("Start listening");
+            EventManager.Instance.StartListening<TrackedQuestsData>(LoadQuestData);
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.Instance.StopListening<TrackedQuestsData>(LoadQuestData);
+        }
 
         private void Update()
         {
+            if (questManager == null)
+            {
+                ServiceLocator.Resolve<IQuestManager>(out questManager);
+            }
+
             if (!canActivate || !Input.GetKeyDown(KeyCode.Q)) return;
 
-            Activate();
-        }
-
-        private void Activate()
-        {
             if (!hasAccepted)
             {
-                Debug.Log("Status: Unaccepted");
-                InitUI();
-                questActivateUI.gameObject.SetActive(true);
+                Activate();
                 return;
             }
 
@@ -44,8 +58,14 @@ namespace RPG.Quest
 
             if (!tracker.IsComplete()) return;
 
-            GiveRewards();
-            statusBubbleChat.gameObject.SetActive(false);
+            ProcessQuestComplete();            
+        }
+
+        private void Activate()
+        {
+            Debug.Log("Status: Unaccepted");
+            InitUI();
+            questActivateUI.gameObject.SetActive(true);
         }
 
         private void InitUI()
@@ -53,36 +73,46 @@ namespace RPG.Quest
             if (questActivateUI != null) return;
             
             questActivateUI = Instantiate(questActivateUIObject).GetComponent<QuestActivateUI>();
-            questActivateUI.OnAccept += OnQuestAccept;
+            questActivateUI.OnAccept += ProcessQuestAccept;
             questActivateUI.BindData(data.QuestName, data.QuestDescription, data.ItemReward.Sprite, data.GoldReward);                      
         }
-
-        private void GiveRewards()
-        {
-            Debug.Log("Give rewards");
-            GameManager.Instance.IncreaseGold(data.GoldReward);
-            AttemptToObtain();
-            tracker = null;
-        }
-
-        private void AttemptToObtain()
+        
+        private bool AttemptToObtain()
         {
             Inventory.AbstractItemHolderFactory itemHolderFactory = new Inventory.ItemHolderFactory();
             int invAvail = ItemManager.Instance.AddItem(Inventory.InventoryOwner.BAG, itemHolderFactory.CreateItemToObtainHolder(data.ItemReward));
             if (invAvail == Constants.INVALID) Debug.LogError("INVENTORY FULL!");
+            return invAvail != Constants.INVALID;
         }
 
-        private void OnQuestAccept()
+        private void ProcessQuestAccept()
         {
+            Debug.Log("Status: Accepted");
             hasAccepted = true;
             statusBubbleChat.UpdateSpriteColor(QuestStatus.ONGOING);
-
-            questActivateUI.OnAccept -= OnQuestAccept;
-
-            if (!ServiceLocator.Resolve<IQuestManager>(out IQuestManager questManager)) return;
-            
+            questActivateUI.OnAccept -= ProcessQuestAccept;           
             tracker = data.QuestGoal.GenerateTracker(data.QuestName);
-            questManager.AddTracker(tracker);           
+            questManager.AddTracker(SceneManager.GetActiveScene().name, tracker);
+
+            //if (!tracker.IsComplete())
+            //{
+            //    questManager.AddTracker(SceneManager.GetActiveScene().name, tracker);
+            //    return;
+            //}
+
+            //ProcessQuestComplete();
+        }
+
+        private void ProcessQuestComplete()
+        {
+            Debug.Log("Status: Complete");
+
+            if (!AttemptToObtain()) return;
+
+            GameManager.Instance.IncreaseGold(data.GoldReward);
+            questManager.RemoveTracker(SceneManager.GetActiveScene().name, tracker);
+            tracker = null;
+            statusBubbleChat.gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -98,5 +128,16 @@ namespace RPG.Quest
 
             canActivate = false;
         }
+
+        private void LoadQuestData(TrackedQuestsData cache)
+        {
+            var (cachedTracker, idx) = cache.Trackers.Lookup(_ => _.QuestName.Equals(data.QuestName));
+
+            if (idx.Equals(Constants.INVALID)) return;
+
+            tracker = cachedTracker;
+
+        }
+
     }
 }

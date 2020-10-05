@@ -23,7 +23,5 @@ public class EssentialsLoader : MonoBehaviour
         if (GameManager.Instance == null) GameManager.Instance = Instantiate(gameManager).GetComponent<GameManager>();
 
         if (ItemManager.Instance == null) ItemManager.Instance = Instantiate(itemManager).GetComponent<ItemManager>();
-
-        ServiceLocator.Register<RPG.Quest.IQuestManager>(new RPG.Quest.QuestManager());
     }    
 }

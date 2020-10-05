@@ -29,6 +29,19 @@ public static class CollectionExtension
         return (default(T), Constants.INVALID);
     }
 
+    public static (T item, int idx) Lookup<T>(this List<T> arr, Predicate<T> conditions)
+    {
+        for (int i = 0; i < arr.Count; i++)
+        {
+            if (conditions(arr[i]))
+            {
+                return (arr[i], i);
+            }
+        }
+
+        return (default(T), Constants.INVALID);
+    }
+
     public static T[] Filter<T>(this T[] iter, Predicate<T> conditions)
     {
         var result = new List<T>();
@@ -103,6 +116,14 @@ public static class CollectionExtension
         for (int i = 0; i < iter.Count; i++)
         {
             function(iter[i]);
+        }
+    }
+
+    public static void Map<T>(this HashSet<T> iter, Action<T> function)
+    {
+        foreach (var ele in iter)
+        {
+            function(ele);
         }
     }
 }

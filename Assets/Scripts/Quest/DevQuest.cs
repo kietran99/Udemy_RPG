@@ -1,10 +1,8 @@
-﻿using RPG.Quest;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DevQuest : MonoBehaviour
 {
     public Item item;
-    public QuestStatusBubbleChat statusColor;
 
     void Update()
     {
