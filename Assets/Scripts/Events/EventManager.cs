@@ -30,7 +30,7 @@ namespace EventSystems
         {
             if (instance.eventDictionary.TryGetValue(typeof(T), out IBaseEvent publisher))
             {
-                (publisher as GameEvent<T>).Add(listener);
+                (publisher as GameEvent<T>).Add(listener); 
                 return;
             }
             

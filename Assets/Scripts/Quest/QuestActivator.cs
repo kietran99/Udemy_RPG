@@ -1,7 +1,4 @@
-﻿using EventSystems;
-using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 namespace RPG.Quest
 {
@@ -30,22 +27,12 @@ namespace RPG.Quest
         
         private void Start()
         {
-            Debug.Log("Start listening");
-            EventManager.Instance.StartListening<TrackedQuestsData>(LoadQuestData);
+            ServiceLocator.Resolve<IQuestManager>(out questManager);
+            TryLoadQuestCache();
         }
-
-        private void OnDestroy()
-        {
-            EventManager.Instance.StopListening<TrackedQuestsData>(LoadQuestData);
-        }
-
+        
         private void Update()
         {
-            if (questManager == null)
-            {
-                ServiceLocator.Resolve<IQuestManager>(out questManager);
-            }
-
             if (!canActivate || !Input.GetKeyDown(KeyCode.Q)) return;
 
             if (!hasAccepted)
@@ -92,7 +79,7 @@ namespace RPG.Quest
             statusBubbleChat.UpdateSpriteColor(QuestStatus.ONGOING);
             questActivateUI.OnAccept -= ProcessQuestAccept;           
             tracker = data.QuestGoal.GenerateTracker(data.QuestName);
-            questManager.AddTracker(SceneManager.GetActiveScene().name, tracker);
+            questManager.AddTracker(tracker);
 
             //if (!tracker.IsComplete())
             //{
@@ -110,7 +97,7 @@ namespace RPG.Quest
             if (!AttemptToObtain()) return;
 
             GameManager.Instance.IncreaseGold(data.GoldReward);
-            questManager.RemoveTracker(SceneManager.GetActiveScene().name, tracker);
+            questManager.RemoveTracker(tracker);
             tracker = null;
             statusBubbleChat.gameObject.SetActive(false);
         }
@@ -128,16 +115,14 @@ namespace RPG.Quest
 
             canActivate = false;
         }
-
-        private void LoadQuestData(TrackedQuestsData cache)
+        
+        private void TryLoadQuestCache()
         {
-            var (cachedTracker, idx) = cache.Trackers.Lookup(_ => _.QuestName.Equals(data.QuestName));
+            if (!questManager.TryFindTracker(data.QuestName, out IQuestTracker trackerToFind)) return;
 
-            if (idx.Equals(Constants.INVALID)) return;
-
-            tracker = cachedTracker;
-
+            tracker = trackerToFind;
+            statusBubbleChat.UpdateSpriteColor(tracker.IsComplete() ? QuestStatus.COMPLETED : QuestStatus.ONGOING);
+            hasAccepted = true;
         }
-
     }
 }

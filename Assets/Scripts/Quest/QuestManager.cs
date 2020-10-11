@@ -1,7 +1,4 @@
-﻿using EventSystems;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using System.Collections.Generic;
 
 namespace RPG.Quest
 {
@@ -9,63 +6,31 @@ namespace RPG.Quest
     {
         private List<IQuestTracker> trackers;
 
-        private Dictionary<string, List<IQuestTracker>> trackerDict;
-
         public QuestManager()
         {
-            SceneManager.sceneLoaded += PublishTrackedQuestData;
             trackers = new List<IQuestTracker>();
-            trackerDict = new Dictionary<string, List<IQuestTracker>>();
         }
 
         public void AddTracker(IQuestTracker tracker)
         {
+            if (trackers.Contains(tracker)) return;
+
             trackers.Add(tracker);
         }
 
         public void RemoveTracker(IQuestTracker tracker)
         {
-            trackers.Remove(tracker);
+            if (trackers.Contains(tracker)) return;
+
+            tracker.OnUntrack?.Invoke();
+            trackers.Remove(tracker);           
         }
 
-        public List<IQuestTracker> GetTrackers(string sceneName)
+        public bool TryFindTracker(string questName, out IQuestTracker tracker)
         {
-            if (trackerDict.TryGetValue(sceneName, out List<IQuestTracker> trackers))
-            {
-                Debug.Log("Accepted quests in " + sceneName + " scene: ");
-                trackers.Map(_ => Debug.Log(_.QuestName));
-                return trackers;
-            }
-
-            Debug.Log("No accepted quest in scene: " + sceneName);
-            return default;
-        }
-
-        public void AddTracker(string sceneName, IQuestTracker tracker)
-        {
-            if (trackerDict.TryGetValue(sceneName, out List<IQuestTracker> trackers))
-            {
-                trackers.Add(tracker);
-                return;
-            }
-
-            trackerDict.Add(sceneName, new List<IQuestTracker>{ tracker });
-        }
-
-        public void RemoveTracker(string sceneName, IQuestTracker tracker)
-        {
-            if (trackerDict.TryGetValue(sceneName, out List<IQuestTracker> trackers))
-            {
-                trackers.Remove(tracker);
-            }
-        }
-
-        private void PublishTrackedQuestData(Scene scene, LoadSceneMode mode)
-        {
-            var trackers = GetTrackers(scene.name);
-
-            if (trackers == null) return;
-            EventManager.Instance.TriggerEvent(new TrackedQuestsData(trackers));           
-        }
+            var (trackerToFind, idx) = trackers.Lookup(_ => _.QuestName.Equals(questName));
+            tracker = trackerToFind;
+            return !idx.Equals(Constants.INVALID);
+        }        
     }
 }

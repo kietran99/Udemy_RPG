@@ -13,8 +13,16 @@ namespace RPG.Quest
         private void Start()
         {
             EventSystems.EventManager.Instance.
-                StartListening<QuestStatusChangeData>(_ => UpdateSpriteColor(_.status));
+                StartListening<QuestStatusChangeData>(ChangeSpriteColor);
         }
+
+        private void OnDestroy()
+        {
+            EventSystems.EventManager.Instance.
+                StopListening<QuestStatusChangeData>(ChangeSpriteColor);
+        }
+
+        private void ChangeSpriteColor(QuestStatusChangeData data) => UpdateSpriteColor(data.status);
 
         public void UpdateSpriteColor(QuestStatus status)
         {
